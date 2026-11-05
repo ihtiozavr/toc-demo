@@ -459,7 +459,7 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
         off: left ? -(cardX + 280 + 16) : (W - cardX + 16) };
       const near = state.mode === 'pinned' ? (left ? cardX + 280 + 12 : W - cardX + 12) : p.near;
       geo.textL = left ? near : p.far; geo.textR = left ? p.far : near;
-      if (c.wide) { const far = geo.textL === undefined ? 28 : (left ? geo.textR : geo.textL); geo.textL = left ? W - 820 - far : far; geo.textR = left ? far : W - 820 - far; } // text column 820 keeps the far padding, the TOC lives in the free margin
+      if (c.wide) { if (!left) geo.textL = geo.textL; geo.textR = W - geo.textL - 820; } // text column 820 keeps the far padding, the TOC lives in the free margin
       geo.titleTop = p.titleTop;
       return geo;
     }
@@ -473,7 +473,7 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
       off: left ? -8 : 8 };
     const near = state.mode === 'pinned' ? (left ? blockX + 200 + 16 : W - blockX + 16) : p.near;
     geo.textL = left ? near : p.far; geo.textR = left ? p.far : near;
-    if (c.wide) { const far = geo.textL === undefined ? 28 : (left ? geo.textR : geo.textL); geo.textL = left ? W - 820 - far : far; geo.textR = left ? far : W - 820 - far; } // text column 820 keeps the far padding, the TOC lives in the free margin
+    if (c.wide) { if (!left) geo.textL = geo.textL; geo.textR = W - geo.textL - 820; } // text column 820 keeps the far padding, the TOC lives in the free margin
     geo.titleTop = p.titleTop;
     return geo;
   }
