@@ -229,6 +229,7 @@ svg { display: block; }
     <div class="radios" id="wRadios" style="--panel-top:-6px" role="radiogroup" aria-label="Ширина статьи"></div>
     <div class="grp-head" id="sideHead">Положение оглавления</div>
     <div class="radios" id="sideRadios" style="--panel-top:-6px" role="radiogroup" aria-label="Положение оглавления"></div>
+    <div class="radios" id="tightRadios" style="--panel-top:-6px" aria-label="Отступы"></div>
     <div class="swbox" id="alRadios" aria-label="Оглавление"></div>
   </div>
 </div>
@@ -333,7 +334,7 @@ svg { display: block; }
     { id: 'base', label: '«Оглавление» на базовой линии', btn: 0, dash: 0 },
     { id: 'item', label: 'Первый пункт на базовой линии', btn: -26, dash: 0 }
   ];
-  const state = { v: VARIANTS[0], ctx: CONTEXTS[0], narrow: false, side: CONTEXTS[0].side, mode: 'pinned', open: false, lc: false, active: 0, align: ALIGNS[1], guide: true };
+  const state = { v: VARIANTS[0], ctx: CONTEXTS[0], narrow: false, side: CONTEXTS[0].side, mode: 'pinned', open: false, lc: false, active: 0, align: ALIGNS[1], tight: false, guide: true };
   const box = document.getElementById('docBox');
   const doc = document.getElementById('toc');
   const art = document.getElementById('art');
@@ -428,7 +429,8 @@ svg { display: block; }
       geo.titleTop = p.titleTop;
       return geo;
     }
-    const p = c.cmp;
+    // viewer: by default the paddings of «Как сейчас»; the «Отступы меньше» switch gives the tighter ones of the new variants
+    const p = c.static && !state.tight ? c.orig : c.cmp;
     const base = p.titleTop + 36;
     const blockX = left ? 12 : W - 16 - 196;          // dashes 16 px from the container edge
     const A = state.align;
@@ -611,7 +613,7 @@ svg { display: block; }
 
   /* ---------- system area ---------- */
   const radio = (on, label, attr) => `<button class="radio${on ? ' on' : ''}" role="radio" aria-checked="${on}" ${attr}><span class="dot">${on ? ICON.radioOn : ICON.radioOff}</span>${esc(label)}</button>`;
-  const radios = document.getElementById('radios'), radiosNow = document.getElementById('radiosNow'), ctxRadios = document.getElementById('ctxRadios'), ctxHead = document.getElementById('ctxHead');
+  const tightRadios = document.getElementById('tightRadios'), radios = document.getElementById('radios'), radiosNow = document.getElementById('radiosNow'), ctxRadios = document.getElementById('ctxRadios'), ctxHead = document.getElementById('ctxHead');
   const wRadios = document.getElementById('wRadios'), wHead = document.getElementById('wHead'), sideRadios = document.getElementById('sideRadios'), sideHead = document.getElementById('sideHead'), alRadios = document.getElementById('alRadios'), guide = document.getElementById('guide');
   function renderRadios() {
     radiosNow.innerHTML = VARIANTS.filter(v => v.kind === 'original').map(v => radio(v === state.v, v.label, `data-v="${v.id}"`)).join('');
@@ -638,7 +640,12 @@ svg { display: block; }
     const b1 = sideRadios.offsetTop + sideRadios.offsetHeight;
     wHead.style.top = (b1 + 6) + 'px';
     wRadios.style.top = (b1 + 6 + wHead.offsetHeight) + 'px';
-    const b2 = kb ? wRadios.offsetTop + wRadios.offsetHeight : b1;
+    // «Отступы меньше»: only in the viewer, only for the new variants
+    const vw = state.ctx.static;
+    tightRadios.hidden = !vw;
+    tightRadios.innerHTML = `<button class="sw${state.tight ? ' on' : ''}" role="switch" aria-checked="${state.tight}"${off ? ' disabled' : ''} data-t="1"><span class="swc">Отступы меньше</span><span class="swt"><i></i></span></button>`;
+    tightRadios.style.top = (b1 + 6) + 'px';
+    const b2 = kb ? wRadios.offsetTop + wRadios.offsetHeight : vw ? tightRadios.offsetTop + tightRadios.offsetHeight : b1;
     // with the block hidden the grey of the system area is continued down to its end
     const fill = document.getElementById('sysFill');
     const end = b2;
@@ -680,6 +687,11 @@ svg { display: block; }
     const r = e.target.closest('[data-a]');
     if (!r || r.disabled) return;
     state.align = ALIGNS.find(x => x.id === r.dataset.a);
+    render();
+  });
+  tightRadios.addEventListener('click', (e) => {
+    if (!e.target.closest('[data-t]') || state.v.kind === 'original') return;
+    state.tight = !state.tight; state.open = false;
     render();
   });
   wRadios.addEventListener('click', (e) => {
