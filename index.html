@@ -186,7 +186,7 @@ svg { display: block; }
 /* «Голубая линия»: «Черная линия» with the brand blue marker */
 .ci.mono.blueline.all .mk { background: var(--selected); }
 .ci.mono.on .mk { background: var(--dark-marker); } /* black line: the marker stays black everywhere (the ruler dash is orange in the viewer) */
-.ci.ln .mk, .ci.src .slot { position: relative; left: -4px; } /* the marker sits right on the panel frame in the hover card (card padding 4px); the pinned list uses the same x, so the line never jumps between the states */
+.ci.ln .mk { position: relative; left: -4px; } /* the line marker sits right on the panel frame in the hover card (card padding 4px); the pinned list uses the same x, so the line never jumps between the states. «С заливкой» keeps its marker inside the highlight */
 .ci.mono.blueline.on .mk { background: var(--dash-on, var(--secondary-border)); }
 /* «Голубая линия, короткий маркер»: the active marker is 16 px high and sits on the first line, like the marker of «Как в Notion»; the soft track of the pinned panel stays full height */
 .ci.mono.fill.on .mk { background: transparent; }
@@ -865,7 +865,6 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
   sideRadios.addEventListener('click', (e) => {
     const r = e.target.closest('[data-s]');
     if (!r) return;
-    sideOpen = false;
     if (r.dataset.s !== state.side) { state.side = r.dataset.s; state.open = false; }
     render();
   });
