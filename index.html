@@ -44,7 +44,7 @@ body { background: var(--page); color: var(--ink); font-family: var(--font); ove
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; }
 svg { display: block; }
 
-.viewport { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.viewport { position: relative; width: 100%; height: 100%; overflow: auto; } /* fixed-size stage: scrolls when the window is smaller, browser zoom scales it natively (crisp) */
 .stage { position: absolute; left: 0; top: 0; width: calc(1960px + var(--sx, 0px)); height: 1000px; transform-origin: 0 0;
   /* Figma renders text with grayscale antialiasing; without this the browser draws regular Inter visibly bolder */
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-optical-sizing: none; font-variation-settings: "opsz" 14; }
@@ -895,10 +895,10 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
   let sx = 0; // the wide article makes the whole screen wider
   function fit() {
     const w = vp.clientWidth, h = vp.clientHeight;
-    const s = Math.min(w / (1960 + sx), h / 1000);
-    stage.style.transform = `scale(${s})`;
-    stage.style.left = Math.max(0, (w - (1960 + sx) * s) / 2) + 'px';
-    stage.style.top = Math.max(0, (h - 1000 * s) / 2) + 'px';
+    // fixed 1:1 size: no transform scaling, so text and images stay sharp; centred when there is room
+    stage.style.transform = 'none';
+    stage.style.left = Math.max(0, Math.round((w - (1960 + sx)) / 2)) + 'px';
+    stage.style.top = Math.max(0, Math.round((h - 1000) / 2)) + 'px';
   }
   new ResizeObserver(fit).observe(vp);
   fit();
