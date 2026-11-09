@@ -30,7 +30,8 @@
   --card-shadow: 0 0 8px rgba(0, 0, 0, 0.06); /* library effect style shadow_c */
   --shadow-d: 0 0 6px rgba(0, 0, 0, 0.1); /* Figma effect style shadow_d */
   --shadow-sliding: 0 0 5px rgba(0, 0, 0, 0.2); /* library: box-shadow_slidingPanel (Default Light theme) */
-  --bg-grey: #f8f8f8;   /* library: Background/unaccented_background-color */
+  --shadow-saby: 0 0 46px 0 rgba(0, 0, 0, 0.12), 0 0 15px 0 rgba(0, 0, 0, 0.12); /* live Saby document TOC */
+  --bg-grey: #f7f7f7;   /* grey background sampled from the reference screenshot */
   --bg-violet: #f8f7ff; /* library: Background/info_background-color */
   --bg-blue: #f5faff;   /* library: Background/secondary_background-color */
   --shadow-b: 0 0 8px rgba(0, 0, 0, 0.14); /* Figma effect style shadow_b (Default Light theme) */
@@ -49,17 +50,17 @@ svg { display: block; }
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-optical-sizing: none; font-variation-settings: "opsz" 14; }
 .bg { position: absolute; left: 0; top: 0; width: calc(1960px + var(--sx, 0px)); height: 1000px; max-width: none; user-select: none; pointer-events: none; }
 
-/* the article container: KB article card or the document viewer; it clips the sliding panel */
+/* the article container: allow the floating TOC shadow to extend beyond its edges */
 #sticky { position: absolute; left: 0; right: 0; top: 0; height: 48px; box-sizing: border-box; padding-right: 110px; background: var(--white); box-shadow: var(--shadow-sliding); font-size: 24px; line-height: 48px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; transition: opacity .15s; pointer-events: none; z-index: 4; } /* article title bar: appears under the hovered commands once the title has scrolled away */
 .doc:hover #sticky.on { opacity: 1; }
 #cmds { position: absolute; right: 6px; top: 9px; display: flex; gap: 7px; opacity: 0; transition: opacity .15s; pointer-events: none; z-index: 5; } /* article commands (link, edit, more): shown while the article is hovered */
 .doc:hover #cmds { opacity: 1; }
-.doc { position: absolute; overflow: hidden; background: var(--white); }
+.doc { position: absolute; background: var(--white); }
 #toc { position: absolute; inset: 0; pointer-events: none; }
 #toc > .zone, #toc > .pinned { pointer-events: auto; }
 
 /* ---------- live article; metrics copied from the Figma widgets ---------- */
-.art { position: absolute; left: 0; right: 0; bottom: 0; overflow-y: auto; background: var(--white); scrollbar-width: none; overscroll-behavior: contain; }
+.art { position: absolute; left: 0; right: 0; bottom: 0; overflow-y: auto; border-radius: inherit; background: var(--white); scrollbar-width: none; overscroll-behavior: contain; }
 .art::-webkit-scrollbar { display: none; }
 .art-in { color: var(--ink); font-size: 16px; line-height: 19px; padding-bottom: 560px; }
 .art h1 { margin: 0; padding: 16px 0 12px; font-size: 36px; line-height: 46px; font-weight: 600; }
@@ -111,10 +112,10 @@ svg { display: block; }
 .orig .dash.l1 { width: 20px; } .orig .dash.l2 { width: 16px; } .orig .dash.l3 { width: 12px; }
 .cmp .dash.l1 { width: 12px; } .cmp .dash.l2 { width: 8px; } .cmp .dash.l3 { width: 6px; }
 
-/* ---------- sliding card ---------- */
+/* ---------- floating card: shared fade and slight edge shift for every variant ---------- */
 .card { position: absolute; background: var(--white); border-radius: 8px; box-shadow: var(--card-shadow); /* «Как сейчас»: library effect shadow_c (0 0 8px, Opacity 0.06), no stroke */
-  transform: translateX(var(--off)); transition: transform 0.2s cubic-bezier(0.42, 0, 1, 1); pointer-events: none; }
-.card.open { transform: translateX(0); transition: transform 0.25s cubic-bezier(0, 0, 0.58, 1); pointer-events: auto; }
+  opacity: 0; visibility: hidden; transform: translateX(var(--off)); transition: opacity 0.12s ease-in, transform 0.12s ease-in, visibility 0s linear 0.12s; pointer-events: none; }
+.card.open { opacity: 1; visibility: visible; transform: translateX(0); transition: opacity 0.18s ease-out, transform 0.18s ease-out, visibility 0s; pointer-events: auto; }
 .pinned { position: absolute; }
 
 .head { display: flex; height: 30px; padding-top: 2px; gap: 4px; }
@@ -212,9 +213,13 @@ svg { display: block; }
 .ddchev.open svg { transform: rotate(180deg); }
 .cap { padding: 2px 6px 4px; font-size: 12px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--label); }
 .grp-head .sw { height: 18px; padding: 0; }
+#othHead { flex-wrap: wrap; row-gap: 6px; }
+.variant-options { display: flex; flex-wrap: wrap; gap: 6px 12px; width: 100%; text-transform: none; }
+.shadow-setting { display: flex; align-items: center; justify-content: space-between; width: 100%; font-size: 14px; }
+.shadow-options { display: flex; gap: 10px; }
+.shadow-options .radio { width: auto; font-size: 13px; white-space: nowrap; }
 .lksub { position: relative; padding-left: 0; }
 .lksub .lkcap { padding: 2px 0 2px 2px; font-size: 13px; line-height: 18px; letter-spacing: 0; }
-.lksub .lksw { position: absolute; right: 0; top: 22px; padding: 0; } /* «Тень ярче»: only for the white background, so it sits on its row */
 .dsw { display: flex; align-items: center; gap: 8px; height: 24px; font-size: 14px; line-height: 17px; cursor: pointer; }
 .dsw .swt { position: relative; flex: 0 0 24px; height: 16px; border-radius: 10px; background: #f6733c; } /* double switch: the track is always orange */
 .dsw .swt i { position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%; background: #fff; transition: left .12s; }
@@ -268,7 +273,8 @@ svg { display: block; }
 .radio:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
 
 /* panel look controls (prototype on «Цветная линия»): background / frame / shadow are independent */
-#toc[data-ctl="1"] .card { background: var(--ctl-bg, var(--white)); box-shadow: var(--ctl-frame, 0 0 0 0 transparent), var(--ctl-sh, var(--card-shadow)) !important; }
+#toc[data-ctl="1"] .card { background: var(--ctl-bg, var(--white)); }
+#toc .card { box-shadow: var(--ctl-frame, 0 0 0 0 transparent), var(--ctl-sh, var(--card-shadow)) !important; }
 #toc[data-bg="grey"] { --ctl-bg: var(--bg-grey); }
 #toc[data-bg="blue"] { --ctl-bg: linear-gradient(rgba(245, 250, 255, 0.6), rgba(245, 250, 255, 0.6)), #fff; } /* library Background/secondary_background-color at Opacity 0.6 over an opaque white base */
 #toc[data-fr="thin"] { --ctl-frame: inset 0 0 0 1px #dbecff; } /* thin: 1px frame, library Background/secondary_active_background-color; the marker is 1px too */
@@ -278,11 +284,9 @@ svg { display: block; }
 #toc[data-bg="blue"][data-fr="1"] { --ctl-frame: inset 0 0 0 1px #dbecff; } /* the blue background: thin frame and a thin marker */
 #toc[data-bg="blue"][data-fr="1"] .ci.ln .mk { flex-basis: 1px; }
 #toc[data-sh="bright"] { --ctl-sh: var(--shadow-sliding); } /* library box-shadow_slidingPanel */
+#toc[data-sh="saby"] { --ctl-sh: var(--shadow-saby); }
 #toc[data-sh="none"] { --ctl-sh: 0 0 0 0 transparent; }
 
-/* new variants: the panel appears in place like in Notion: fades in with a small shift from the edge, no slide */
-.cmp .card { box-shadow: var(--shadow-sliding); opacity: 0; transition: opacity 0.12s ease-in, transform 0.12s ease-in; }
-.cmp .card.open { opacity: 1; transition: opacity 0.18s ease-out, transform 0.18s ease-out; }
 @media (prefers-reduced-motion: reduce) { .card, .card.open { transition: none; } }
 </style>
 
@@ -419,12 +423,12 @@ svg { display: block; }
     { id: 'black-text', label: 'Черный текст', kind: 'compact', item: 'ink', markers: { free: 'none', pinned: 'none' }, card: [6, 4, 4, 4], dashOn: 'var(--dark-marker)' }
   ].map(v => ({ heads: COMPACT, ...v }));
 
-  /* alignment experiments for the new variants: shifts (px) of the panel header and of the dashes relative to the title baseline */
+  /* The title switch only changes its visibility; all variants keep the same vertical position. */
   const ALIGNS = [
     { id: 'base', label: '«Оглавление» на базовой линии', btn: 0, dash: 0 },
-    { id: 'item', label: 'Первый пункт на базовой линии', btn: -26, dash: 0 }
+    { id: 'item', label: 'Без заголовка', btn: 0, dash: 0 }
   ];
-  const state = { v: VARIANTS[0], ctx: CONTEXTS[0], width: 'normal', side: CONTEXTS[0].side, mode: 'pinned', open: false, lc: false, active: 0, align: ALIGNS[1], tight: false, bg: 'none', frame: false, sh: 'default', guide: true };
+  const state = { v: VARIANTS.find(v => v.id === 'blue-line'), ctx: CONTEXTS[0], width: 'normal', side: CONTEXTS[0].side, mode: 'pinned', open: false, lc: false, active: 0, align: ALIGNS[1], tight: false, bg: 'none', frame: false, sh: 'default', guide: true };
   const box = document.getElementById('docBox');
   const doc = document.getElementById('toc');
   const art = document.getElementById('art');
@@ -519,7 +523,7 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
       const cardX = left ? edge : W - edge - 280;
       const geo = { w: 280, cardX, cardTop: c.id === 'viewer' ? 25 : zoneTop - 17, pinTop: zoneTop - 17,
         zoneX: left ? 0 : W - 52, zoneTop, zoneW: 52, dashAlign: left ? 'flex-start' : 'flex-end', dashPad: left ? '33px 0 0 16px' : '33px 16px 0 0',
-        off: left ? -(cardX + 280 + 16) : (W - cardX + 16) };
+        off: left ? -8 : 8 };
       const near = state.mode === 'pinned' ? (left ? cardX + 280 + 12 : W - cardX + 12) : p.near;
       geo.textL = left ? near : p.far; geo.textR = left ? p.far : near;
       if (c.wide) { if (!left) geo.textL = geo.textL; geo.textR = W - geo.textL - 820; } // text column 820 keeps the far padding, the TOC lives in the free margin
@@ -581,7 +585,7 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
     doc.classList.toggle('vw', !!c.static);
     document.getElementById('cmds').hidden = !!state.ctx.static; // the viewer has its own toolbar
     const ctl = v.kind !== 'original';
-    doc.dataset.ctl = ctl ? '1' : '0'; const bl = v.id === 'blue-line'; doc.dataset.bg = bl ? state.bg : 'none'; doc.dataset.fr = bl && state.frame ? (state.frame === 'thin' ? 'thin' : '1') : '0'; doc.dataset.sh = bl ? (state.bg !== 'none' || state.frame ? 'none' : state.sh) : 'default'; // a coloured background goes without a shadow
+    doc.dataset.ctl = ctl ? '1' : '0'; const bl = v.id === 'blue-line'; doc.dataset.bg = bl ? state.bg : 'none'; doc.dataset.fr = bl && state.frame ? (state.frame === 'thin' ? 'thin' : '1') : '0'; doc.dataset.sh = state.sh; // the shadow choice is shared by every variant and background
     if (v.kind === 'original') renderOriginal(v, g); else renderCompact(v, g);
     bg.src = c.bg;
     // article: rebuilt when the set of headings changes; paddings follow the TOC
@@ -598,6 +602,7 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
     artIn.style.paddingRight = g.textR + 'px';
     guide.hidden = true; // the red baseline line was a review aid; its toggle is removed
     guide.style.top = (g.titleTop + (c.static ? 37 : 36)) + 'px'; // viewer: the real glyph baseline of the 36 px title
+    alignDashesToParagraph();
     syncBreaks();
     renderRadios();
   }
@@ -619,7 +624,7 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
 
   function renderCompact(v, g) {
     const ttlPad = v.item === 'src' ? 11 : (v.markers.free === 'none' ? 8 : 10);
-    const ttl = state.align.id !== 'item' ? `<span class="ttl" style="padding-left:${ttlPad}px${(v.item === 'mono' || v.item === 'ink') && !(v.extra || '').includes('blueline') ? ';color:var(--mono-ink)' : ''}">Оглавление</span>` : '';
+    const ttl = `<span class="ttl"${state.align.id === 'item' ? ' aria-hidden="true"' : ''} style="${state.align.id === 'item' ? 'visibility:hidden;' : ''}padding-left:${ttlPad}px${(v.item === 'mono' || v.item === 'ink') && !(v.extra || '').includes('blueline') ? ';color:var(--mono-ink)' : ''}">Оглавление</span>`;
     // KB, TOC on the right: the pin button sits on the axis of the article commands (8 px closer to the edge) in every state, so it never jumps
     const shift = state.side === 'right' && !state.ctx.static ? 8 : 0;
     const head = (unpin) => `<div class="head right" style="--pin-shift:${shift}px">${ttl}${pinBtn(unpin)}</div>`;
@@ -628,19 +633,17 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
       return;
     }
     const [pt, pr, pb, pl] = v.card;
-    // in the viewer there is nothing to pin: without a title the panel has no header, and its first item sits on the title baseline
-    const headless = state.ctx.noPin && !ttl; // nothing to pin and no label: no header at all
-    const top = headless ? '' : v.item === 'src' ? head(false) : `<div class="head right" style="--pin-shift:${shift}px;height:auto;padding:0;margin-bottom:4px">${ttl}${pinBtn(false)}</div>`;
-    const cardTop = headless ? g.titleTop + 37 - 22 : g.cardTop;
+    // Keep the title row even when its label is hidden, including in the viewer.
+    const top = v.item === 'src' ? head(false) : `<div class="head right" style="--pin-shift:${shift}px;height:auto;padding:0;margin-bottom:4px">${ttl}${pinBtn(false)}</div>`;
+    const cardTop = g.cardTop;
     doc.innerHTML = `<div class="zone" id="zone" style="position:absolute;left:${g.zoneX}px;top:${g.zoneTop}px;width:192px">
         <div class="dashes" style="align-items:${g.dashAlign};padding:${g.dashPad}">${dashesHTML(v)}</div></div>
       <div class="card${state.open ? ' open' : ''}" id="card" style="--off:${g.off}px;left:${g.cardX}px;top:${cardTop}px;width:${200 + shift}px;padding:${pt}px ${pr + shift}px ${pb}px ${pl}px">${top}${listHTML(v)}</div>`;
     bindHover();
-    if (state.ctx.static || headless) alignCardToBaseline(g, cardTop);
+    if (state.ctx.static) alignCardToBaseline(g, cardTop);
   }
 
-  /* viewer: the panel sits on the baseline of the document title. The «ОГЛАВЛЕНИЕ» label is aligned to it,
-     and when there is no label (the «Первый пункт на базовой линии» mode) the first item is. Measured on the real glyph lines. */
+  /* Align the visible or reserved title row to the document title baseline. */
   function alignCardToBaseline(g, cardTop) {
     const card = document.getElementById('card');
     const target = card.querySelector('.ttl') || card.querySelector('.ci .tx .r');
@@ -653,6 +656,21 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
     const baseline = (rect.top - bx.top) / sc + (rect.height / sc) * (0.96875 / 1.2102); // Inter: ascent / content height
     const titleBase = g.titleTop + (state.ctx.static ? 37 : 36);
     card.style.top = (cardTop + (titleBase - baseline)) + 'px';
+  }
+
+  // Align the collapsed TOC with the first paragraph in every document layout.
+  function alignDashesToParagraph() {
+    const zone = doc.querySelector('.zone');
+    const dash = zone?.querySelector('.dash');
+    const paragraph = art.querySelector('p');
+    if (!dash || !paragraph) return;
+    const range = document.createRange();
+    range.selectNodeContents(paragraph);
+    const firstLine = range.getClientRects()[0];
+    if (!firstLine) return;
+    const scale = box.getBoundingClientRect().width / state.ctx.box.w;
+    const offset = (firstLine.top - dash.getBoundingClientRect().top) / scale + art.scrollTop;
+    zone.style.top = (parseFloat(zone.style.top) + offset) + 'px';
   }
 
   function bindHover() {
@@ -729,26 +747,22 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
     othRadios.innerHTML = OTHER.map(v => radio(v === state.v, v.label, `data-v="${v.id}"`)).join('');
     ctxRadios.innerHTML = CONTEXTS.map(c => radio(c.id === state.ctx.id, c.label, `data-c="${c.id}"`)).join('');
     // «Цветная линия»: its own block; grey caps subheadings inside. Фон: switch (off = white), on = Серый / Голубой.
-    // Тень: only with the white background (a coloured one goes without a shadow): По умолчанию / Ярче.
     const isBlue = state.v.id === 'blue-line', bgOn = state.bg !== 'none';
     blHead.hidden = true;
     // «Варианты оформления» header (with the «Заголовок» switch, it sets up all these variants) above «Цветная линия»
     const offA = state.v.kind === 'original', lblA = state.align.id === 'base';
-    othHead.innerHTML = `<span>Варианты оформления</span><button class="sw${lblA ? ' on' : ''}" role="switch" aria-checked="${lblA}"${offA ? ' disabled' : ''} data-a="${lblA ? 'item' : 'base'}"><span class="swc">Заголовок</span><span class="swt"><i></i></span></button>`;
+    othHead.innerHTML = `<span>Варианты оформления</span><div class="variant-options"><button class="sw${lblA ? ' on' : ''}" role="switch" aria-checked="${lblA}"${offA ? ' disabled' : ''} data-a="${lblA ? 'item' : 'base'}"><span class="swc">Заголовок</span><span class="swt"><i></i></span></button><div class="shadow-setting"><span>Тень</span><div class="shadow-options" role="radiogroup" aria-label="Тень">${[['default', 'Мягкая'], ['bright', 'Яркая'], ['saby', 'sabydoc']].map(([id, label]) => radio(state.sh === id, label, `data-sh="${id}"`)).join('')}</div></div></div>`;
     othHead.style.top = (90 + radiosNow.offsetHeight + 6) + 'px';
     radios.style.top = (othHead.offsetTop + othHead.offsetHeight) + 'px';
-        // horizontal radio buttons; what the coloured background does not take (shadow, frame) is disabled, not hidden
-    const dis = bgOn ? ' disabled' : '';
-    const noSh = bgOn || state.frame, shd = noSh ? ' disabled' : ''; // the frame and the blue background go without a shadow
     const blue = VARIANTS.find(v => v.id === 'blue-line');
     radios.innerHTML = radio(isBlue, blue.label, 'data-v="blue-line"');
     lookCard.classList.toggle('idle', !isBlue);
-    // three looks in a column: white / blue background (with the frame) / blue frame on white
-    const look = bgOn ? 'blue' : state.frame === 'thin' ? 'thin' : state.frame ? 'frame' : 'white';
+    // four looks in a column: white / grey / blue background (with the frame) / blue frame on white
+    const look = bgOn ? state.bg : state.frame === 'thin' ? 'thin' : state.frame ? 'frame' : 'white';
     // sub-items of «Цветная линия» on the same card, 20 px from the left
     // the hover looks belong to «Цветная линия» only: with any other variant they are disabled
     const ld = ''; // always clickable: picking one switches to «Цветная линия»; with another variant none of them is checked
-    radios.innerHTML += `<div class="lksub"><div class="cap lkcap">По ховеру</div>` + radio(isBlue && look === 'white', 'Белый фон', 'data-look="white"' + ld) + radio(isBlue && look === 'blue', 'Голубой фон', 'data-look="blue"' + ld) + radio(isBlue && look === 'frame', 'Голубая обводка без фона', 'data-look="frame"' + ld) + `<button class="sw lksw${isBlue && look === 'white' && state.sh === 'bright' ? ' on' : ''}" role="switch" aria-checked="${isBlue && look === 'white' && state.sh === 'bright'}" data-shsw="1"><span class="swc">Тень ярче</span><span class="swt"><i></i></span></button>` + `</div>`;
+    radios.innerHTML += `<div class="lksub"><div class="cap lkcap">По ховеру</div>` + radio(isBlue && look === 'white', 'Белый фон', 'data-look="white"' + ld) + radio(isBlue && look === 'grey', 'Серый фон', 'data-look="grey"' + ld) + radio(isBlue && look === 'blue', 'Голубой фон', 'data-look="blue"' + ld) + radio(isBlue && look === 'frame', 'Голубая обводка без фона', 'data-look="frame"' + ld) + `</div>`;
     lookCard.hidden = true;
     // shadow: a double switch on its own card; only the white background takes a shadow
     const br = state.sh === 'bright';
@@ -827,6 +841,13 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
     if (r.dataset.v !== state.v.id) reset({ v: VARIANTS.find(x => x.id === r.dataset.v) });
   }));
   othHead.addEventListener('click', (e) => {
+    const shadow = e.target.closest('[data-sh]');
+    if (shadow) {
+      state.sh = shadow.dataset.sh;
+      render();
+      othHead.querySelector(`[data-sh="${state.sh}"]`).focus({ preventScroll: true });
+      return;
+    }
     const r = e.target.closest('[data-a]');
     if (!r || r.disabled) return;
     state.align = ALIGNS.find(x => x.id === r.dataset.a);
@@ -838,12 +859,7 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
     if (!t || t.disabled || t.dataset.v) return; // «Цветная линия» itself is handled by the variant radios
     const wasBlue = state.v.id === 'blue-line';
     if (!wasBlue) reset({ v: VARIANTS.find(x => x.id === 'blue-line') }); // a hover look belongs to «Цветная линия»
-    if (t && t.dataset.look) { const l = t.dataset.look; state.bg = l === 'blue' ? 'blue' : 'none'; state.frame = l === 'thin' ? 'thin' : l !== 'white'; }
-    else if (t && t.dataset.shsw) { // always clickable: switches to «Белый фон»
-      const wasWhite = wasBlue && state.bg === 'none' && !state.frame;
-      state.sh = wasWhite && state.sh === 'bright' ? 'default' : 'bright';
-      state.bg = 'none'; state.frame = false;
-    }
+    if (t && t.dataset.look) { const l = t.dataset.look; state.bg = ['blue', 'grey'].includes(l) ? l : 'none'; state.frame = l === 'thin' ? 'thin' : ['blue', 'frame'].includes(l); }
     else return;
     state.mode = 'free'; state.open = false; // the hover looks are seen on the unpinned TOC
     render();
