@@ -22,7 +22,7 @@ html[data-sabydoc-full-window] #sabydoc-combined #sabydoc-toolbar { overflow:hid
 #sabydoc-combined > [hidden]{display:none!important}
 #sabydoc-combined #sabydoc-toolbar{display:block;position:relative;overflow:auto;scrollbar-width:thin}
 #sabydoc-preview .device-header{
-position:absolute;left:calc(1608px + var(--sx,0px));top:0;width:360px;height:60px;
+position:absolute;left:0;top:0;width:100%;height:60px;
 display:flex;flex-direction:column;gap:6px;border-radius:8px 8px 0 0;
 background:var(--background-background-color);font:400 14px/normal Inter,sans-serif;
 --background-background-color:#ffffff;
@@ -43,7 +43,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .df-devices{padding-top:8px}
 .df-size{font-variant-numeric:tabular-nums}
 }
-#sabydoc-preview .demo-switch{position:absolute;left:calc(1608px + var(--sx,0px));top:60px;width:360px;box-sizing:border-box}
+#sabydoc-preview .demo-switch{position:absolute;left:0;top:60px;width:100%;box-sizing:border-box}
 
 .demo-switch{padding:6px;background:#f2f2f2;font:400 14px/17px Inter,system-ui,sans-serif}
 .demo-switch .df-options{display:flex;flex-direction:column;gap:2px;padding:4px 6px;border-radius:8px;background:var(--background-background-color)}
@@ -58,7 +58,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; }
 .df-radio { display: flex; align-items: flex-start; text-align: left; }
 .df-radio__box { width: 20px; height: 24px; flex: none; display: flex; align-items: center; justify-content: center; }
-.df-radio__box::before { content: ""; width: 12px; height: 12px; border: 1px solid var(--border-unaccented_border-color); border-radius: 6px; }
+.df-radio__box::before { content: ""; box-sizing: border-box; width: 12px; height: 12px; border: 1px solid var(--border-unaccented_border-color); border-radius: 50%; }
 .df-radio.is-on .df-radio__box::before { border-color: var(--background-contrast-primary_color); background: var(--background-contrast-primary_color); box-shadow: inset 0 0 0 1px var(--background-background-color); } /* кольцо 1 + зазор 1 + точка 8 */
 .df-radio.is-on, .df-radio:disabled { cursor: default; }
 .df-radio__text { padding: 3px 0 4px; color: var(--components-toggle-text-color_switcher); white-space: nowrap; }
@@ -295,14 +295,21 @@ svg { display: block; }
 .ci.guides.l2::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 1px; background: var(--guide); }
 
 /* ---------- system area ---------- */
-.radios { position: absolute; left: calc(1614px + var(--sx, 0px)); width: 348px; padding: 6px; border-radius: 8px; background: var(--white); display: flex; flex-direction: column; isolation: isolate; }
+.radios { position: absolute; left: 6px; right: 6px; padding: 6px; border-radius: 8px; background: var(--white); display: flex; flex-direction: column; isolation: isolate; }
 .radios::before { content: ""; position: absolute; left: -6px; right: -6px; top: var(--panel-top, 50%); bottom: -6px; background: var(--panel); z-index: -1; }
 .radios::after { content: ""; position: absolute; inset: 0; border-radius: 8px; background: var(--white); z-index: -1; }
-.grp-head { display: flex; align-items: center; justify-content: space-between; padding-right: 8px !important; position: absolute; left: calc(1608px + var(--sx, 0px)); width: 360px; padding: 6px 12px 4px; background: var(--panel); font-size: 13px; line-height: 18px; text-transform: uppercase; color: var(--ink); }
+.grp-head { display: flex; align-items: center; justify-content: space-between; padding-right: 8px !important; position: absolute; left: 0; width: 100%; padding: 6px 12px 4px; background: var(--panel); font-size: 13px; line-height: 18px; text-transform: uppercase; color: var(--ink); }
 [hidden] { display: none !important; }
-.sysfill, #auxFooter { position: absolute; left: calc(1608px + var(--sx, 0px)); width: 360px; }
-.sysfill { background: var(--panel); }
-#auxFooter { height:115px; background-size:calc(1960px + var(--sx, 0px)) 1000px; background-position:right -785px; pointer-events:none; }
+.toc-aux {
+  --footer-height:91px;
+  --footer-top:max(var(--footer-min-top,0px),calc(var(--aux-height,900px) - var(--footer-height)));
+  position:absolute;left:calc(1608px + var(--sx,0px));top:0;width:360px;
+  height:max(900px,calc(var(--footer-top) + var(--footer-height)));background:var(--panel);border-radius:8px;
+}
+#auxFooter{position:absolute;top:var(--footer-top);inset-inline:6px;display:grid;gap:4px;padding:6px 0;font:14px/17px var(--font)}
+.toc-credit{display:grid;grid-template-columns:64px 1fr;align-items:end;gap:6px;margin:0;padding:6px 8px;border-radius:8px;background:var(--white)}
+.toc-credit dt{color:var(--label)}
+.toc-credit dd{margin:0}
 .radio { width: 100%; display: flex; align-items: center; height: 24px; font-size: 14px; line-height: 17px; color: var(--label); text-align: left; }
 .radio .dot { flex: 0 0 20px; }
 .cap { padding: 2px 6px 4px; font-size: 12px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--label); }
@@ -422,6 +429,7 @@ svg { display: block; }
     <img class="bg" id="bg" alt="Экран с открытой статьёй «Как нанять удаленного сотрудника»">
     <div class="doc" id="docBox"><div class="art" id="art"></div><div id="edTb" hidden></div><div class="guide" id="guide"></div><div id="toc"></div><div id="sticky" aria-hidden="true"></div><div id="cmds" aria-hidden="true"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAAC5ElEQVR4Xu2Zv48NURTHP0REiUKUKrSrEVR+JP4ADdGRLeyWS0Qo/UqISlSoFBqtRMGWsskG3YoCpShErZLvy7mbl8m8mXtm7tx58zKfZKu9b/d+5tw559zzdqyuPWWR2bnIcmIUHDpjBIfOGMGhM0Zw6Cx8BHfNUYT2AseAJWA/8Af4DHxos8d5EVwD7gO7S2R+AXeAF01E+xZU1N4CJ2zzH4EvFj1F8QJwEHgOXLd1fz2ifQpKTkJHYRKlyyXHcQU4Dby2dXoYJz2CfSWZotypindtHTgO/LYI6jhH04dgmdz3mh3/BC7amrsw+RtR5BZsIhdQJDeAPZZto8gp2EYuoLIhVEqiyCWYQk6oNop9UXaZbvSp5BqRI4I3pkqBsmVdQqnirP0yHNVactTB27YLdSJt5A5ZuVDNfFNrZuSIoJDkLLkzEZuVnDKoeBmxfptcgrNQTXsPlcU7yB0AvtrDiqYLwauR/11yiuw/mNS4MopyoWeNJrXgK2uMn9XsQOP0IKdNfypZXybnarRFKkGVAsmpYVYSeFwhqHWrFrlO5USKLOqpc+Eh6Fh2LpcignMt11Zw7uXaCKaWEzdhuxTo+LoTShlN3sEu5MQ1a6YfpZJrmmQ0NghjhqreUvMUZdWqhFIktHXJ8JYJFWcdH5WCusZZ/eLDimyZBa/gsu1KY7yYxvlWRRG/l8PQ8w5quqV+UNFrNKM0pjsUkfxYTuOJ4Dn7YPRdrIRi+6WE0ikewUBZ3xhDkt7Si0cw1CVt1EsvcsIjuGlWSv8eepPzCurdU03TXDJWslc5r6CO6BMLnW4FdUe1dzmvoFBd+2ZR3IKZt3fNWTRDCWOGZL2lF08dDJwH3gGH7fau7kYjhx82kFW9VCsnNEPpTU40EdQXIUeAB8AV+/7uUuHJ6l3Vrb7TIh5DE8GAjqt+lHCmvytQJNWHJrnutKWNYEAy0YPY3Hjq4CAZBYfOGMGhM0Zw6Cx8BP8Dilm/+NT/ziAAAAAASUVORK5CYII=" width="28" height="28" alt=""><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAACF0lEQVR4Xu2ZvUvlQBRHzxMRSyuxtBJLVyuxUhH0L7CwFITVUrYQWxFBSwtBS7G1tJLtFButtRC7XSzEehvlPjIQgm7e3JnMxyMHHoFA3uTkN3dmMulsbR/Tzwz0s5zQCuZOm2DutAnmTptg7rQJ5k6bYGDGgUfgBlj30XZKCYrcHTABzAJnwB/onleTiqCRG62YjAG3LpIpCH4nZxDJK22EsQXr5AyTwLZGMqZgr3KGvZwER4oBpVpz/2MYWLCVjJGgyMnAYSNn+JG6oJGTmrLlL3Bpe1HIBF3l5oDnVAWjyAmhErwAdbdUJWcIIXgOrNh2LejWnJNciARFbi2WXNOC0eWaFExCrilB+Zqj6Zb/fNRcFd+DjKwXtxQ1J3LyDmg9z9XhU1Dkdusa/AIjd6+4thZfgknK+apBrZwg3bKR5HxN9C5yG03LuSboKndaW0AecKnBX8r2Jbkgci4JTgFDxXrxwEI0qJyL4Ewh9QDsACc9SO6HTM51kFks/uC6OP4s9li+Q+Q0c6Qz2ho0Cf4u3cEy8PTFHUWT03ZReTuX7XXhrST0DqxCd2ViiConDCr6wHzpGtlxPoJuonK+vJkUXU4ruFQSFCH5SFLmtZA+VDw872gSnC7dhXRHGWjk91Icpasmg0ZQ1o4yURuppNEIbiZtVEEjWOUjsHDHpj3tPJgNPhK0eqKh6fsEW8HcaRPMnb5P8BNVD1uZBBX9CgAAAABJRU5ErkJggg==" width="28" height="28" alt=""><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAABWElEQVR4Xu2ZPUoEQRBGnyLiEQxNTU1UvIBHWM+gmanH8Az+nEC8gOIJxGQxFG+wmyjVdIPKOtHW11RTDxqGSZrH1zPDN7VxfnnNyGyOLGekYHQywehkgtHJBKOTCUZHleAe8AQs6rqBcs8dhaCJvAHHwHZdZ8CzQlIheFel/rILJUlXFIKHEwaWqisKwa4oBF8mDG+97RWCM+BzhcgHcDWC4DuU57Aluaxv0BNg7i245b1BxSSPRHv9QnFEu5KC0ckEo6NK8OBHm/iq10O1CWsOrU0Ydp1tYh0ojmi2CU8UCU61iQdPOUMhONUmLkYQbG3iEUqTGLZNnHqntQrFEe1KCkYnE4yOKsHWJqxJSNuE4qeT1SJrDjaXaFibeAX2oXwn3VAk+N9sYidnE2tAkWBXFII5m/BEkWBrE/d1CGODGJsqDTebsF4oR5FgV1IwOplgdDLB6HwDfhc59DaN7ncAAAAASUVORK5CYII=" width="28" height="28" alt=""></div></div>
     <button class="sd-edit" id="sdEdit" hidden aria-label="Изменить"></button>
+    <aside class="toc-aux" aria-label="Настройки демо">
     <div class="device-header"></div>
     <div class="demo-switch" role="radiogroup" aria-label="Демо"></div>
     <div class="grp-head" id="preHead"><span>Пресеты</span></div>
@@ -437,7 +445,6 @@ svg { display: block; }
     <div class="radios" id="othRadios" style="--panel-top:-6px" role="radiogroup" aria-label="Другие варианты оформления"></div>
     <div class="grp-head" id="ctxHead">Место открытия</div>
     <div class="radios" id="ctxRadios" style="--panel-top:-6px" role="radiogroup" aria-label="Место открытия"></div>
-    <div class="sysfill" id="sysFill"></div><div id="auxFooter" aria-hidden="true"></div>
     <div class="grp-head" id="wHead">Ширина статьи</div>
     <div class="radios seg" id="wRadios" style="--panel-top:-6px" role="radiogroup" aria-label="Ширина статьи"></div>
     <div class="grp-head" id="sideHead">Положение оглавления</div>
@@ -451,6 +458,11 @@ svg { display: block; }
     <div class="grp-head" id="tightHead">Отступы</div>
     <div class="radios" id="tightRadios" style="--panel-top:-6px" aria-label="Отступы"></div>
     <div class="radios" id="alRadios" style="--panel-top:-6px" aria-label="Заголовок оглавления"></div>
+    <footer id="auxFooter">
+      <dl class="toc-credit"><dt>Design:</dt><dd>Мингазова Алина</dd></dl>
+      <dl class="toc-credit"><dt>Develop:<br>web</dt><dd>Угриновский Назарий</dd></dl>
+    </footer>
+    </aside>
   </div>
 </div>
 
@@ -805,7 +817,6 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
     doc.dataset.ctl = ctl ? '1' : '0'; doc.dataset.bg = state.orig ? 'none' : state.bg; doc.dataset.sh = state.sh; // the shadow choice is shared by every variant and background
     if (v.kind === 'original') renderOriginal(v, g); else renderCompact(v, g);
     bg.src = c.sd && state.edit ? screens.screen5 : c.bg;
-    byId('auxFooter').style.backgroundImage = `url("${bg.src}")`;
     const ed = !!(c.sd && state.edit), edTb = byId('edTb'), sdEdit = byId('sdEdit');
     edTb.hidden = !ed; edTb.classList.toggle('pin', state.mode === 'pinned');
     sdEdit.hidden = !c.sd; sdEdit.classList.toggle('on', ed); sdEdit.setAttribute('aria-label', ed ? 'Сохранить' : 'Изменить');
@@ -1053,7 +1064,7 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
     const ctxSub = (c) => false ? `<div class="ctxsub"><button class="sw${state.tight ? ' on' : ''}" role="switch" aria-checked="${state.tight}"${offT ? ' disabled' : ''} data-t="1"><span class="swc">Отступы меньше</span><span class="swt"><i></i></span></button></div>` : '';
     ctxRadios.innerHTML = CONTEXTS.map(c => radio(c.id === state.ctx.id, c.label, `data-c="${c.id}"`) + ctxSub(c)).join('');
     // presets: the looks we consider good
-    preHead.style.top = '136px';
+    preHead.style.top = (modePicker.offsetTop + Math.max(70, modePicker.offsetHeight) + 6) + 'px';
     preCard.innerHTML = `<div class="pre-grid">${PRESETS.map(pr => {
       const on = presetOn(pr);
       const preview = pr.cfg
@@ -1092,13 +1103,7 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
     sideHead.style.top = (b1 + 4) + 'px';
     sideRadios.style.top = (b1 + 4 + sideHead.offsetHeight) + 'px';
     const b2 = sideRadios.offsetTop + sideRadios.offsetHeight;
-    // with the block hidden the grey of the system area is continued down to its end
-    const fill = byId('sysFill');
-    const fillTop = Math.min(b2, 785);
-    const footerTop = Math.max(785, b2 + 6);
-    fill.style.top = fillTop + 'px';
-    fill.style.height = (footerTop - fillTop) + 'px';
-    byId('auxFooter').style.top = footerTop + 'px';
+    auxPanel.style.setProperty('--footer-min-top', (b2 + 6) + 'px');
   }
 
   function switchContext(context) {
@@ -1199,6 +1204,8 @@ BODY['Какую подпись выбрать'] = `<p>Для приема на 
 
 const vp = byId('viewport');
 const stage = byId('stage');
+const auxPanel = root.querySelector('.toc-aux');
+const modePicker = auxPanel.querySelector('.demo-switch');
 const fullWindow = document.documentElement.hasAttribute('data-sabydoc-full-window');
 let sx = 0;
 
@@ -1206,10 +1213,12 @@ function fit() {
   if (!vp.clientWidth) return;
   const scale = vp.clientWidth / (1968 + sx);
   stage.style.zoom = scale;
-  if (!fullWindow) vp.style.height = Math.ceil(1000 * scale) + 'px';
+  if (fullWindow) auxPanel.style.setProperty('--aux-height', vp.clientHeight / scale + 'px');
+  else vp.style.height = Math.ceil(1000 * scale) + 'px';
 }
 
 new ResizeObserver(fit).observe(vp);
+new ResizeObserver(() => { if (modePicker.offsetHeight) renderRadios(); }).observe(modePicker);
 fit();
 
   render();
@@ -1292,7 +1301,7 @@ fit();
 .df-radio { display: flex; align-items: flex-start; text-align: left; }
 .df-sub { display: flex; flex-direction: column; gap: 2px; padding-left: 16px; } /* вилка: подсценарии с отступом 16 */
 .df-radio__box { width: 20px; height: 24px; flex: none; display: flex; align-items: center; justify-content: center; }
-.df-radio__box::before { content: ""; width: 12px; height: 12px; border: 1px solid var(--border-unaccented_border-color); border-radius: 6px; }
+.df-radio__box::before { content: ""; box-sizing: border-box; width: 12px; height: 12px; border: 1px solid var(--border-unaccented_border-color); border-radius: 50%; }
 .df-radio.is-on .df-radio__box::before { border-color: var(--background-contrast-primary_color); background: var(--background-contrast-primary_color); box-shadow: inset 0 0 0 1px var(--background-background-color); } /* кольцо 1 + зазор 1 + точка 8 */
 .df-radio.is-on, .df-radio:disabled { cursor: default; }
 .df-radio__text { padding: 3px 0 4px; color: var(--components-toggle-text-color_switcher); white-space: nowrap; }
