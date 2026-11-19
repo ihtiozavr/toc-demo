@@ -2267,6 +2267,8 @@ svg{ display: block}
 .opt .oc{ font-size: 12px;line-height: 13px;color: var(--label);text-align: center}
 .opt.on .oc{ color: var(--ink)}
 .srow{ display: flex;align-items: flex-start;gap: 6px;padding: 2px 0}
+#setCard{ display: grid;grid-template-columns: max-content minmax(0, 1fr);column-gap: 8px}
+#setCard &gt; .srow{ display: grid;grid-column: 1 / -1;grid-template-columns: subgrid;column-gap: inherit;justify-items: start}
 .srow + .srow{ margin-top: 4px}
 .srow .sl{ flex: 0 0 106px;padding: 6px 0 0 2px;font-size: 13px;line-height: 16px;color: var(--ink);white-space: nowrap}
 .ctxsub{ padding: 0 0 2px 20px}
