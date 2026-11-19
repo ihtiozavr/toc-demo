@@ -2119,6 +2119,7 @@ svg{ display: block}
 .ci.src.on .slot i{ background: var(--dash-on, var(--brand))}
 #toc.vw .ci.src.on .slot i{ background: var(--dash-on, var(--live-marker))}
 #toc.cmp:is(.sd,.sd-right,.kb-panel) .ci{ font-size: 16px;line-height: 19.5px}
+#toc.cmp:is(.sd,.sd-right)[data-original-heading-sizes] .ci:not(.l1){ font-size: 14px;line-height: 17px}
 #toc.cmp:is(.sd,.sd-right) .ci.src{ border-radius: var(--document-radius)}
 #toc.cmp:is(.sd,.kb-panel):not(.white-outline) .ci .cnt{ --text-inset: 1px;column-gap: 0}
 #toc.cmp:is(.sd,.kb-panel):not(.white-outline) .ci.src .cnt{ --text-inset: 5px}
@@ -2464,7 +2465,7 @@ svg{ display: block}
     { id: &#x27;base&#x27;, label: &#x27;«Оглавление» на базовой линии&#x27;, btn: 0, dash: 0 },
     { id: &#x27;item&#x27;, label: &#x27;Без заголовка&#x27;, btn: 0, dash: 0 }
   ];
-  const state = { ctx: CONTEXTS[0], width: &#x27;normal&#x27;, side: &#x27;left&#x27;, mode: &#x27;pinned&#x27;, open: false, trigger: &#x27;lines&#x27;, kbTab: &#x27;doc&#x27;, lc: false, active: 0, align: ALIGNS[1], tight: false, bg: &#x27;grey&#x27;, sh: &#x27;default&#x27;, edit: false, sabyTitle: false, orig: false, mlen: &#x27;none&#x27;, mcol: &#x27;grey&#x27;, presetMcol: &#x27;grey&#x27;, fill: true, pale: true, slab: false, rail: false, arrowSide: &#x27;left&#x27;, pinPreference: null };
+  const state = { ctx: CONTEXTS[0], width: &#x27;normal&#x27;, side: &#x27;left&#x27;, mode: &#x27;pinned&#x27;, open: false, trigger: &#x27;lines&#x27;, kbTab: &#x27;doc&#x27;, lc: false, active: 0, align: ALIGNS[1], tight: false, bg: &#x27;grey&#x27;, sh: &#x27;default&#x27;, edit: false, sabyTitle: false, orig: false, mlen: &#x27;none&#x27;, mcol: &#x27;grey&#x27;, presetMcol: &#x27;grey&#x27;, fill: true, pale: true, slab: false, rail: false, arrowSide: &#x27;left&#x27;, pinPreference: null, equalHeadingSizes: true };
   const craft = () =&gt; !state.orig &amp;&amp; state.pale;
   const canPin = () =&gt; !state.ctx.noPin || (craft() &amp;&amp; !state.ctx.static);
   const syncPinMode = defaultPinned =&gt; {
@@ -2739,6 +2740,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     doc.classList.toggle(&#x27;sd&#x27;, Boolean(sabyLeft()));
     doc.classList.toggle(&#x27;sd-right&#x27;, Boolean(sabyRight()));
     doc.toggleAttribute(&#x27;data-edit&#x27;, Boolean(c.sd &amp;&amp; state.edit));
+    doc.toggleAttribute(&#x27;data-original-heading-sizes&#x27;, c.sd &amp;&amp; !state.orig &amp;&amp; !state.equalHeadingSizes);
     doc.classList.toggle(&#x27;sdorange&#x27;, sdOrange);
     doc.classList.toggle(&#x27;rail&#x27;, linePreset());
     doc.dataset.markerLength = state.mlen;
@@ -3013,14 +3015,17 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     { id: &#x27;rail&#x27;, label: &#x27;С линией&#x27;, cfg: { slab: true, rail: true, fill: false, mlen: &#x27;short&#x27;, bg: &#x27;none&#x27;, mcol: &#x27;orange&#x27; } }
   ];
   const preCfg = (pr, mcol) =&gt; ({ pale: false, slab: false, rail: false, mcol: pr.id === &#x27;slab&#x27; ? mcol : &#x27;grey&#x27;, ...pr.cfg });
-  const cur = () =&gt; ({ title: titleVisible(), sh: state.sh, bg: state.bg, mlen: state.mlen, mcol: state.mcol, fill: state.fill, pale: state.pale, slab: state.slab, rail: state.rail, arrowSide: state.arrowSide });
-  const SETTINGS = () =&gt; craft() ? [] : [
-    ...(!greySaby() &amp;&amp; !slabDoc() ? [{ key: &#x27;title&#x27;, label: &#x27;Заголовок&#x27;, sw: true }] : []),
-    { key: &#x27;fill&#x27;, label: &#x27;Заливка пункта&#x27;, sw: true },
-    ...(!slabDoc() ? [{ key: &#x27;sh&#x27;, label: &#x27;Тень&#x27;, opts: [[&#x27;default&#x27;, &#x27;Мягкая&#x27;], [&#x27;bright&#x27;, &#x27;Яркая&#x27;], [&#x27;saby&#x27;, &#x27;SabyDoc&#x27;], [&#x27;none&#x27;, &#x27;Нет&#x27;]] }] : []),
-    { key: &#x27;mlen&#x27;, label: &#x27;Маркер&#x27;, opts: [[&#x27;none&#x27;, &#x27;Нет&#x27;], [&#x27;long&#x27;, &#x27;Длинный&#x27;], [&#x27;short&#x27;, &#x27;Короткий&#x27;]] },
-    { key: &#x27;mcol&#x27;, label: &#x27;Цвет маркера&#x27;, opts: [[&#x27;grey&#x27;, &#x27;Серый&#x27;], [&#x27;orange&#x27;, &#x27;Рыжий&#x27;]], dim: state.mlen === &#x27;none&#x27; },
-    ...(slabDoc() ? [{ key: &#x27;arrowSide&#x27;, label: &#x27;Стрелки&#x27;, opts: [[&#x27;left&#x27;, &#x27;Слева&#x27;], [&#x27;right&#x27;, &#x27;Справа&#x27;]] }] : [])
+  const cur = () =&gt; ({ title: titleVisible(), sh: state.sh, bg: state.bg, mlen: state.mlen, mcol: state.mcol, fill: state.fill, pale: state.pale, slab: state.slab, rail: state.rail, arrowSide: state.arrowSide, equalHeadingSizes: state.equalHeadingSizes });
+  const SETTINGS = () =&gt; [
+    ...(craft() ? [] : [
+      ...(!greySaby() &amp;&amp; !slabDoc() ? [{ key: &#x27;title&#x27;, label: &#x27;Заголовок&#x27;, sw: true }] : []),
+      { key: &#x27;fill&#x27;, label: &#x27;Заливка пункта&#x27;, sw: true },
+      ...(!slabDoc() ? [{ key: &#x27;sh&#x27;, label: &#x27;Тень&#x27;, opts: [[&#x27;default&#x27;, &#x27;Мягкая&#x27;], [&#x27;bright&#x27;, &#x27;Яркая&#x27;], [&#x27;saby&#x27;, &#x27;SabyDoc&#x27;], [&#x27;none&#x27;, &#x27;Нет&#x27;]] }] : []),
+      { key: &#x27;mlen&#x27;, label: &#x27;Маркер&#x27;, opts: [[&#x27;none&#x27;, &#x27;Нет&#x27;], [&#x27;long&#x27;, &#x27;Длинный&#x27;], [&#x27;short&#x27;, &#x27;Короткий&#x27;]] },
+      { key: &#x27;mcol&#x27;, label: &#x27;Цвет маркера&#x27;, opts: [[&#x27;grey&#x27;, &#x27;Серый&#x27;], [&#x27;orange&#x27;, &#x27;Рыжий&#x27;]], dim: state.mlen === &#x27;none&#x27; },
+      ...(slabDoc() ? [{ key: &#x27;arrowSide&#x27;, label: &#x27;Стрелки&#x27;, opts: [[&#x27;left&#x27;, &#x27;Слева&#x27;], [&#x27;right&#x27;, &#x27;Справа&#x27;]] }] : []),
+    ]),
+    ...(state.ctx.sd &amp;&amp; !state.orig ? [{ key: &#x27;equalHeadingSizes&#x27;, label: &#x27;Одинаковые размеры&#x27;, sw: true }] : [])
   ];
   const backgroundColor = (bg) =&gt; bg === &#x27;none&#x27; ? &#x27;var(--white)&#x27; : sabyLeft() ? (state.edit ? &#x27;var(--sd-edit-frame)&#x27; : &#x27;#f8f8f8&#x27;) : &#x27;var(--bg-grey)&#x27;;
   function mini(bg, width, height) {
@@ -3175,6 +3180,13 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
   setCard.addEventListener(&#x27;click&#x27;, (e) =&gt; {
     const b = e.target.closest(&#x27;[data-set]&#x27;); if (!b || b.disabled) return;
     const k = b.dataset.set, val = JSON.parse(b.dataset.val);
+    if (k === &#x27;equalHeadingSizes&#x27;) {
+      state.equalHeadingSizes = val;
+      const restoreFocus = document.activeElement === b;
+      render();
+      if (restoreFocus) setCard.querySelector(&#x27;[data-set=&quot;equalHeadingSizes&quot;]&#x27;)?.focus({ preventScroll: true });
+      return;
+    }
     if (k === &#x27;title&#x27;) {
       if (state.ctx.sd) state.sabyTitle = val;
       else state.align = ALIGNS.find(a =&gt; a.id === (val ? &#x27;base&#x27; : &#x27;item&#x27;));
