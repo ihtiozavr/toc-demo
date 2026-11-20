@@ -1869,7 +1869,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 #sabydoc-preview .demo-switch{position:absolute;left:0;top:60px;width:100%;box-sizing:border-box}
 .demo-switch{padding:6px;background:#f2f2f2;font:400 14px/17px Inter,system-ui,sans-serif}
-.demo-switch .df-options{display:flex;flex-direction:column;gap:2px;padding:4px 6px;border-radius:8px;background:var(--background-background-color)}
+.demo-switch .df-options{display:flex;flex-direction:row;gap:18px;padding:4px 6px;border-radius:8px;background:var(--background-background-color)}
 #sabydoc-preview .demo-switch {
 --background-background-color:#ffffff;
 --border-unaccented_border-color:#d2d6da;
@@ -2048,15 +2048,6 @@ svg{ display: block}
 #toc.cmp .head .btn svg{ display:block;width:24px;height:24px}
 .ttl{ position: relative;top: 2px;margin-right: auto;font-size: 12px;line-height: 24px;font-weight: 400;text-transform: uppercase;letter-spacing: 0.02em;color: var(--label);white-space: nowrap}
 .list{ display: flex;flex-direction: column}
-#toc.rail{ --rail-start:7px;--rail-radius:12px}
-#toc.sd.rail{ --rail-start:6px}
-.rail-frame, #toc.rail .ci.on::before{ position:absolute;pointer-events:none}
-.rail-frame{ z-index:1;box-shadow:inset 0 0 0 1px var(--border-pale_border-color)}
-#toc.rail .pinned-card &gt; .rail-frame{ opacity:.35;background:var(--border-pale_border-color);box-shadow:none}
-#toc.rail .ci.on::before{ content:&#x27;&#x27;;top:var(--rail-start);left:var(--rail-marker-left);width:2px;height:16px;z-index:2;background:var(--dash-on)}
-#toc.rail[data-marker-length=&quot;none&quot;] .ci.on::before{ content:none}
-#toc.rail[data-marker-length=&quot;long&quot;] .ci.on::before{ height:auto;bottom:var(--rail-start)}
-#toc.rail[data-marker-length=&quot;long&quot;] .pinned-card .ci.on:last-child::before{ bottom:calc(var(--rail-radius) - 4px)}
 #toc.cmp:is(.kb,.white-outline) .head:has(.btn) + .list{ margin-top: 4px}
 .oi{ position: relative;display: flex;align-items: center;min-height: 31px;padding: 6px 8px 6px var(--pl);border-radius: 4px;cursor: pointer;
   font-size: 14px;line-height: 17px;color: var(--label)}
@@ -2076,7 +2067,7 @@ svg{ display: block}
 .sd-pin{ margin-left: auto;margin-right: 4px}
 #toc.sd .card{ padding-top: 0 !important}
 .sd-document-heading{ position:absolute;width:580px;height:46px;display:flex;align-items:center;gap:12px;font:400 16px/20px var(--font);color:var(--ink)}
-#toc.sdorange .ci.mono.blueline.all:not(.on) .mk{ background: #e0e0e0}
+#toc.sdorange:not(.blue-line) .ci.mono.blueline.all:not(.on) .mk{ background: #e0e0e0}
 #toc.sd:not(.white-outline) .card &gt; .head{ height: 40px !important;padding-top: 0 !important;padding-bottom: 0 !important;margin-top: 0 !important;margin-bottom: 4px !important;align-items: center}
 #toc.sd .card &gt; .head .ttl, #toc.sd .card &gt; .head .ttl-live{ position: relative;top: 2px}
 #toc.sd:not(.white-outline) .card &gt; .head &gt; *, #toc.sd .card &gt; .head .sd-pin{ align-self: center}
@@ -2118,8 +2109,8 @@ svg{ display: block}
 #toc:is(.pale-fill,.white-doc) .ci.src:is(:hover,.on){ background: var(--background-contrast-pale_color)}
 .ci.src.on .slot i{ background: var(--dash-on, var(--brand))}
 #toc.vw .ci.src.on .slot i{ background: var(--dash-on, var(--live-marker))}
-#toc.cmp:is(.sd,.sd-right,.kb-panel) .ci{ font-size: 16px;line-height: 19.5px}
-#toc.cmp:is(.sd,.sd-right)[data-original-heading-sizes] .ci:not(.l1){ font-size: 14px;line-height: 17px}
+#toc.cmp:is(.sd,.sd-right,.sd-blue,.kb-panel) .ci{ font-size: 16px;line-height: 19.5px}
+#toc.cmp:is(.sd,.sd-right,.sd-blue)[data-original-heading-sizes] .ci:not(.l1){ font-size: 14px;line-height: 17px}
 #toc.cmp:is(.sd,.sd-right) .ci.src{ border-radius: var(--document-radius)}
 #toc.cmp:is(.sd,.kb-panel):not(.white-outline) .ci .cnt{ --text-inset: 1px;column-gap: 0}
 #toc.cmp:is(.sd,.kb-panel):not(.white-outline) .ci.src .cnt{ --text-inset: 5px}
@@ -2150,13 +2141,28 @@ svg{ display: block}
 #toc.cmp.pale-fill .ci:not(.on) .tx, #toc.cmp.white-doc .ci.src:not(.on) .tx{ color:var(--icon-secondary_icon-color);opacity:1}
 #toc.cmp:is(.kb,.sd,.sd-right,.vw) .ci:not(.src,.on,:hover) .tx{ color:var(--icon-secondary_icon-color);opacity:.85}
 #toc.cmp[data-text] .ci:not(.src,.on):hover .tx{ color:var(--text-label_contrast_text-color);opacity:1}
-#toc.cmp.rail[data-text] .ci:not(.on):hover .tx{ color:var(--text-text-color);opacity:1}
-.ci.mono.blueline.all .mk{ background: var(--selected)}
+#toc.cmp.blue-grey[data-text] .ci:not(.on):hover .tx{ color:var(--text-text-color);opacity:1}
+#toc.cmp.black-text[data-text] .ci .tx{ color:var(--ink);opacity:1}
+#toc.cmp.black-text[data-text] .ci:hover .tx{ color:#575757}
+#toc.sd-blue{letter-spacing:normal}
+#toc.blue-fill .ci:is(.on,:hover){background:var(--line-fill,var(--selected))}
+#toc.blue-fill .ci.ln .mk{left:0}
+#toc[data-neutral-line]{--line-fill:var(--background-contrast-pale_color);--line-track:color-mix(in srgb,var(--border-pale_border-color) 35%,transparent)}
+#toc.blue-line .head.left{gap:4px}
+
+#toc.sd-blue .head:has(.btn) + .list{margin-top:4px}
+#toc.sd-blue .pinned-card{background:transparent}
+#toc.blue-line .card:not(.pinned-card){border-radius:12px}
+#toc.blue-line .ci.mono.fill.on .mk::after{border-radius:2px}
+#toc.blue-line .ci.mono.on:not(.fill) .mk{background:transparent}
+#toc.blue-line .ci.mono.all.on:not(.fill) .mk{background:var(--line-track,var(--selected));clip-path:none;flex-basis:2px;margin-right:1px}
+#toc.blue-line .ci.mono.on:not(.fill) .mk::after{content:&quot;&quot;;position:absolute;inset:0;border-radius:2px;background:var(--dash-on,var(--secondary-border))}
+.ci.mono.blueline.all .mk{background:var(--line-track,var(--selected))}
 .ci.mono.on .mk{ background: var(--dark-marker)}
 .ci.ln .mk{ position: relative;left: var(--edge-marker-x, -4px)}
 .ci.mono.blueline.on .mk{ background: var(--dash-on, var(--secondary-border))}
 .ci.mono.fill.on .mk{ background: transparent}
-.ci.mono.fill.all.on .mk{ background: var(--selected)}
+.ci.mono.fill.all.on .mk{background:var(--line-track,var(--selected))}
 .ci.mono.fill.all.on:first-child .mk{ -webkit-mask: linear-gradient(to bottom, transparent 6px, #000 6px);mask: linear-gradient(to bottom, transparent 6px, #000 6px)}
 #toc.pale-fill .ci.mono.on:not(.fill) .mk{ background:var(--dash-on)}
 #toc.pale-fill .ci.mono.blueline.all .mk{ background:var(--border-unaccented_border-color)}
@@ -2166,9 +2172,14 @@ svg{ display: block}
 .radios::before{ content: &quot;&quot;;position: absolute;left: -6px;right: -6px;top: var(--panel-top, 50%);bottom: -6px;background: var(--panel);z-index: -1}
 .radios::after{ content: &quot;&quot;;position: absolute;inset: 0;border-radius: 8px;background: var(--white);z-index: -1}
 .grp-head{ display: flex;align-items: center;justify-content: space-between;padding-right: 8px !important;position: absolute;left: 0;width: 100%;padding: 6px 12px 4px;background: var(--panel);font-size: 13px;line-height: 18px;text-transform: uppercase;color: var(--ink)}
-#setHead::after{ content:&quot;&quot;;width:7px;height:7px;border:solid var(--label);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin-right:6px}
-#setHead[aria-expanded=&quot;true&quot;]::after{ transform:rotate(225deg)}
-#setHead:focus-visible{ outline:2px solid var(--brand);outline-offset:-2px}
+.settings-toggle{align-self:center;width:48px;height:20px;padding:0;border:0;background:transparent no-repeat center;cursor:pointer}
+#setHead{margin-top:4px}
+.settings-toggle:focus-visible{outline:2px solid var(--brand);outline-offset:-2px;border-radius:5px}
+#preCard &gt; #setCard,#preCard &gt; #levelCard{padding-top:8px}
+#setHead{background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAzMiAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAgNUMwIDIuMjM4NTggMi4yMzg1OCAwIDUgMEgyN0MyOS43NjE0IDAgMzIgMi4yMzg1OCAzMiA1VjVDMzIgNy43NjE0MiAyOS43NjE0IDEwIDI3IDEwSDVDMi4yMzg1OCAxMCAwIDcuNzYxNDIgMCA1VjVaIiBmaWxsPSIjMzMzMzMzIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPHBhdGggZD0iTTkgNi41QzkuODI4NDUgNi41IDEwLjUgNS44Mjg0MyAxMC41IDVDMTAuNSA0LjE3MTU3IDkuODI4NDUgMy41IDkgMy41QzguMTcxNTcgMy41IDcuNSA0LjE3MTU3IDcuNSA1QzcuNSA1LjgyODQzIDguMTcxNTcgNi41IDkgNi41WiIgZmlsbD0iIzg5OTFBOSIvPgo8cGF0aCBkPSJNMTYgNi41QzE2LjgyODQgNi41IDE3LjUgNS44Mjg0MyAxNy41IDVDMTcuNSA0LjE3MTU3IDE2LjgyODQgMy41IDE2IDMuNUMxNS4xNzE2IDMuNSAxNC41IDQuMTcxNTcgMTQuNSA1QzE0LjUgNS44Mjg0MyAxNS4xNzE2IDYuNSAxNiA2LjVaIiBmaWxsPSIjODk5MUE5Ii8+CjxwYXRoIGQ9Ik0yMyA2LjVDMjMuODI4NCA2LjUgMjQuNSA1LjgyODQzIDI0LjUgNUMyNC41IDQuMTcxNTcgMjMuODI4NCAzLjUgMjMgMy41QzIyLjE3MTYgMy41IDIxLjUgNC4xNzE1NyAyMS41IDVDMjEuNSA1LjgyODQzIDIyLjE3MTYgNi41IDIzIDYuNVoiIGZpbGw9IiM4OTkxQTkiLz4KPC9zdmc+Cg==)}
+#setHead:hover{background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAzMiAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAgNUMwIDIuMjM4NTggMi4yMzg1OCAwIDUgMEgyN0MyOS43NjE0IDAgMzIgMi4yMzg1OCAzMiA1QzMyIDcuNzYxNDIgMjkuNzYxNCAxMCAyNyAxMEg1QzIuMjM4NTggMTAgMCA3Ljc2MTQyIDAgNVoiIGZpbGw9IiMzMzMzMzMiIGZpbGwtb3BhY2l0eT0iMC4xIi8+CjxwYXRoIGQ9Ik05IDYuNUM5LjgyODQ1IDYuNSAxMC41IDUuODI4NDMgMTAuNSA1QzEwLjUgNC4xNzE1NyA5LjgyODQ1IDMuNSA5IDMuNUM4LjE3MTU3IDMuNSA3LjUgNC4xNzE1NyA3LjUgNUM3LjUgNS44Mjg0MyA4LjE3MTU3IDYuNSA5IDYuNVoiIGZpbGw9IiMzMTNFNzgiLz4KPHBhdGggZD0iTTE2IDYuNUMxNi44Mjg0IDYuNSAxNy41IDUuODI4NDMgMTcuNSA1QzE3LjUgNC4xNzE1NyAxNi44Mjg0IDMuNSAxNiAzLjVDMTUuMTcxNiAzLjUgMTQuNSA0LjE3MTU3IDE0LjUgNUMxNC41IDUuODI4NDMgMTUuMTcxNiA2LjUgMTYgNi41WiIgZmlsbD0iIzMxM0U3OCIvPgo8cGF0aCBkPSJNMjMgNi41QzIzLjgyODQgNi41IDI0LjUgNS44Mjg0MyAyNC41IDVDMjQuNSA0LjE3MTU3IDIzLjgyODQgMy41IDIzIDMuNUMyMi4xNzE2IDMuNSAyMS41IDQuMTcxNTcgMjEuNSA1QzIxLjUgNS44Mjg0MyAyMi4xNzE2IDYuNSAyMyA2LjVaIiBmaWxsPSIjMzEzRTc4Ii8+Cjwvc3ZnPgo=)}
+#setClose{background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAzMiAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAgNUMwIDIuMjM4NTggMi4yMzg1OCAwIDUgMEgyN0MyOS43NjE0IDAgMzIgMi4yMzg1OCAzMiA1VjVDMzIgNy43NjE0MiAyOS43NjE0IDEwIDI3IDEwSDVDMi4yMzg1OCAxMCAwIDcuNzYxNDIgMCA1VjVaIiBmaWxsPSIjMzMzMzMzIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPHBhdGggZD0iTTIzLjA4MzMgNy41TDE2IDMuNDE2NjdMOC45MTY2NyA3LjVMOC41IDYuNzVMMTYgMi41TDIzLjUgNi43NUwyMy4wODMzIDcuNVoiIGZpbGw9IiM4OTkxQTkiLz4KPC9zdmc+Cg==)}
+#setClose:hover{background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAzMiAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAgNUMwIDIuMjM4NTggMi4yMzg1OCAwIDUgMEgyN0MyOS43NjE0IDAgMzIgMi4yMzg1OCAzMiA1VjVDMzIgNy43NjE0MiAyOS43NjE0IDEwIDI3IDEwSDVDMi4yMzg1OCAxMCAwIDcuNzYxNDIgMCA1VjVaIiBmaWxsPSIjMzMzMzMzIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8cGF0aCBkPSJNMjMuMDgzMyA3LjVMMTYgMy40MTY2N0w4LjkxNjY3IDcuNUw4LjUgNi43NUwxNiAyLjVMMjMuNSA2Ljc1TDIzLjA4MzMgNy41WiIgZmlsbD0iIzMxM0U3OCIvPgo8L3N2Zz4K)}
 [hidden]{ display: none !important}
 .toc-aux{
   --footer-height:91px;
@@ -2245,17 +2256,17 @@ svg{ display: block}
 #toc .card{ box-shadow: var(--ctl-sh, var(--card-shadow)) !important}
 #toc.white-outline .card{ --pin-inset:7.5px;padding:4px !important}
 #toc.white-outline .ci .cnt{ --text-inset:calc(var(--pin-inset) - 3px);padding-right:var(--pin-inset)}
-#toc:is(.white-outline,.rail) .card:not(.pinned-card){ border-radius:var(--rail-radius,12px)}
-#toc.white-outline:not(.rail) .card:not(.pinned-card){ --ctl-sh:inset 0 0 0 1px var(--border-pale_border-color), var(--card-shadow)}
+#toc.white-outline .card:not(.pinned-card){border-radius:12px;--ctl-sh:inset 0 0 0 1px color-mix(in srgb,var(--border-pale_border-color) 70%,transparent)}
 #toc.cmp[data-bg=&quot;grey&quot;] .card:not(.pinned-card){ --ctl-sh:none}
 #toc[data-bg=&quot;grey&quot;]{ --ctl-bg: var(--bg-grey)}
 #toc.sd[data-bg=&quot;grey&quot;]{ --ctl-bg: #f8f8f8}
 #toc.sd[data-bg=&quot;grey&quot;][data-edit]{ --ctl-bg: var(--sd-edit-frame)}
-#toc.sdorange .ci.mono.blueline.fill.all.on .mk{ background: #e0e0e0}
+#toc.sdorange:not(.blue-line) .ci.mono.blueline.fill.all.on .mk{ background: #e0e0e0}
 #toc[data-sh=&quot;bright&quot;]{ --ctl-sh: var(--shadow-sliding)}
 #toc[data-sh=&quot;saby&quot;]{ --ctl-sh: var(--shadow-saby)}
 #toc[data-sh=&quot;none&quot;]{ --ctl-sh: 0 0 0 0 transparent}
 .pre-grid{ display: grid;grid-template-columns: repeat(4, 1fr);gap: 6px;padding: 2px 0 0}
+.pre-grid [data-pre=&quot;blue-line&quot;] .thc::before{ content:&quot;&quot;;position:absolute;left:4px;top:6px;bottom:5px;width:2px;background:linear-gradient(var(--secondary-border) 40%,var(--selected) 40%)}
 .opt{ display: flex;flex-direction: column;align-items: center;gap: 3px;padding: 0;cursor: pointer}
 .opt .th{ position: relative;display: block;border-radius: 6px;background: #e8eaee;box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .04)}
 .opt .thc{ position: absolute;display: block;border-radius: 4px;overflow: hidden}
@@ -2289,7 +2300,7 @@ svg{ display: block}
 .ci.src.longmk .slot{ display: flex;padding-top: 0}
 .ci.src.longmk .slot i{ height: auto;flex: 1;border-radius: 2px}
 @media (prefers-reduced-motion: reduce){ .card, .card.open{ transition: none}}
-.viewport{ height: 526px;background: var(--page);scrollbar-width: thin}
+.viewport{height:526px;background:var(--page);scrollbar-width:thin;scrollbar-gutter:stable}
   [hidden]{ display: none !important}
 }
 &lt;/style&gt;
@@ -2312,10 +2323,16 @@ svg{ display: block}
     &lt;aside class=&quot;toc-aux&quot; aria-label=&quot;Настройки демо&quot;&gt;
     &lt;div class=&quot;device-header&quot;&gt;&lt;/div&gt;
     &lt;div class=&quot;demo-switch&quot; role=&quot;radiogroup&quot; aria-label=&quot;Демо&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;grp-head&quot; id=&quot;ctxHead&quot;&gt;Место открытия&lt;/div&gt;
+    &lt;div class=&quot;radios&quot; id=&quot;ctxRadios&quot; style=&quot;--panel-top:-6px&quot; role=&quot;radiogroup&quot; aria-label=&quot;Место открытия&quot;&gt;&lt;/div&gt;
     &lt;div class=&quot;grp-head&quot; id=&quot;preHead&quot;&gt;&lt;span&gt;Пресеты&lt;/span&gt;&lt;/div&gt;
-    &lt;div class=&quot;radios&quot; id=&quot;preCard&quot; style=&quot;--panel-top:-6px&quot; role=&quot;radiogroup&quot; aria-label=&quot;Пресеты&quot;&gt;&lt;/div&gt;
-    &lt;button class=&quot;grp-head&quot; id=&quot;setHead&quot; type=&quot;button&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;setCard&quot;&gt;Настройки&lt;/button&gt;
-    &lt;div class=&quot;radios&quot; id=&quot;setCard&quot; style=&quot;--panel-top:-6px&quot; aria-labelledby=&quot;setHead&quot; hidden&gt;&lt;/div&gt;
+    &lt;div class=&quot;radios&quot; id=&quot;preCard&quot; style=&quot;--panel-top:-6px&quot;&gt;
+      &lt;div class=&quot;pre-grid&quot; role=&quot;radiogroup&quot; aria-label=&quot;Пресеты&quot;&gt;&lt;/div&gt;
+      &lt;button class=&quot;settings-toggle&quot; id=&quot;setHead&quot; type=&quot;button&quot; aria-label=&quot;Настройки оформления&quot; title=&quot;Настройки оформления&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;setCard levelCard&quot; hidden&gt;&lt;/button&gt;
+      &lt;div id=&quot;setCard&quot; role=&quot;group&quot; aria-label=&quot;Настройки оформления&quot; hidden&gt;&lt;/div&gt;
+      &lt;div id=&quot;levelCard&quot; hidden&gt;&lt;/div&gt;
+      &lt;button class=&quot;settings-toggle&quot; id=&quot;setClose&quot; type=&quot;button&quot; aria-label=&quot;Свернуть настройки оформления&quot; title=&quot;Свернуть настройки оформления&quot; aria-expanded=&quot;true&quot; aria-controls=&quot;setCard levelCard&quot; hidden&gt;&lt;/button&gt;
+    &lt;/div&gt;
     &lt;div class=&quot;radios&quot; id=&quot;radiosNow&quot; style=&quot;top:90px&quot; role=&quot;radiogroup&quot; aria-label=&quot;Как сейчас&quot;&gt;&lt;/div&gt;
     &lt;div class=&quot;grp-head&quot; id=&quot;blHead&quot;&gt;Цветная линия&lt;/div&gt;
     &lt;div class=&quot;radios&quot; id=&quot;radios&quot; style=&quot;--panel-top:-6px&quot; role=&quot;radiogroup&quot; aria-label=&quot;Вариант оглавления&quot;&gt;&lt;/div&gt;
@@ -2323,12 +2340,10 @@ svg{ display: block}
     &lt;div class=&quot;radios&quot; id=&quot;shCard&quot; style=&quot;--panel-top:-6px&quot;&gt;&lt;/div&gt;
     &lt;div class=&quot;grp-head&quot; id=&quot;othHead&quot;&gt;Другие варианты оформления&lt;/div&gt;
     &lt;div class=&quot;radios&quot; id=&quot;othRadios&quot; style=&quot;--panel-top:-6px&quot; role=&quot;radiogroup&quot; aria-label=&quot;Другие варианты оформления&quot;&gt;&lt;/div&gt;
-    &lt;div class=&quot;grp-head&quot; id=&quot;ctxHead&quot;&gt;Место открытия&lt;/div&gt;
-    &lt;div class=&quot;radios&quot; id=&quot;ctxRadios&quot; style=&quot;--panel-top:-6px&quot; role=&quot;radiogroup&quot; aria-label=&quot;Место открытия&quot;&gt;&lt;/div&gt;
     &lt;div class=&quot;grp-head&quot; id=&quot;sideHead&quot;&gt;Положение&lt;/div&gt;
-    &lt;div class=&quot;radios&quot; id=&quot;sideRadios&quot; style=&quot;--panel-top:-6px&quot; role=&quot;radiogroup&quot; aria-labelledby=&quot;sideHead&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;radios seg&quot; id=&quot;sideRadios&quot; style=&quot;--panel-top:-6px&quot; role=&quot;radiogroup&quot; aria-labelledby=&quot;sideHead&quot;&gt;&lt;/div&gt;
     &lt;div class=&quot;grp-head&quot; id=&quot;triggerHead&quot;&gt;Вызывающий элемент&lt;/div&gt;
-    &lt;div class=&quot;radios&quot; id=&quot;triggerRadios&quot; style=&quot;--panel-top:-6px&quot; role=&quot;radiogroup&quot; aria-labelledby=&quot;triggerHead&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;radios seg&quot; id=&quot;triggerRadios&quot; style=&quot;--panel-top:-6px&quot; role=&quot;radiogroup&quot; aria-labelledby=&quot;triggerHead&quot;&gt;&lt;/div&gt;
     &lt;div class=&quot;grp-head&quot; id=&quot;wHead&quot;&gt;Ширина статьи&lt;/div&gt;
     &lt;div class=&quot;radios seg&quot; id=&quot;wRadios&quot; style=&quot;--panel-top:-6px&quot; role=&quot;radiogroup&quot; aria-label=&quot;Ширина статьи&quot;&gt;&lt;/div&gt;
     &lt;div class=&quot;grp-head&quot; id=&quot;tightHead&quot;&gt;Отступы&lt;/div&gt;
@@ -2442,10 +2457,13 @@ svg{ display: block}
   const sabyLeft = () =&gt; state.ctx.sd &amp;&amp; state.side === &#x27;left&#x27;;
   const sabyRight = () =&gt; state.ctx.sd &amp;&amp; !sabyLeft();
   const leftKb = () =&gt; state.ctx.id === &#x27;kb&#x27; &amp;&amp; state.side === &#x27;left&#x27;;
-  const knowledgeBaseStyle = () =&gt; state.ctx.id === &#x27;kb&#x27; || sabyRight();
+  const knowledgeBaseStyle = () =&gt; state.ctx.id === &#x27;kb&#x27; || sabyRight() || (state.ctx.sd &amp;&amp; blueLinePreset());
   const slabDoc = () =&gt; state.slab &amp;&amp; state.ctx.sd;
-  const nearTextRulers = () =&gt; slabDoc() &amp;&amp; state.trigger === &#x27;near-text&#x27;;
-  const rightBranchArrows = () =&gt; slabDoc() &amp;&amp; state.arrowSide === &#x27;right&#x27;;
+  const hasRulerPlacement = () =&gt; state.ctx.sd &amp;&amp; (slabDoc() || blueLinePreset());
+  const nearTextRulers = () =&gt; hasRulerPlacement() &amp;&amp; state.trigger === &#x27;near-text&#x27;;
+  const rightBranchArrows = () =&gt; blueLinePreset()
+    ? blueBranchArrows() &amp;&amp; state.blueArrowSide === &#x27;right&#x27;
+    : slabDoc() &amp;&amp; state.arrowSide === &#x27;right&#x27;;
   const greySaby = () =&gt; sabyLeft() &amp;&amp; !slabDoc() &amp;&amp; !state.orig &amp;&amp; state.bg === &#x27;grey&#x27;;
   const masterWidth = 312, foldedMasterWidth = 54;
   let masterFolded = false;
@@ -2455,19 +2473,16 @@ svg{ display: block}
       return { ...c.box, x: c.box.x - released, w: c.box.w + released };
     }
     const pinned = state.mode === &#x27;pinned&#x27;;
-    if (!c.sd || (!slabDoc() &amp;&amp; sabyLeft() &amp;&amp; (pinned || !greySaby()))) return pinned &amp;&amp; c.boxPinned ? c.boxPinned : c.box;
-    const x = sabyLeft() ? 8 : 12;
+    const useLeftFrame = sabyLeft() &amp;&amp; !blueLinePreset();
+    if (!c.sd || (!slabDoc() &amp;&amp; useLeftFrame &amp;&amp; (pinned || !greySaby()))) return pinned &amp;&amp; c.boxPinned ? c.boxPinned : c.box;
+    const x = 8;
     return { ...c.box, x, w: c.box.x + c.box.w - x };
   }
   const kbCtx = (w) =&gt; w === &#x27;narrow&#x27; ? KB_NARROW : w === &#x27;wide&#x27; ? KB_WIDE : CONTEXTS[0];
 
     const originalVariant = { id: &#x27;now&#x27;, kind: &#x27;original&#x27;, heads: ORIGINAL };
 
-  const ALIGNS = [
-    { id: &#x27;base&#x27;, label: &#x27;«Оглавление» на базовой линии&#x27;, btn: 0, dash: 0 },
-    { id: &#x27;item&#x27;, label: &#x27;Без заголовка&#x27;, btn: 0, dash: 0 }
-  ];
-  const state = { ctx: CONTEXTS[0], width: &#x27;normal&#x27;, side: &#x27;left&#x27;, mode: &#x27;pinned&#x27;, open: false, trigger: &#x27;lines&#x27;, kbTab: &#x27;doc&#x27;, lc: false, active: 0, align: ALIGNS[1], tight: false, bg: &#x27;grey&#x27;, sh: &#x27;default&#x27;, edit: false, sabyTitle: false, orig: false, mlen: &#x27;none&#x27;, mcol: &#x27;grey&#x27;, presetMcol: &#x27;grey&#x27;, fill: true, pale: true, slab: false, rail: false, arrowSide: &#x27;left&#x27;, pinPreference: null, equalHeadingSizes: true };
+  const state = { ctx: CONTEXTS[0], width: &#x27;normal&#x27;, side: &#x27;left&#x27;, mode: &#x27;pinned&#x27;, open: false, trigger: &#x27;lines&#x27;, kbTab: &#x27;doc&#x27;, lc: false, active: 0, tight: false, bg: &#x27;grey&#x27;, sh: &#x27;default&#x27;, edit: false, orig: false, mlen: &#x27;none&#x27;, mcol: &#x27;grey&#x27;, presetMcol: &#x27;grey&#x27;, fill: true, pale: true, slab: false, blueLine: false, blueArrowSide: &#x27;none&#x27;, blueText: &#x27;black&#x27;, textColor: &#x27;grey&#x27;, arrowSide: &#x27;left&#x27;, pinPreference: null, equalHeadingSizes: true };
   const craft = () =&gt; !state.orig &amp;&amp; state.pale;
   const canPin = () =&gt; !state.ctx.noPin || (craft() &amp;&amp; !state.ctx.static);
   const syncPinMode = defaultPinned =&gt; {
@@ -2475,7 +2490,7 @@ svg{ display: block}
     state.mode = canPin() &amp;&amp; pinned ? &#x27;pinned&#x27; : &#x27;free&#x27;;
   };
   function triggerOptions() {
-    if (slabDoc()) return [[&#x27;lines&#x27;, &#x27;Линейки у края&#x27;], [&#x27;near-text&#x27;, &#x27;Линейки у текста&#x27;]];
+    if (hasRulerPlacement()) return [[&#x27;lines&#x27;, &#x27;У края&#x27;], [&#x27;near-text&#x27;, &#x27;У текста&#x27;]];
     const options = [[&#x27;lines&#x27;, &#x27;Линейки&#x27;]];
     if (craft() &amp;&amp; state.ctx.id === &#x27;kb&#x27; &amp;&amp; state.side === &#x27;left&#x27;) options.push([&#x27;segments&#x27;, &#x27;Переключатель&#x27;]);
     return options;
@@ -2485,17 +2500,18 @@ svg{ display: block}
   };
   const kbTabs = () =&gt; craft() &amp;&amp; state.ctx.id === &#x27;kb&#x27; &amp;&amp; state.side === &#x27;left&#x27; &amp;&amp; state.trigger === &#x27;segments&#x27;;
   const sideOutline = () =&gt; kbTabs() &amp;&amp; state.kbTab === &#x27;doc&#x27;;
-  const linePreset = () =&gt; state.slab &amp;&amp; state.rail;
+  const blueLinePreset = () =&gt; !state.orig &amp;&amp; state.blueLine;
+  const tocTextColor = () =&gt; blueLinePreset() ? state.blueText : state.textColor;
   const panelInArticle = () =&gt; !state.orig
     &amp;&amp; (state.ctx.id === &#x27;kb&#x27; || state.ctx.sd) &amp;&amp; !greySaby() &amp;&amp; !kbTabs();
-  const branches = () =&gt; sabyLeft() || slabDoc() || sideOutline();
-  const titleVisible = () =&gt; !craft() &amp;&amp; (state.ctx.sd ? !greySaby() &amp;&amp; !slabDoc() &amp;&amp; state.sabyTitle : state.align.id === &#x27;base&#x27;);
+  const blueBranchArrows = () =&gt; blueLinePreset() &amp;&amp; state.ctx.sd &amp;&amp; state.blueArrowSide !== &#x27;none&#x27;;
+  const branches = () =&gt; blueLinePreset() ? blueBranchArrows() : sabyLeft() || slabDoc() || sideOutline();
   const box = byId(&#x27;docBox&#x27;);
   const defMcol = () =&gt; sabyLeft() || state.ctx.static ? &#x27;orange&#x27; : &#x27;grey&#x27;;
   function buildV() {
     if (state.mcol === &#x27;black&#x27;) state.mcol = defMcol();
-    const mlen = linePreset() ? &#x27;none&#x27; : state.mlen;
-    if (state.fill) return { id: &#x27;cfg&#x27;, kind: &#x27;compact&#x27;, item: &#x27;src&#x27;, extra: mlen === &#x27;long&#x27; ? &#x27;longmk&#x27; : mlen === &#x27;none&#x27; ? &#x27;nomkr&#x27; : &#x27;&#x27;, card: [4, 4, 4, 4], heads: COMPACT };
+    const { mlen } = state;
+    if (state.fill &amp;&amp; !blueLinePreset()) return { id: &#x27;cfg&#x27;, kind: &#x27;compact&#x27;, item: &#x27;src&#x27;, extra: mlen === &#x27;long&#x27; ? &#x27;longmk&#x27; : mlen === &#x27;none&#x27; ? &#x27;nomkr&#x27; : &#x27;&#x27;, card: [4, 4, 4, 4], heads: COMPACT };
     if (mlen === &#x27;none&#x27;) return { id: &#x27;cfg&#x27;, kind: &#x27;compact&#x27;, item: &#x27;ink&#x27;, markers: { free: &#x27;none&#x27;, pinned: &#x27;none&#x27; }, card: [6, 4, 4, 4], heads: COMPACT };
     return { id: &#x27;cfg&#x27;, kind: &#x27;compact&#x27;, item: &#x27;mono&#x27;, extra: state.mlen === &#x27;short&#x27; ? &#x27;blueline fill&#x27; : &#x27;blueline&#x27;, markers: { free: &#x27;active&#x27;, pinned: &#x27;all&#x27; }, card: [6, 4, 8, 4], heads: COMPACT };
   }
@@ -2514,23 +2530,27 @@ svg{ display: block}
   let openTimer = 0;
 
   const esc = s =&gt; s.replace(/&amp;/g, &#x27;&amp;amp;&#x27;).replace(/&lt;/g, &#x27;&amp;lt;&#x27;);
-  const H = (v) =&gt; state.ctx.heads || (state.ctx.sd ? ORIGINAL : v.heads);
-  const sabyTopBranches = ORIGINAL.flatMap((h, i) =&gt; h.kids &amp;&amp; h.l === 1 ? [i] : []);
+  const H = (v) =&gt; state.ctx.heads || ((state.ctx.sd || blueLinePreset()) ? ORIGINAL : v.heads);
+  const topBranches = () =&gt; H(state.v).flatMap((h, i) =&gt; h.kids &amp;&amp; h.l === 1 ? [i] : []);
   const sabyCollapsed = new Set(), kbCollapsed = new Set();
-  const collapsedBranches = () =&gt; sideOutline() ? kbCollapsed : sabyCollapsed;
-  const sabyLevelsCollapsed = () =&gt; sabyTopBranches.every(i =&gt; sabyCollapsed.has(i));
+  const blueArticleCollapsed = new Set(), blueViewerCollapsed = new Set();
+  const collapsedBranches = () =&gt; {
+    if (blueLinePreset()) return state.ctx.static ? blueViewerCollapsed : blueArticleCollapsed;
+    return sideOutline() ? kbCollapsed : sabyCollapsed;
+  };
+  const sabyLevelsCollapsed = () =&gt; topBranches().every(i =&gt; collapsedBranches().has(i));
 
-  function sabyVisible() {
+  function sabyVisible(v) {
     const rows = [];
     let collapsedLevel = Infinity;
-    ORIGINAL.forEach((h, i) =&gt; {
+    H(v).forEach((h, i) =&gt; {
       if (h.l &gt; collapsedLevel) return;
       rows.push(i);
       collapsedLevel = collapsedBranches().has(i) ? h.l : Infinity;
     });
     return rows;
   }
-  const visible = (v) =&gt; { const out = []; H(v).forEach((h, i) =&gt; { if (!state.lc || slabDoc() || h.l === 1) out.push(i); }); return out; };
+  const visible = (v) =&gt; { const out = []; H(v).forEach((h, i) =&gt; { if (!state.lc || slabDoc() || blueLinePreset() || h.l === 1) out.push(i); }); return out; };
 
     const BODY_LIST = [
     `&lt;p&gt;Трудовой кодекс понятия «удаленная работа» не содержит, он оперирует понятием «дистанционная работа». На практике используют и то, и другое, вкладывая в них один смысл.&lt;/p&gt;
@@ -2631,33 +2651,42 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     }
     const p = c.static &amp;&amp; !state.tight ? c.orig : c.cmp;
     const base = p.titleTop + 36;
-    const blockX = left ? 12 : W - 16 - 196;
-    const A = state.align;
-    const cardW = slabDoc() ? 280 : 200;
-    const geo = { w: cardW, cardX: left ? blockX : blockX + 200 - cardW, cardTop: base - 24 + A.btn,
-      zoneX: blockX + 4, zoneTop: base - 26 + A.dash + (c.static ? 1 : 0), zoneW: 192, dashAlign: left ? &#x27;flex-start&#x27; : &#x27;flex-end&#x27;, dashPad: left ? &#x27;25px 0 8px 0&#x27; : &#x27;25px 4px 8px 0&#x27;,
+    const blue = blueLinePreset();
+    const blockX = left ? (blue ? 4 : 12) : W - 212;
+    const cardW = slabDoc() ? 280 : blue &amp;&amp; c.sd ? 224 : 200;
+    const geo = { w: cardW, cardX: left ? blockX : blockX + 200 - cardW, cardTop: base - 24,
+      zoneX: blockX + (blue &amp;&amp; left &amp;&amp; !c.static ? 16 : 4), zoneTop: base - 26 + (c.static ? 1 : 0), zoneW: 192, dashAlign: left ? &#x27;flex-start&#x27; : &#x27;flex-end&#x27;, dashPad: left ? &#x27;25px 0 8px 0&#x27; : &#x27;25px 4px 8px 0&#x27;,
       off: left ? -8 : 8 };
-    const pinnedGap = state.slab &amp;&amp; !c.static ? 76 : leftKb() || (!left &amp;&amp; c.id === &#x27;kb&#x27;) ? 32 : 16;
+    const pinnedGap = blue ? 16 : state.slab &amp;&amp; !c.static ? 76 : leftKb() || (!left &amp;&amp; c.id === &#x27;kb&#x27;) ? 32 : 16;
     const rightInset = !left &amp;&amp; c.id === &#x27;kb&#x27; &amp;&amp; v.item === &#x27;src&#x27; ? v.card[3] : 0;
-    const near = state.mode === &#x27;pinned&#x27; &amp;&amp; !kbTabs() ? (left ? blockX + 200 : W - blockX + rightInset) + pinnedGap : p.near;
+    const near = state.mode === &#x27;pinned&#x27; &amp;&amp; !kbTabs() ? (left ? blockX + 200 + (blue ? 8 : 0) : W - blockX + rightInset) + pinnedGap : p.near;
     geo.textL = left ? near : p.far; geo.textR = left ? p.far : near;
-    if (c.wide || slabDoc()) centerWideArticle(geo, W, near, left);
+    if (c.wide &amp;&amp; blue) {
+      if (left) geo.textL = W - geo.textR - 820;
+      else geo.textR = W - geo.textL - 820;
+    }
+    else if (c.wide || slabDoc()) centerWideArticle(geo, W, near, left);
     else if (kbTabs()) geo.textL = geo.textR = p.far;
     else if (c.fixedText) geo.textL = geo.textR = (W - 820) / 2;
     if (nearTextRulers()) {
       centerWideArticle(geo, W, 0, left);
-      const panelGap = 24;
-      const rulerGap = 44;
-      const zoneInset = 12;
       const textEdge = left ? geo.textL : W - geo.textR;
-      geo.cardX = left ? textEdge - panelGap - cardW : textEdge + panelGap;
+      const panelGap = blue ? 36 : 24;
+      const rulerGap = panelGap + 20;
+      const zoneInset = 12;
+      if (blue &amp;&amp; state.mode === &#x27;pinned&#x27;) {
+        const textShift = left ? 56 : -56;
+        geo.textL += textShift;
+        geo.textR -= textShift;
+      }
+      geo.cardX = left ? textEdge - panelGap - cardW - (blue ? 8 : 0) : textEdge + panelGap;
       geo.zoneW = 36;
       geo.zoneX = left ? textEdge - rulerGap - geo.zoneW + zoneInset : textEdge + rulerGap - zoneInset;
       geo.dashAlign = left ? &#x27;flex-start&#x27; : &#x27;flex-end&#x27;;
       geo.dashPad = &#x27;25px 12px 8px&#x27;;
-      geo.off = left ? 8 : -8;
+      geo.off = blue ? 0 : left ? 8 : -8;
     }
-    if (c.cmpPos &amp;&amp; left &amp;&amp; !slabDoc()) { const q = c.cmpPos; Object.assign(geo, { zoneX: q.zoneXs - B.x, zoneTop: q.zoneTop, cardX: q.cardXs - B.x, cardTop: q.cardTop, cardH: q.cardH, w: q.cardW }); }
+    if (c.cmpPos &amp;&amp; left &amp;&amp; !slabDoc() &amp;&amp; !blue) { const q = c.cmpPos; Object.assign(geo, { zoneX: q.zoneXs - B.x, zoneTop: q.zoneTop, cardX: q.cardXs - B.x, cardTop: q.cardTop, cardH: q.cardH, w: q.cardW }); }
     if (greySaby()) {
       if (state.mode === &#x27;free&#x27;) {
         geo.zoneX = 14 - B.x;
@@ -2716,7 +2745,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     }).join(&#x27;&#x27;)}&lt;/div&gt;`;
   }
 
-  const listHTML = (v) =&gt; `&lt;div class=&quot;list&quot;&gt;${(branches() &amp;&amp; v.kind !== &#x27;original&#x27; ? sabyVisible() : visible(v)).map(i =&gt; v.kind === &#x27;original&#x27; ? originalItem(H(v)[i], i) : compactItem(v, H(v)[i], i)).join(&#x27;&#x27;)}&lt;/div&gt;`;
+  const listHTML = (v) =&gt; `&lt;div class=&quot;list&quot;&gt;${(branches() &amp;&amp; v.kind !== &#x27;original&#x27; ? sabyVisible(v) : visible(v)).map(i =&gt; v.kind === &#x27;original&#x27; ? originalItem(H(v)[i], i) : compactItem(v, H(v)[i], i)).join(&#x27;&#x27;)}&lt;/div&gt;`;
 
  
   const pinBtn = (unpin) =&gt; {
@@ -2739,20 +2768,24 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     doc.className = v.kind === &#x27;original&#x27; ? &#x27;orig&#x27; + (c.static || sabyLeft() ? &#x27; live&#x27; : &#x27;&#x27;) : &#x27;cmp&#x27; + ((v.item === &#x27;mono&#x27; || v.item === &#x27;ink&#x27;) &amp;&amp; !(v.extra || &#x27;&#x27;).includes(&#x27;blueline&#x27;) ? &#x27; neutral&#x27; : &#x27;&#x27;);
     doc.classList.toggle(&#x27;kb&#x27;, Boolean(knowledgeBaseStyle()));
     doc.classList.toggle(&#x27;vw&#x27;, !!c.static);
-    doc.classList.toggle(&#x27;sd&#x27;, Boolean(sabyLeft()));
+    doc.classList.toggle(&#x27;sd&#x27;, Boolean(sabyLeft() &amp;&amp; !blueLinePreset()));
+    doc.classList.toggle(&#x27;sd-blue&#x27;, Boolean(c.sd &amp;&amp; blueLinePreset()));
     doc.classList.toggle(&#x27;sd-right&#x27;, Boolean(sabyRight()));
     doc.toggleAttribute(&#x27;data-edit&#x27;, Boolean(c.sd &amp;&amp; state.edit));
     doc.toggleAttribute(&#x27;data-original-heading-sizes&#x27;, c.sd &amp;&amp; !state.orig &amp;&amp; !state.equalHeadingSizes);
     doc.classList.toggle(&#x27;sdorange&#x27;, sdOrange);
-    doc.classList.toggle(&#x27;rail&#x27;, linePreset());
-    doc.dataset.markerLength = state.mlen;
+    doc.classList.toggle(&#x27;blue-line&#x27;, blueLinePreset());
+    doc.toggleAttribute(&#x27;data-neutral-line&#x27;, blueLinePreset() &amp;&amp; state.mcol !== &#x27;blue&#x27;);
+    doc.classList.toggle(&#x27;blue-fill&#x27;, blueLinePreset() &amp;&amp; state.fill);
+    doc.classList.toggle(&#x27;blue-grey&#x27;, blueLinePreset() &amp;&amp; state.blueText === &#x27;grey&#x27;);
+    doc.classList.toggle(&#x27;black-text&#x27;, !state.orig &amp;&amp; tocTextColor() === &#x27;black&#x27;);
     doc.classList.toggle(&#x27;pale-fill&#x27;, !state.orig &amp;&amp; state.pale);
     doc.classList.toggle(&#x27;white-doc&#x27;, slabDoc());
     doc.classList.toggle(&#x27;arrows-right&#x27;, rightBranchArrows());
     doc.classList.toggle(&#x27;white-outline&#x27;, state.slab &amp;&amp; state.bg === &#x27;none&#x27;);
     byId(&#x27;cmds&#x27;).hidden = !!(state.ctx.static || state.ctx.sd);
     const ctl = v.kind !== &#x27;original&#x27;;
-    doc.dataset.ctl = ctl ? &#x27;1&#x27; : &#x27;0&#x27;; doc.dataset.bg = state.orig ? &#x27;none&#x27; : state.bg; doc.dataset.sh = slabDoc() ? &#x27;default&#x27; : state.sh;
+    doc.dataset.ctl = ctl ? &#x27;1&#x27; : &#x27;0&#x27;; doc.dataset.bg = state.orig ? &#x27;none&#x27; : state.bg; doc.dataset.sh = state.slab ? &#x27;default&#x27; : state.sh;
     if (ctl) doc.dataset.text = &#x27;black&#x27;;
     else delete doc.dataset.text;
     kbMaster.hidden = c.id !== &#x27;kb&#x27;;
@@ -2804,25 +2837,9 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     guide.hidden = true;
     guide.style.top = (g.titleTop + (c.static ? 37 : 36)) + &#x27;px&#x27;;
     if (!inSidebar || sideOutline()) syncBreaks();
-    if (c.id === &#x27;kb&#x27; || slabDoc() || panelInArticle() || (c.static &amp;&amp; !state.orig)) alignToArticleTitle(artIn.querySelector(&#x27;h1&#x27;));
+    if (nearTextRulers() || (!blueLinePreset() &amp;&amp; (c.id === &#x27;kb&#x27; || slabDoc() || panelInArticle() || (c.static &amp;&amp; !state.orig)))) alignToArticleTitle(artIn.querySelector(&#x27;h1&#x27;));
     else alignDashesToParagraph();
-    if (linePreset()) drawRail();
     renderRadios();
-  }
-
-  function drawRail() {
-    const card = byId(&#x27;card&#x27;), list = card.querySelector(&#x27;.list&#x27;);
-    const frame = document.createElement(&#x27;i&#x27;);
-    frame.className = &#x27;rail-frame&#x27;;
-    const edge = state.fill ? list.offsetLeft : 0;
-    card.style.setProperty(&#x27;--rail-marker-left&#x27;, edge - list.offsetLeft + &#x27;px&#x27;);
-    if (canPin() &amp;&amp; card.classList.contains(&#x27;pinned-card&#x27;)) {
-      const start = parseFloat(getComputedStyle(doc).getPropertyValue(&#x27;--rail-start&#x27;));
-      Object.assign(frame.style, {top: list.offsetTop + start + &#x27;px&#x27;, bottom: &#x27;var(--rail-radius)&#x27;, left: edge + &#x27;px&#x27;, width: &#x27;2px&#x27;});
-    } else {
-      Object.assign(frame.style, {inset: &#x27;0px&#x27;, borderRadius: &#x27;var(--rail-radius)&#x27;});
-    }
-    card.append(frame);
   }
 
   function alignToArticleTitle(title) {
@@ -2871,28 +2888,28 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
 
   function renderCompact(v, g) {
     const ttlPad = v.item === &#x27;src&#x27; ? 14 : 10;
-    const ttl = `&lt;span class=&quot;ttl&quot;${!titleVisible() ? &#x27; aria-hidden=&quot;true&quot;&#x27; : &#x27;&#x27;} style=&quot;${!titleVisible() ? &#x27;visibility:hidden;&#x27; : &#x27;&#x27;}padding-left:${ttlPad}px&quot;&gt;Оглавление&lt;/span&gt;`;
-    const shift = state.side === &#x27;right&#x27; &amp;&amp; !state.ctx.static ? 8 : 0;
+    const ttl = `&lt;span class=&quot;ttl&quot; aria-hidden=&quot;true&quot; style=&quot;visibility:hidden;padding-left:${ttlPad}px&quot;&gt;Оглавление&lt;/span&gt;`;
+    const shift = !state.ctx.static &amp;&amp; (state.side === &#x27;right&#x27; || blueLinePreset()) ? 8 : 0;
     const [pt, pr, pb, pl] = v.card;
     const extraWidth = v.item === &#x27;src&#x27; ? pl : 0;
     const cardX = g.cardX - extraWidth;
     const width = g.w + extraWidth;
     const unified = greySaby();
     const head = (unpin) =&gt; sabyLeft()
-      ? `&lt;div class=&quot;head left${unified ? &#x27; sd-card-header&#x27; : &#x27;&#x27;}&quot; style=&quot;margin-left:${extraWidth}px&quot;&gt;${titleVisible() ? liveTitle : &#x27;&#x27;}${levelsBtn(sabyLevelsCollapsed(), &#x27;saby-levels&#x27;)}&lt;span class=&quot;sd-pin&quot;&gt;${pinBtn(unpin)}&lt;/span&gt;&lt;/div&gt;`
+      ? `&lt;div class=&quot;head left${unified ? &#x27; sd-card-header&#x27; : &#x27;&#x27;}&quot; style=&quot;margin-left:${extraWidth}px&quot;&gt;${levelsBtn(sabyLevelsCollapsed(), &#x27;saby-levels&#x27;)}&lt;span class=&quot;sd-pin&quot;&gt;${pinBtn(unpin)}&lt;/span&gt;&lt;/div&gt;`
       : `&lt;div class=&quot;head right&quot; style=&quot;--pin-shift:${shift}px&quot;&gt;${ttl}${pinBtn(unpin)}&lt;/div&gt;`;
     const topRow = (unpin) =&gt; {
-      if (state.slab) {
+      if (state.slab || blueLinePreset()) {
         const pin = pinBtn(unpin);
-        const levels = slabDoc() ? levelsBtn(sabyLevelsCollapsed(), &#x27;saby-levels&#x27;) : &#x27;&#x27;;
+        const levels = slabDoc() || blueBranchArrows() ? levelsBtn(sabyLevelsCollapsed(), &#x27;saby-levels&#x27;) : &#x27;&#x27;;
         const controlsLeft = nearTextRulers() ? !left : left;
-        return titleVisible() || pin ? `&lt;div class=&quot;head ${controlsLeft ? &#x27;left&#x27; : &#x27;right&#x27;}&quot;&gt;${controlsLeft ? pin + levels + ttl : ttl + levels + pin}&lt;/div&gt;` : &#x27;&#x27;;
+        return pin || levels ? `&lt;div class=&quot;head ${controlsLeft ? &#x27;left&#x27; : &#x27;right&#x27;}&quot;&gt;${controlsLeft ? pin + levels + ttl : ttl + levels + pin}&lt;/div&gt;` : &#x27;&#x27;;
       }
-      if (sabyLeft() &amp;&amp; !titleVisible()) {
+      if (sabyLeft()) {
         const levels = levelsBtn(sabyLevelsCollapsed(), &#x27;saby-levels&#x27;);
         return `&lt;div class=&quot;head left${unified ? &#x27; sd-card-header&#x27; : &#x27;&#x27;}&quot; style=&quot;margin-left:${extraWidth}px&quot;&gt;&lt;span class=&quot;sd-header-actions&quot;&gt;${levels}${pinBtn(unpin)}&lt;/span&gt;&lt;/div&gt;`;
       }
-      if (!canPin()) return titleVisible() ? `&lt;div class=&quot;head right&quot; style=&quot;height:auto;padding:0&quot;&gt;${ttl}&lt;/div&gt;` : &#x27;&#x27;;
+      if (!canPin()) return &#x27;&#x27;;
       if (leftKb()) return `&lt;div class=&quot;head left&quot;${v.item === &#x27;src&#x27; ? &#x27;&#x27; : &#x27; style=&quot;height:auto;padding:0;margin-bottom:4px&quot;&#x27;}&gt;${pinBtn(unpin)}${ttl}&lt;/div&gt;`;
       if (sabyLeft() || v.item === &#x27;src&#x27;) return head(unpin);
       return `&lt;div class=&quot;head right&quot; style=&quot;--pin-shift:${shift}px;height:auto;padding:0;margin-bottom:4px&quot;&gt;${ttl}${pinBtn(unpin)}&lt;/div&gt;`;
@@ -2904,7 +2921,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     const left = state.side === &#x27;left&#x27;;
     const cardStyle = `${g.panelInset ? `--edge-marker-x:-${pl + inset}px;` : &#x27;&#x27;}left:${cardX - inset - extension}px;top:${g.cardTop}px;width:${width + inset + shift + extension + rightExtension}px;${g.cardH ? &#x27;height:&#x27; + g.cardH + &#x27;px;&#x27; : &#x27;&#x27;}${unified ? &#x27;border-radius:0;&#x27; : &#x27;&#x27;}padding:${canPin() ? pt : pb}px ${rightPadding}px ${pb}px ${pl + inset + extension}px`;
     let fixedTitle = &#x27;&#x27;;
-    if (unified &amp;&amp; !titleVisible()) {
+    if (unified) {
       const textX = cardX + pl + 3 + (v.item === &#x27;src&#x27; ? 5 : 1) + 20;
       const name = esc(sdDocumentName).replace(/&quot;/g, &#x27;&amp;quot;&#x27;);
       fixedTitle = `&lt;div class=&quot;sd-document-heading fixed-title&quot; style=&quot;left:${textX - 28}px;top:${g.cardTop}px&quot;&gt;&lt;span class=&quot;sd-card-title&quot;&gt;${sdDocumentIcon}&lt;span data-tooltip=&quot;${name}&quot;&gt;${name}&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;`;
@@ -2917,12 +2934,35 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     const rulers = `&lt;div class=&quot;zone&quot; id=&quot;zone&quot; style=&quot;position:absolute;left:${g.zoneX}px;top:${g.zoneTop}px;width:${g.zoneW}px&quot;&gt;
         &lt;div class=&quot;dashes&quot; style=&quot;align-items:${g.dashAlign};padding:${g.dashPad}&quot;&gt;${dashesHTML(v)}&lt;/div&gt;&lt;/div&gt;`;
     doc.innerHTML = `${fixedTitle}${rulers}
-      &lt;div class=&quot;card${state.open ? &#x27; open&#x27; : &#x27;&#x27;}&quot; id=&quot;card&quot; style=&quot;--off:${unified || (panelInArticle() &amp;&amp; !nearTextRulers()) ? 0 : g.off}px;${cardStyle}&quot;&gt;${top}${listHTML(v)}&lt;/div&gt;`;
+      &lt;div class=&quot;card${state.open ? &#x27; open&#x27; : &#x27;&#x27;}&quot; id=&quot;card&quot; style=&quot;--off:${unified || (panelInArticle() &amp;&amp; !blueLinePreset() &amp;&amp; !nearTextRulers()) ? 0 : g.off}px;${cardStyle}&quot;&gt;${top}${listHTML(v)}&lt;/div&gt;`;
+    if (!(state.ctx.sd &amp;&amp; craft())) trimHoverCardTop(byId(&#x27;card&#x27;));
     bindHover();
   }
 
+  function trimHoverCardTop(card) {
+    const head = card.querySelector(&#x27;.head&#x27;);
+    const buttons = head?.querySelectorAll(&#x27;.btn&#x27;);
+    if (!buttons?.length || !card.offsetWidth) return;
+    const left = head.classList.contains(&#x27;left&#x27;);
+    const button = left ? buttons[0] : buttons[buttons.length - 1];
+    const panelRect = card.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+    const scale = panelRect.width / card.offsetWidth;
+    if (!scale) return;
+
+    const side = left ? buttonRect.left - panelRect.left : panelRect.right - buttonRect.right;
+    const padding = parseFloat(getComputedStyle(card).paddingTop);
+    const trim = Math.min(padding, (buttonRect.top - panelRect.top - side) / scale);
+    if (trim &lt;= 0.05) return;
+
+    // Move only the top edge: compensate for the smaller padding at the same time.
+    card.style.top = (parseFloat(card.style.top) + trim) + &#x27;px&#x27;;
+    card.style.setProperty(&#x27;padding-top&#x27;, (padding - trim) + &#x27;px&#x27;, &#x27;important&#x27;);
+    if (card.style.height) card.style.height = (parseFloat(card.style.height) - trim) + &#x27;px&#x27;;
+  }
+
   function alignDashesToParagraph() {
-    if (state.ctx.sd) return;
+    if (state.ctx.sd &amp;&amp; !blueLinePreset()) return;
     const zone = doc.querySelector(&#x27;.zone&#x27;);
     const dash = zone?.querySelector(&#x27;.dash&#x27;);
     const paragraph = art.querySelector(&#x27;p&#x27;);
@@ -3005,47 +3045,54 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
 
     const radio = (on, label, attr) =&gt; `&lt;button class=&quot;radio${on ? &#x27; on&#x27; : &#x27;&#x27;}&quot; role=&quot;radio&quot; aria-checked=&quot;${on}&quot; ${attr}&gt;&lt;span class=&quot;dot&quot;&gt;${on ? ICON.radioOn : ICON.radioOff}&lt;/span&gt;${esc(label)}&lt;/button&gt;`;
   tightRadios = byId(&#x27;tightRadios&#x27;), radios = byId(&#x27;radios&#x27;), othHead = byId(&#x27;othHead&#x27;), othRadios = byId(&#x27;othRadios&#x27;), radiosNow = byId(&#x27;radiosNow&#x27;), ctxRadios = byId(&#x27;ctxRadios&#x27;), ctxHead = byId(&#x27;ctxHead&#x27;);
-  const preHead = byId(&#x27;preHead&#x27;), preCard = byId(&#x27;preCard&#x27;), setHead = byId(&#x27;setHead&#x27;), setCard = byId(&#x27;setCard&#x27;);
+  const preHead = byId(&#x27;preHead&#x27;), preCard = byId(&#x27;preCard&#x27;), setHead = byId(&#x27;setHead&#x27;), setCard = byId(&#x27;setCard&#x27;), levelCard = byId(&#x27;levelCard&#x27;);
+  const setClose = byId(&#x27;setClose&#x27;);
+  const presetGrid = preCard.querySelector(&#x27;.pre-grid&#x27;);
   let settingsOpen = false;
   const blHead = byId(&#x27;blHead&#x27;), lookCard = byId(&#x27;lookCard&#x27;), shCard = byId(&#x27;shCard&#x27;);
   const wRadios = byId(&#x27;wRadios&#x27;), wHead = byId(&#x27;wHead&#x27;), sideRadios = byId(&#x27;sideRadios&#x27;), sideHead = byId(&#x27;sideHead&#x27;), alRadios = byId(&#x27;alRadios&#x27;), guide = byId(&#x27;guide&#x27;);
   const triggerHead = byId(&#x27;triggerHead&#x27;), triggerRadios = byId(&#x27;triggerRadios&#x27;);
     const PRESETS = [
     { id: &#x27;now&#x27;, label: &#x27;Как сейчас&#x27; },
+    { id: &#x27;blue-line&#x27;, label: &#x27;С линией&#x27;, cfg: { blueLine: true, fill: false, mlen: &#x27;long&#x27;, bg: &#x27;none&#x27;, mcol: &#x27;blue&#x27;, sh: &#x27;default&#x27; } },
     { id: &#x27;craft&#x27;, label: &#x27;Серый фон&#x27;, cfg: { fill: true, pale: true, mlen: &#x27;none&#x27;, bg: &#x27;grey&#x27; } },
-    { id: &#x27;slab&#x27;, label: &#x27;Белый фон&#x27;, cfg: { slab: true, fill: true, mlen: &#x27;none&#x27;, bg: &#x27;none&#x27; } },
-    { id: &#x27;rail&#x27;, label: &#x27;С линией&#x27;, cfg: { slab: true, rail: true, fill: false, mlen: &#x27;short&#x27;, bg: &#x27;none&#x27;, mcol: &#x27;orange&#x27; } }
+    { id: &#x27;slab&#x27;, label: &#x27;Белый фон с обводкой&#x27;, cfg: { slab: true, fill: true, mlen: &#x27;none&#x27;, bg: &#x27;none&#x27; } },
   ];
-  const preCfg = (pr, mcol) =&gt; ({ pale: false, slab: false, rail: false, mcol: pr.id === &#x27;slab&#x27; ? mcol : &#x27;grey&#x27;, ...pr.cfg });
-  const cur = () =&gt; ({ title: titleVisible(), sh: state.sh, bg: state.bg, mlen: state.mlen, mcol: state.mcol, fill: state.fill, pale: state.pale, slab: state.slab, rail: state.rail, arrowSide: state.arrowSide, equalHeadingSizes: state.equalHeadingSizes });
-  const SETTINGS = () =&gt; [
-    ...(craft() ? [] : [
-      ...(!greySaby() &amp;&amp; !slabDoc() ? [{ key: &#x27;title&#x27;, label: &#x27;Заголовок&#x27;, sw: true }] : []),
-      { key: &#x27;fill&#x27;, label: &#x27;Заливка пункта&#x27;, sw: true },
-      ...(!slabDoc() ? [{ key: &#x27;sh&#x27;, label: &#x27;Тень&#x27;, opts: [[&#x27;default&#x27;, &#x27;Мягкая&#x27;], [&#x27;bright&#x27;, &#x27;Яркая&#x27;], [&#x27;saby&#x27;, &#x27;SabyDoc&#x27;], [&#x27;none&#x27;, &#x27;Нет&#x27;]] }] : []),
-      { key: &#x27;mlen&#x27;, label: &#x27;Маркер&#x27;, opts: [[&#x27;none&#x27;, &#x27;Нет&#x27;], [&#x27;long&#x27;, &#x27;Длинный&#x27;], [&#x27;short&#x27;, &#x27;Короткий&#x27;]] },
-      { key: &#x27;mcol&#x27;, label: &#x27;Цвет маркера&#x27;, opts: [[&#x27;grey&#x27;, &#x27;Серый&#x27;], [&#x27;orange&#x27;, &#x27;Рыжий&#x27;]], dim: state.mlen === &#x27;none&#x27; },
-      ...(slabDoc() ? [{ key: &#x27;arrowSide&#x27;, label: &#x27;Стрелки&#x27;, opts: [[&#x27;left&#x27;, &#x27;Слева&#x27;], [&#x27;right&#x27;, &#x27;Справа&#x27;]] }] : []),
-    ]),
-    ...(state.ctx.sd &amp;&amp; !state.orig ? [{ key: &#x27;equalHeadingSizes&#x27;, label: &#x27;Одинаковые размеры&#x27;, sw: true }] : [])
-  ];
+  const preCfg = (pr, mcol) =&gt; ({ pale: false, slab: false, blueLine: false, mcol: pr.id === &#x27;slab&#x27; ? mcol : &#x27;grey&#x27;, ...pr.cfg });
+  const cur = () =&gt; ({ sh: state.sh, bg: state.bg, mlen: state.mlen, mcol: state.mcol, fill: state.fill, pale: state.pale, slab: state.slab, blueLine: state.blueLine, blueArrowSide: state.blueArrowSide, textColor: tocTextColor(), arrowSide: state.arrowSide });
+  function SETTINGS() {
+    const blue = blueLinePreset();
+    const fill = { key: &#x27;fill&#x27;, label: &#x27;Заливка пункта&#x27;, sw: true };
+    const shadow = { key: &#x27;sh&#x27;, label: &#x27;Тень&#x27;, opts: [[&#x27;default&#x27;, &#x27;Мягкая&#x27;], [&#x27;bright&#x27;, &#x27;Яркая&#x27;], [&#x27;saby&#x27;, &#x27;SabyDoc&#x27;], [&#x27;none&#x27;, &#x27;Нет&#x27;]] };
+    const length = { key: &#x27;mlen&#x27;, label: &#x27;Маркер&#x27;, opts: [[&#x27;none&#x27;, &#x27;Нет&#x27;], [&#x27;long&#x27;, &#x27;Длинный&#x27;], [&#x27;short&#x27;, &#x27;Короткий&#x27;]] };
+    const color = { key: &#x27;mcol&#x27;, label: &#x27;Цвет маркера&#x27;, opts: [...(blue ? [[&#x27;blue&#x27;, &#x27;Голубой&#x27;]] : []), [&#x27;grey&#x27;, &#x27;Серый&#x27;], [&#x27;orange&#x27;, &#x27;Рыжий&#x27;]], dim: state.mlen === &#x27;none&#x27; };
+    const arrowSide = { key: &#x27;arrowSide&#x27;, label: &#x27;Стрелки&#x27;, opts: [[&#x27;left&#x27;, &#x27;Слева&#x27;], [&#x27;right&#x27;, &#x27;Справа&#x27;]] };
+
+    const text = { key: &#x27;textColor&#x27;, label: &#x27;Цвет текста&#x27;, opts: [[&#x27;black&#x27;, &#x27;Чёрный&#x27;], [&#x27;grey&#x27;, &#x27;Серый&#x27;]] };
+    if (blue) return [
+      length, color, text, shadow, fill,
+      ...(state.ctx.sd ? [{ ...arrowSide, key: &#x27;blueArrowSide&#x27;, opts: [[&#x27;none&#x27;, &#x27;Нет&#x27;], ...arrowSide.opts] }] : []),
+    ];
+    return craft() ? [length, color, text] : [length, color, text, fill, ...(slabDoc() ? [arrowSide] : [])];
+  }
   const backgroundColor = (bg) =&gt; bg === &#x27;none&#x27; ? &#x27;var(--white)&#x27; : sabyLeft() ? (state.edit ? &#x27;var(--sd-edit-frame)&#x27; : &#x27;#f8f8f8&#x27;) : &#x27;var(--bg-grey)&#x27;;
   function mini(bg, width, height) {
     const bars = [[10, 7, 28], [14, 14, 21], [14, 21, 25]].map(([x, y, w], i) =&gt;
       `&lt;i style=&quot;left:${x}px;top:${y}px;width:${w}px;height:2px;border-radius:1px;background:${i ? &#x27;var(--contrast)&#x27; : &#x27;var(--ink)&#x27;}&quot;&gt;&lt;/i&gt;`    ).join(&#x27;&#x27;);
     return `&lt;span class=&quot;th&quot; style=&quot;width:${width}px;height:${height}px&quot;&gt;&lt;span class=&quot;thc&quot; style=&quot;inset:5px;background:${backgroundColor(bg)}&quot;&gt;${bars}&lt;/span&gt;&lt;/span&gt;`;
   }
-  const presetOn = (pr) =&gt; pr.id === &#x27;now&#x27; ? state.orig : pr.id === &#x27;rail&#x27; ? linePreset() : !state.orig &amp;&amp; Object.entries(preCfg(pr, state.presetMcol)).every(([k, val]) =&gt; cur()[k] === val);
-  const MC = m =&gt; m === &#x27;orange&#x27; ? &#x27;var(--live-marker)&#x27; : &#x27;var(--icon-unaccented_hover_icon-color)&#x27;;
+  const presetOn = (pr) =&gt; pr.id === &#x27;now&#x27; ? state.orig : pr.id === &#x27;blue-line&#x27; ? blueLinePreset() : pr.id === &#x27;craft&#x27; ? craft() : !state.orig &amp;&amp; Object.entries(preCfg(pr, state.presetMcol)).every(([k, val]) =&gt; cur()[k] === val);
+  const MC = m =&gt; m === &#x27;blue&#x27; ? &#x27;var(--secondary-border)&#x27; : m === &#x27;orange&#x27; ? &#x27;var(--live-marker)&#x27; : &#x27;var(--icon-unaccented_hover_icon-color)&#x27;;
   const SQ_SH = { default: &#x27;0 0 5px rgba(0,0,0,.16)&#x27;, bright: &#x27;0 0 3px rgba(0,0,0,.42)&#x27;, saby: &#x27;0 0 12px rgba(0,0,0,.2), 0 0 4px rgba(0,0,0,.12)&#x27;, none: &#x27;inset 0 0 0 1px #e1e4e9&#x27; };
   const EDGE = &#x27;inset 0 0 0 1px rgba(0,0,0,.09)&#x27;;
   function tile(key, val) {
     const st = (css, inner = &#x27;&#x27;) =&gt; `&lt;span class=&quot;sq&quot; style=&quot;${css}&quot;&gt;${inner}&lt;/span&gt;`;
     if (key === &#x27;sh&#x27;) return st(`background:#fff;box-shadow:${SQ_SH[val]}`);
-    if (key === &#x27;arrowSide&#x27;) return st(`background:#fff;box-shadow:${EDGE}`, `&lt;span style=&quot;position:absolute;top:5px;width:12px;height:16px;${val}:2px&quot;&gt;${ICON.arrowCol(true)}&lt;/span&gt;`);
-    if (key === &#x27;mlen&#x27; &amp;&amp; val === &#x27;none&#x27;) return st(`background:#fff;box-shadow:inset 0 0 0 1px #d5d9e0`, &#x27;&lt;svg width=&quot;26&quot; height=&quot;26&quot; viewBox=&quot;0 0 26 26&quot; style=&quot;left:0;top:0&quot;&gt;&lt;path d=&quot;M6 20L20 6&quot; stroke=&quot;#b9bfca&quot; stroke-width=&quot;1.2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&#x27;);
-    if (key === &#x27;mlen&#x27;) { const c = MC(state.mcol), width = linePreset() ? 2 : 3; return st(`background:#fff;box-shadow:${EDGE}`, val === &#x27;long&#x27; ? `&lt;i style=&quot;left:5px;top:4px;width:${width}px;height:18px;border-radius:1.5px;background:${c}&quot;&gt;&lt;/i&gt;` : `&lt;i style=&quot;left:5px;top:9px;width:${width}px;height:8px;border-radius:1.5px;background:${c}&quot;&gt;&lt;/i&gt;`); }
+    if ((key === &#x27;mlen&#x27; || key === &#x27;blueArrowSide&#x27;) &amp;&amp; val === &#x27;none&#x27;) return st(`background:#fff;box-shadow:inset 0 0 0 1px #d5d9e0`, &#x27;&lt;svg width=&quot;26&quot; height=&quot;26&quot; viewBox=&quot;0 0 26 26&quot; style=&quot;left:0;top:0&quot;&gt;&lt;path d=&quot;M6 20L20 6&quot; stroke=&quot;#b9bfca&quot; stroke-width=&quot;1.2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&#x27;);
+    if (key === &#x27;arrowSide&#x27; || key === &#x27;blueArrowSide&#x27;) return st(`background:#fff;box-shadow:${EDGE}`, `&lt;span style=&quot;position:absolute;top:5px;width:12px;height:16px;${val}:2px&quot;&gt;${ICON.arrowCol(true)}&lt;/span&gt;`);
+    if (key === &#x27;mlen&#x27;) { const c = MC(state.mcol), width = 3; return st(`background:#fff;box-shadow:${EDGE}`, val === &#x27;long&#x27; ? `&lt;i style=&quot;left:5px;top:4px;width:${width}px;height:18px;border-radius:1.5px;background:${c}&quot;&gt;&lt;/i&gt;` : `&lt;i style=&quot;left:5px;top:9px;width:${width}px;height:8px;border-radius:1.5px;background:${c}&quot;&gt;&lt;/i&gt;`); }
     if (key === &#x27;mcol&#x27;) return st(`background:${MC(val)}`);
+    if (key === &#x27;textColor&#x27;) return st(`display:grid;place-items:center;background:white;box-shadow:${EDGE};color:var(${val === &#x27;black&#x27; ? &#x27;--ink&#x27; : &#x27;--icon-secondary_icon-color&#x27;})`, &#x27;&lt;span aria-hidden=&quot;true&quot;&gt;Аа&lt;/span&gt;&#x27;);
     return &#x27;&#x27;;
   }
 
@@ -3059,32 +3106,45 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
 
   function renderRadios() {
     [radiosNow, blHead, radios, lookCard, shCard, othHead, othRadios, alRadios].forEach(el =&gt; { el.hidden = true; });
-    ctxRadios.innerHTML = [CONTEXTS[2], CONTEXTS[0], CONTEXTS[1]].map(c =&gt; radio(c.id === state.ctx.id, c.label, `data-c=&quot;${c.id}&quot;`)).join(&#x27;&#x27;);
-    preHead.style.top = (modePicker.offsetTop + Math.max(70, modePicker.offsetHeight) + 6) + &#x27;px&#x27;;
-    preCard.innerHTML = `&lt;div class=&quot;pre-grid&quot;&gt;${PRESETS.map(pr =&gt; {
+    ctxRadios.innerHTML = [CONTEXTS[0], CONTEXTS[2], CONTEXTS[1]].map(c =&gt; radio(c.id === state.ctx.id, c.label, `data-c=&quot;${c.id}&quot;`)).join(&#x27;&#x27;);
+    const place = (head, card, y) =&gt; {
+      head.style.top = y + &#x27;px&#x27;;
+      const top = y + head.offsetHeight;
+      card.style.top = top + &#x27;px&#x27;;
+      return top + card.offsetHeight;
+    };
+    const contextEnd = place(ctxHead, ctxRadios, modePicker.offsetTop + Math.max(44, modePicker.offsetHeight) + 6);
+    presetGrid.innerHTML = PRESETS.map(pr =&gt; {
       const on = presetOn(pr);
       return `&lt;button class=&quot;opt${on ? &#x27; on&#x27; : &#x27;&#x27;}&quot; role=&quot;radio&quot; aria-checked=&quot;${on}&quot; data-pre=&quot;${pr.id}&quot;&gt;${mini(pr.cfg?.bg ?? &#x27;none&#x27;, 58, 40)}&lt;span class=&quot;oc&quot;&gt;${pr.label}&lt;/span&gt;&lt;/button&gt;`;
-    }).join(&#x27;&#x27;)}&lt;/div&gt;`;
-    preCard.style.top = (preHead.offsetTop + preHead.offsetHeight) + &#x27;px&#x27;;
-    const now = cur(), settings = SETTINGS();
-    setHead.hidden = !settings.length;
-    setCard.hidden = setHead.hidden || !settingsOpen;
-    setHead.setAttribute(&#x27;aria-expanded&#x27;, String(!setCard.hidden));
+    }).join(&#x27;&#x27;);
+    const settings = state.orig ? [] : SETTINGS();
+    const showSettings = settingsOpen &amp;&amp; settings.length &gt; 0;
+    setHead.hidden = settings.length === 0 || showSettings;
+    setHead.setAttribute(&#x27;aria-expanded&#x27;, String(showSettings));
+    setCard.hidden = setClose.hidden = !showSettings;
+    levelCard.hidden = !showSettings || !state.ctx.sd;
+    sideHead.hidden = sideRadios.hidden = state.orig;
+    if (state.orig) {
+      [triggerHead, triggerRadios, wHead, wRadios, tightRadios].forEach(el =&gt; { el.hidden = true; });
+      const presetEnd = place(preHead, preCard, contextEnd + 4);
+      auxPanel.style.setProperty(&#x27;--footer-min-top&#x27;, (presetEnd + 6) + &#x27;px&#x27;);
+      return;
+    }
+    const now = cur();
     setCard.innerHTML = settings.map(st =&gt; st.sw ? settingSwitch(st, now[st.key]) : `&lt;div class=&quot;srow${st.dim ? &#x27; dim&#x27; : &#x27;&#x27;}&quot; role=&quot;radiogroup&quot; aria-label=&quot;${st.label}&quot;&gt;&lt;span class=&quot;sl&quot;&gt;${st.label}&lt;/span&gt;&lt;div class=&quot;so&quot;&gt;${st.opts.map(([val, label]) =&gt; { const on = !state.orig &amp;&amp; now[st.key] === val; return `&lt;button class=&quot;opt${on ? &#x27; on&#x27; : &#x27;&#x27;}&quot; role=&quot;radio&quot; aria-checked=&quot;${on}&quot; data-set=&quot;${st.key}&quot; data-val=&quot;${JSON.stringify(val).replace(/&quot;/g, &#x27;&amp;quot;&#x27;)}&quot;&gt;${tile(st.key, val)}&lt;span class=&quot;oc&quot;&gt;${label}&lt;/span&gt;&lt;/button&gt;`; }).join(&#x27;&#x27;)}&lt;/div&gt;&lt;/div&gt;`).join(&#x27;&#x27;);
-    setCard.classList.toggle(&#x27;idle&#x27;, state.orig);
-    const presetEnd = preCard.offsetTop + preCard.offsetHeight;
-    const settingsTop = presetEnd + (setHead.hidden ? 0 : 4);
-    setHead.style.top = settingsTop + &#x27;px&#x27;;
-    const settingsEnd = settingsTop + setHead.offsetHeight;
-    setCard.style.top = settingsEnd + &#x27;px&#x27;;
     const off = state.v.kind === &#x27;original&#x27;;
-    const bottom = settingsEnd + setCard.offsetHeight;
+    if (!levelCard.hidden) {
+      levelCard.innerHTML = settingSwitch({ key: &#x27;equalHeadingSizes&#x27;, label: &#x27;Одинаковые размеры уровней&#x27; }, state.equalHeadingSizes);
+    }
+    const presetEnd = place(preHead, preCard, contextEnd + 4);
     const kb = state.ctx.id === &#x27;kb&#x27;;
     wHead.hidden = wRadios.hidden = !kb;
     wRadios.innerHTML = [[&#x27;normal&#x27;, &#x27;Обычная&#x27;], [&#x27;wide&#x27;, &#x27;Широкая&#x27;], [&#x27;narrow&#x27;, &#x27;Узкая&#x27;]].map(([n, label]) =&gt; radio(state.width === n, label, `data-w=&quot;${n}&quot;`)).join(&#x27;&#x27;);
     sideRadios.innerHTML = [[&#x27;left&#x27;, &#x27;Слева&#x27;], [&#x27;right&#x27;, &#x27;Справа&#x27;]]
       .map(([side, label]) =&gt; radio(state.side === side, label, `data-s=&quot;${side}&quot;`)).join(&#x27;&#x27;);
     const triggers = triggerOptions();
+    triggerHead.textContent = hasRulerPlacement() ? &#x27;Линейка&#x27; : &#x27;Вызывающий элемент&#x27;;
     triggerHead.hidden = triggerRadios.hidden = triggers.length &lt; 2;
     triggerRadios.innerHTML = triggerRadios.hidden ? &#x27;&#x27; : triggers.map(([id, label]) =&gt;
       radio(state.trigger === id, label, `data-trigger=&quot;${id}&quot;`)).join(&#x27;&#x27;);
@@ -3092,14 +3152,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     const tightHead = byId(&#x27;tightHead&#x27;);
     tightRadios.hidden = !vw; tightHead.hidden = true;
     tightRadios.innerHTML = `&lt;button class=&quot;sw${state.tight ? &#x27; on&#x27; : &#x27;&#x27;}&quot; role=&quot;switch&quot; aria-checked=&quot;${state.tight}&quot;${off ? &#x27; disabled&#x27; : &#x27;&#x27;} data-t=&quot;1&quot;&gt;&lt;span class=&quot;swc&quot;&gt;Отступы меньше&lt;/span&gt;&lt;span class=&quot;swt&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/span&gt;&lt;/button&gt;`;
-    const place = (head, card, y) =&gt; {
-      head.style.top = y + &#x27;px&#x27;;
-      const top = y + head.offsetHeight;
-      card.style.top = top + &#x27;px&#x27;;
-      return top + card.offsetHeight;
-    };
-    const contextEnd = place(ctxHead, ctxRadios, bottom + 4);
-    const sideEnd = place(sideHead, sideRadios, contextEnd + 4);
+    const sideEnd = place(sideHead, sideRadios, presetEnd + 4);
     const triggerEnd = triggerRadios.hidden ? sideEnd : place(triggerHead, triggerRadios, sideEnd + 4);
     const widthEnd = kb ? place(wHead, wRadios, triggerEnd + 4) : triggerEnd;
     tightRadios.style.top = (widthEnd + 4) + &#x27;px&#x27;;
@@ -3112,7 +3165,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     if (state.orig) state.side = state.ctx.side;
     Object.assign(state, { open: false, lc: false, active: 0, edit: false });
     syncTrigger();
-    syncPinMode(craft() || linePreset() || (!state.slab &amp;&amp; !state.ctx.startFree));
+    syncPinMode(craft() || blueLinePreset() || (!state.slab &amp;&amp; !state.ctx.startFree));
     art.scrollTop = 0;
     render();
   }
@@ -3134,8 +3187,9 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
       if (branches() &amp;&amp; state.v.kind !== &#x27;original&#x27;) {
         if (a === &#x27;saby-levels&#x27;) {
           const expand = sabyLevelsCollapsed();
-          sabyCollapsed.clear();
-          if (!expand) sabyTopBranches.forEach(i =&gt; sabyCollapsed.add(i));
+          const collapsed = collapsedBranches();
+          collapsed.clear();
+          if (!expand) topBranches().forEach(i =&gt; collapsed.add(i));
           focusSelector = &#x27;[data-act=&quot;saby-levels&quot;]&#x27;;
         }
         if (a === &#x27;saby-branch&#x27;) {
@@ -3161,40 +3215,46 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
   preCard.addEventListener(&#x27;click&#x27;, (e) =&gt; {
     const b = e.target.closest(&#x27;[data-pre]&#x27;); if (!b) return;
     const pr = PRESETS.find(x =&gt; x.id === b.dataset.pre);
-    if (pr.id === &#x27;now&#x27;) { state.orig = true; state.slab = false; state.v = originalVariant; }
+    if (pr.id === &#x27;now&#x27;) { state.orig = true; state.slab = false; state.v = originalVariant; state.side = state.ctx.side; }
     else {
       state.presetMcol = defMcol();
-      Object.assign(state, preCfg(pr, state.presetMcol), { orig: false, side: pr.id === &#x27;rail&#x27; ? &#x27;right&#x27; : &#x27;left&#x27; });
+      Object.assign(state, preCfg(pr, state.presetMcol), { orig: false, side: pr.id === &#x27;blue-line&#x27; ? &#x27;right&#x27; : &#x27;left&#x27; });
       state.v = buildV();
     }
     if (state.orig) showLook();
     else {
       state.trigger = &#x27;lines&#x27;;
-      syncPinMode(craft() || linePreset());
+      syncPinMode(craft() || blueLinePreset());
       state.open = false;
       render();
     }
   });
-  setHead.addEventListener(&#x27;click&#x27;, () =&gt; {
-    settingsOpen = !settingsOpen;
+  setHead.addEventListener(&#x27;click&#x27;, (event) =&gt; {
+    settingsOpen = true;
     renderRadios();
+    if (event.detail === 0) {
+      (setCard.querySelector(&#x27;button:not(:disabled)&#x27;) || setClose).focus();
+    }
+  });
+  setClose.addEventListener(&#x27;click&#x27;, () =&gt; {
+    settingsOpen = false;
+    renderRadios();
+    setHead.focus();
   });
   setCard.addEventListener(&#x27;click&#x27;, (e) =&gt; {
     const b = e.target.closest(&#x27;[data-set]&#x27;); if (!b || b.disabled) return;
     const k = b.dataset.set, val = JSON.parse(b.dataset.val);
-    if (k === &#x27;equalHeadingSizes&#x27;) {
-      state.equalHeadingSizes = val;
-      const restoreFocus = document.activeElement === b;
-      render();
-      if (restoreFocus) setCard.querySelector(&#x27;[data-set=&quot;equalHeadingSizes&quot;]&#x27;)?.focus({ preventScroll: true });
-      return;
-    }
-    if (k === &#x27;title&#x27;) {
-      if (state.ctx.sd) state.sabyTitle = val;
-      else state.align = ALIGNS.find(a =&gt; a.id === (val ? &#x27;base&#x27; : &#x27;item&#x27;));
-    } else state[k] = val;
+    state[k === &#x27;textColor&#x27; &amp;&amp; blueLinePreset() ? &#x27;blueText&#x27; : k] = val;
     state.orig = false; state.v = buildV();
     showLook();
+  });
+  levelCard.addEventListener(&#x27;click&#x27;, (e) =&gt; {
+    const button = e.target.closest(&#x27;[data-set=&quot;equalHeadingSizes&quot;]&#x27;);
+    if (!button) return;
+    state.equalHeadingSizes = JSON.parse(button.dataset.val);
+    const restoreFocus = document.activeElement === button;
+    render();
+    if (restoreFocus) levelCard.querySelector(&#x27;[data-set=&quot;equalHeadingSizes&quot;]&#x27;)?.focus({ preventScroll: true });
   });
   tightRadios.addEventListener(&#x27;click&#x27;, (e) =&gt; {
     if (!e.target.closest(&#x27;[data-t]&#x27;) || state.v.kind === &#x27;original&#x27;) return;
@@ -3207,7 +3267,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     const n = r.dataset.w;
     if (n === state.width) return;
     state.width = n; state.ctx = kbCtx(n); state.open = false;
-    syncPinMode(!state.slab || linePreset());
+    syncPinMode(!state.slab);
     render();
   });
   sideRadios.addEventListener(&#x27;click&#x27;, (e) =&gt; {
@@ -3491,7 +3551,7 @@ fit();
   .sheet-tb{display:flex;align-items:center;height:var(--editor-toolbar-height);flex:0 0 var(--editor-toolbar-height);padding:0 4px 0 16px;position:relative;z-index:2}
   .mode-current .sheet-tb{background:var(--tb)}
   
-  #toolbar-options{gap:0;padding-top:8px;border-top-left-radius:0;border-top-right-radius:0}
+  #toolbar-options{gap:0;margin-top:-6px;background:#f2f2f2;border-top-left-radius:0;border-top-right-radius:0}
   #layoutDisclosure{padding-top:6px}
   #layoutDisclosure &gt; summary{list-style:none;justify-content:space-between;cursor:pointer}
   #layoutDisclosure &gt; summary::-webkit-details-marker{display:none}
@@ -3499,7 +3559,7 @@ fit();
   #layoutDisclosure[open] &gt; summary::after{transform:rotate(225deg)}
   #settings,#layoutChoices{display:flex;flex-direction:column;gap:2px}
   
-  .settings-title{display:flex;align-items:center;height:var(--inline_height-inline_height_m,24px);margin:0;padding:0 6px;color:var(--text-text-color);font-size:var(--font-font-size-font-size_l,15px);font-weight:var(--font-font-weight-bold,600)}
+  .settings-title{display:flex;align-items:center;margin:0;padding:6px 6px 4px;color:var(--text-text-color);font-size:13px;line-height:18px;font-weight:400;letter-spacing:normal;text-transform:uppercase}
 
 #settings {
   --ink:var(--text-text-color);
@@ -3541,7 +3601,7 @@ fit();
   .df-row{display:flex;gap:20px;flex-wrap:wrap}
   .df-devices{padding-top:8px}
   .df-size{font-variant-numeric:tabular-nums}
-  .df-panel{border-radius:8px 8px 0 0}
+  .df-panel{border-radius:8px 8px 0 0;background:linear-gradient(var(--background-background-color) 60px,#f2f2f2 60px)}
   .sheet-tb.scrolled{box-shadow:0 6px 12px rgba(15,15,15,.1),0 3px 6px rgba(15,15,15,.05),0 0 0 1px rgba(15,15,15,.02)} 
   
   .body:has(.tb-strip:not(.collapsed)){--visible-strip:var(--editor-toolbar-height)}
@@ -3671,10 +3731,8 @@ fit();
 
 
 .demo-switch{padding:6px;background:#f2f2f2;font:400 14px/17px Inter,system-ui,sans-serif}
-.demo-switch .df-options{display:flex;flex-direction:column;gap:2px;padding:4px 6px;border-radius:8px;background:var(--background-background-color)}
+.demo-switch .df-options{display:flex;flex-direction:row;gap:18px;padding:4px 6px;border-radius:8px;background:var(--background-background-color)}
 
-.df-panel__top &gt; .demo-switch{padding-bottom:0;margin-bottom:-6px}
-.df-panel__top &gt; .demo-switch:has(+ #toolbar-options){background:var(--background-contrast_background-color)}
 &lt;/style&gt;
 
 
