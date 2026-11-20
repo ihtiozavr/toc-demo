@@ -2052,7 +2052,7 @@ svg{ display: block}
 #toc.cmp:is(.kb,.white-outline) .head:has(.btn) + .list{ margin-top: 4px}
 .oi{ position: relative;display: flex;align-items: center;min-height: 31px;padding: 6px 28px 6px var(--pl);border-radius: 4px;cursor: pointer;
   font-size: 14px;line-height: 17px;color: var(--label)}
-.oi:hover{ background: var(--selected)}
+.oi:not(.on):hover{ background: var(--selected)}
 .oi.on{ background: var(--selected);color: var(--ink)}
 .oi .mk{ display: none;position: absolute;left: var(--edge-marker-x, 0px);top: 7px;width: 3px;height: 16px;border-radius: 0 2px 2px 0;background: var(--brand)}
 .oi.on .mk{ display: block}
@@ -2090,7 +2090,7 @@ svg{ display: block}
 #toc.sd .sd-card-header + .list &gt; .ci.src:not(.longmk) .slot{ padding-top:11px}
 .ttl-live{ padding-left: 12px;margin-right: 1px;font-size: 14px;line-height: 24px;text-transform: uppercase;color: var(--label);white-space: nowrap}
 .oi .ar{ position: absolute;top: 0;left: var(--al);width: 20px;height: 31px;display: grid;justify-items: center}
-.oi .ar:hover path{ fill: var(--brand-dark)}
+.oi:not(.on) .ar:hover path{ fill: var(--brand-dark)}
 .clamp{ display: block;overflow: hidden;white-space: nowrap}
 .tx{ flex: 1 1 0;min-width: 0;display: grid}
 .tx &gt; span{ grid-area: 1 / 1;align-self: center}
@@ -2107,7 +2107,7 @@ svg{ display: block}
 .ci.src .slot{ flex: 0 0 3px;padding-top: 6px}
 .ci.src .slot i{ display: block;position: relative;left: var(--edge-marker-x, 0px);width: 3px;height: 16px;border-radius: 4px}
 .ci.src .cnt{ --text-inset: 11px}
-.ci.src:hover, .ci.src.on{ background: var(--selected)}
+.ci.src:not(.on):hover, .ci.src.on{ background: var(--selected)}
 #toc:is(.pale-fill,.white-doc) .ci.src:is(:hover,.on){ background: var(--background-contrast-pale_color)}
 .ci.src.on .slot i{ background: var(--dash-on, var(--brand))}
 #toc.vw .ci.src.on .slot i{ background: var(--dash-on, var(--live-marker))}
@@ -2123,7 +2123,7 @@ svg{ display: block}
 .branch-toggle, .branch-space{ flex: 0 0 20px}
 .branch-toggle{ display: grid;place-items: center;align-self: flex-start;height: 19px;border-radius: 4px}
 #toc.cmp :is(.head .btn, .branch-toggle) path{ fill: var(--icon-label_icon-color)}
-#toc.cmp :is(.head .btn, .branch-toggle):is(:hover, :focus-visible) path{ fill: var(--icon-label_hover_icon-color)}
+#toc.cmp :is(.head .btn, .branch-toggle:not(.on *)):is(:hover, :focus-visible) path{ fill: var(--icon-label_hover_icon-color)}
 .branch-toggle:focus-visible{ outline: 2px solid var(--brand)}
 .ci.ln{ min-height: 28px}
 .ci.ln .mk{ position: relative;flex: 0 0 3px;align-self: stretch;background: transparent}
@@ -2134,7 +2134,7 @@ svg{ display: block}
 .ci.ln.all .mk{ background: var(--border-unaccented_border-color)}
 #toc.kb .ci.ln.all:not(.fill) .mk{ clip-path: inset(0 1px 0 0)}
 .ci.ln.nomk .mk{ visibility: hidden}
-#toc:not([data-row-fill]) .ci.accent:hover, .ci.accent.on{ color: var(--brand-muted)}
+#toc:not([data-row-fill]) .ci.accent:not(.on):hover, .ci.accent.on{ color: var(--brand-muted)}
 .ci.accent.on .mk{ background: var(--brand-muted)}
 .ci.mono.on, .ci.ink.on{ color: var(--ink)}
 #toc[data-text=&quot;black&quot;]{ --item-ink: var(--text-text-color)}
@@ -2146,7 +2146,7 @@ svg{ display: block}
 #toc.cmp[data-text]:not([data-row-fill]) .ci:not(.src,.on):hover .tx{ color:var(--text-label_contrast_text-color);opacity:1}
 #toc.cmp.blue-grey[data-text]:not([data-row-fill]) .ci:not(.on):hover .tx{ color:var(--text-text-color);opacity:1}
 #toc.cmp.black-text[data-text] .ci[data-i] .tx{ color:var(--ink);opacity:1}
-#toc.cmp.black-text[data-text] .ci:is(.on,:not([data-row-fill] *)):hover .tx{ color:#575757}
+#toc.cmp.black-text[data-text] .ci:not(.on,[data-row-fill] *):hover .tx{ color:#575757}
 #toc.sd-blue{letter-spacing:normal}
 #toc.blue-fill .ci:is(.on,:hover){background:var(--line-fill,var(--selected))}
 #toc.blue-fill .ci.ln .mk{left:0}
@@ -2259,7 +2259,7 @@ svg{ display: block}
 #toc[data-ctl=&quot;1&quot;]{ --card-bg: var(--ctl-bg, var(--white))}
 #toc .card{ box-shadow: var(--ctl-sh, var(--card-shadow)) !important}
 #toc.white-outline .card{ --pin-inset:7.5px;padding:4px !important}
-#toc.white-outline .ci .cnt{ --text-inset:calc(var(--pin-inset) - 3px);padding-right:var(--pin-inset)}
+#toc.white-outline .ci .cnt,#toc.pale-fill[data-row-fill] .ci.src[data-i] .cnt{--text-inset:4.5px;padding-right:7.5px;column-gap:4px}
 #toc.white-outline .card:not(.pinned-card){border-radius:12px;--ctl-sh:inset 0 0 0 1px color-mix(in srgb,var(--border-pale_border-color) 70%,transparent)}
 #toc.cmp[data-bg=&quot;grey&quot;] .card:not(.pinned-card){ --ctl-sh:none}
 #toc[data-bg=&quot;grey&quot;]{ --ctl-bg: var(--bg-grey)}
