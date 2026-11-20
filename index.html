@@ -2867,14 +2867,13 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     guide.hidden = true;
     guide.style.top = (g.titleTop + (c.static ? 37 : 36)) + &#x27;px&#x27;;
     if (!inSidebar || sideOutline()) syncBreaks();
-    if (nearTextRulers() || (!blueLinePreset() &amp;&amp; (c.id === &#x27;kb&#x27; || slabDoc() || panelInArticle() || (c.static &amp;&amp; !state.orig)))) alignToArticleTitle(artIn.querySelector(&#x27;h1&#x27;));
-    else alignDashesToParagraph();
+    alignToArticleTitle(artIn.querySelector(&#x27;h1&#x27;), nearTextRulers() || (!blueLinePreset() &amp;&amp; (c.id === &#x27;kb&#x27; || slabDoc() || panelInArticle() || (c.static &amp;&amp; !state.orig))));
     renderRadios();
   }
 
-  function alignToArticleTitle(title) {
+  function alignToArticleTitle(title, alignPin) {
     const articlePanel = panelInArticle() ? byId(&#x27;card&#x27;) : null;
-    const pin = (articlePanel || leftKb()) &amp;&amp; doc.querySelector(&#x27;[data-act=&quot;pin&quot;],[data-act=&quot;unpin&quot;]&#x27;);
+    const pin = alignPin &amp;&amp; (articlePanel || leftKb()) &amp;&amp; doc.querySelector(&#x27;[data-act=&quot;pin&quot;],[data-act=&quot;unpin&quot;]&#x27;);
     const zone = doc.querySelector(&#x27;.zone&#x27;);
     const dash = zone?.querySelector(&#x27;.dash&#x27;);
     if (!pin &amp;&amp; !dash) return;
@@ -2989,21 +2988,6 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     card.style.top = (parseFloat(card.style.top) + trim) + &#x27;px&#x27;;
     card.style.setProperty(&#x27;padding-top&#x27;, (padding - trim) + &#x27;px&#x27;, &#x27;important&#x27;);
     if (card.style.height) card.style.height = (parseFloat(card.style.height) - trim) + &#x27;px&#x27;;
-  }
-
-  function alignDashesToParagraph() {
-    if (state.ctx.sd &amp;&amp; !blueLinePreset()) return;
-    const zone = doc.querySelector(&#x27;.zone&#x27;);
-    const dash = zone?.querySelector(&#x27;.dash&#x27;);
-    const paragraph = art.querySelector(&#x27;p&#x27;);
-    if (!dash || !paragraph) return;
-    const range = document.createRange();
-    range.selectNodeContents(paragraph);
-    const firstLine = range.getClientRects()[0];
-    if (!firstLine) return;
-    const scale = box.getBoundingClientRect().width / boxOf(state.ctx).w;
-    const offset = (firstLine.top - dash.getBoundingClientRect().top) / scale + art.scrollTop;
-    zone.style.top = (parseFloat(zone.style.top) + offset) + &#x27;px&#x27;;
   }
 
   let unpinPoint = null;
