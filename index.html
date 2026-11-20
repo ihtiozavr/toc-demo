@@ -3158,7 +3158,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
       const on = presetOn(pr);
       return `&lt;button class=&quot;opt${on ? &#x27; on&#x27; : &#x27;&#x27;}&quot; role=&quot;radio&quot; aria-checked=&quot;${on}&quot; data-pre=&quot;${pr.id}&quot;&gt;${mini(pr.cfg?.bg ?? &#x27;none&#x27;, 58, 40)}&lt;span class=&quot;oc&quot;&gt;${pr.label}&lt;/span&gt;&lt;/button&gt;`;
     }).join(&#x27;&#x27;);
-    const settings = SETTINGS();
+    const settings = state.orig ? [] : SETTINGS();
     const showSettings = settingsOpen &amp;&amp; settings.length &gt; 0;
     setHead.hidden = settings.length === 0 || showSettings;
     setHead.setAttribute(&#x27;aria-expanded&#x27;, String(showSettings));
