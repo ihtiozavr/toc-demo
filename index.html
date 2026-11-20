@@ -2675,12 +2675,6 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     else if (c.fixedText) geo.textL = geo.textR = (W - 820) / 2;
     if (nearTextRulers()) {
       centerWideArticle(geo, W, 0, left);
-      if (blue &amp;&amp; state.mode === &#x27;pinned&#x27;) {
-        const textShift = left ? 56 : -56;
-        geo.textL += textShift;
-        geo.textR -= textShift;
-      }
-
       // Left edge of the 100% label in the SabyDoc header artwork.
       const zoomLabelX = 1253 - B.x;
       const anchor = left ? W - zoomLabelX : zoomLabelX;
@@ -2841,7 +2835,12 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
         card.style.left = ((left ? 20 : 1528) - cb.x - localCenter) + &#x27;px&#x27;;
       }
     }
-    if (slabDoc() &amp;&amp; state.mode === &#x27;pinned&#x27;) {
+    if (state.ctx.sd &amp;&amp; blueLinePreset() &amp;&amp; state.mode === &#x27;pinned&#x27;) {
+      const card = byId(&#x27;card&#x27;);
+      const left = state.side === &#x27;left&#x27;;
+      const occupied = left ? card.offsetLeft + card.offsetWidth : cb.w - card.offsetLeft;
+      centerWideArticle(g, cb.w, occupied, left);
+    } else if (slabDoc() &amp;&amp; state.mode === &#x27;pinned&#x27;) {
       const card = byId(&#x27;card&#x27;);
       const left = state.side === &#x27;left&#x27;;
       const occupied = left ? card.offsetLeft + card.offsetWidth : cb.w - card.offsetLeft;
