@@ -2160,7 +2160,6 @@ svg{ display: block}
 
 #toc.sd-blue .head:has(.btn) + .list{margin-top:4px}
 #toc.sd-blue .pinned-card{background:transparent}#toc.white-doc .pinned-card{background:transparent;box-shadow:none}
-#toc.blue-line .card:not(.pinned-card){border-radius:12px}
 #toc.blue-line .ci.mono.fill.on .mk::after{border-radius:2px}
 #toc.blue-line .ci.mono.on:not(.fill) .mk{background:transparent}
 #toc.blue-line .ci.mono.all.on:not(.fill) .mk{background:var(--line-track,var(--selected));clip-path:none;flex-basis:2px;margin-right:1px}
@@ -2266,7 +2265,7 @@ svg{ display: block}
 #toc .card{ box-shadow: var(--ctl-sh, var(--card-shadow)) !important}
 #toc.white-outline .card{ --pin-inset:7.5px;padding:4px !important}
 #toc.white-outline .ci .cnt,#toc.pale-fill[data-row-fill] .ci.src[data-i] .cnt{--text-inset:4.5px;padding-right:7.5px;column-gap:4px}
-#toc.white-outline .card:not(.pinned-card){border-radius:12px;--ctl-sh:inset 0 0 0 1px color-mix(in srgb,var(--border-pale_border-color) 70%,transparent)}
+#toc.white-outline .card:not(.pinned-card){--ctl-sh:inset 0 0 0 1px color-mix(in srgb,var(--border-pale_border-color) 70%,transparent)}
 #toc.cmp[data-bg=&quot;grey&quot;] .card:not(.pinned-card){ --ctl-sh:none}
 #toc[data-bg=&quot;grey&quot;]{ --ctl-bg: var(--bg-grey)}
 #toc.sd[data-bg=&quot;grey&quot;]{ --ctl-bg: #f8f8f8}
@@ -2967,7 +2966,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     const rightExtension = unified ? 8 : 0;
     const rightPadding = unified ? pl + inset + extension : pr;
     const left = state.side === &#x27;left&#x27;;
-    const cardStyle = `${g.panelInset ? `--edge-marker-x:-${pl + inset}px;` : &#x27;&#x27;}left:${cardX - inset - extension}px;top:${g.cardTop}px;width:${width + inset + shift + extension + rightExtension}px;${g.cardH ? &#x27;height:&#x27; + g.cardH + &#x27;px;&#x27; : &#x27;&#x27;}${unified ? &#x27;border-radius:0;&#x27; : &#x27;&#x27;}padding:${canPin() ? pt : pb}px ${rightPadding}px ${pb}px ${pl + inset + extension}px`;
+    const cardStyle = `${g.panelInset ? `--edge-marker-x:-${pl + inset}px;` : &#x27;&#x27;}left:${cardX - inset - extension}px;top:${g.cardTop}px;width:${width + inset + shift + extension + rightExtension}px;${g.cardH ? &#x27;height:&#x27; + g.cardH + &#x27;px;&#x27; : &#x27;&#x27;}padding:${canPin() ? pt : pb}px ${rightPadding}px ${pb}px ${pl + inset + extension}px`;
     let fixedTitle = &#x27;&#x27;;
     if (unified) {
       const textX = cardX + pl + 3 + (v.item === &#x27;src&#x27; ? 5 : 1) + 20;
@@ -3559,7 +3558,7 @@ fit();
   
   .panel{flex:0 0 var(--sidebar-width);width:var(--sidebar-width);height:852px;margin-top:-1px;border-radius:12px;overflow:hidden;position:relative;align-self:flex-start}
   .panel img.shot{display:block;width:350px;pointer-events:none;user-select:none}
-  .toc-panel{background:#fff;margin:var(--visible-strip) var(--toc-gap) 0 var(--toc-left-inset);align-self:stretch;height:auto}
+  .toc-panel{background:#fff;border-radius:8px;margin:var(--visible-strip) var(--toc-gap) 0 var(--toc-left-inset);align-self:stretch;height:auto}
   .toc-panel img.shot{width:100%;height:auto}
   .wid-panel{background:var(--background-unaccented_background-color);margin-left:var(--widgets-gap)}
   .win:not(.toc-pinned) .rail-l{display:block}
