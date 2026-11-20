@@ -2269,7 +2269,7 @@ svg{ display: block}
 #toc[data-sh=&quot;bright&quot;]{ --ctl-sh: var(--shadow-sliding)}
 #toc[data-sh=&quot;saby&quot;]{ --ctl-sh: var(--shadow-saby)}
 #toc[data-sh=&quot;none&quot;]{ --ctl-sh: 0 0 0 0 transparent}
-.pre-grid{ display: grid;grid-template-columns: repeat(4, 1fr);gap: 6px;padding: 2px 0 0}
+.pre-grid{ display: grid;grid-template-columns: repeat(3, 1fr);gap: 6px;padding: 2px 0 0}
 .pre-grid [data-pre=&quot;blue-line&quot;] .thc::before{ content:&quot;&quot;;position:absolute;left:4px;top:6px;bottom:5px;width:2px;background:linear-gradient(var(--secondary-border) 40%,var(--selected) 40%)}
 .opt{ display: flex;flex-direction: column;align-items: center;gap: 3px;padding: 0;cursor: pointer}
 .opt .th{ position: relative;display: block;border-radius: 6px;background: #e8eaee;box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .04)}
@@ -3079,7 +3079,6 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     { id: &#x27;now&#x27;, label: &#x27;Как сейчас&#x27; },
     { id: &#x27;blue-line&#x27;, label: &#x27;С линией&#x27;, cfg: { blueLine: true, fill: false, mlen: &#x27;long&#x27;, bg: &#x27;none&#x27;, mcol: &#x27;blue&#x27;, sh: &#x27;default&#x27; } },
     { id: &#x27;craft&#x27;, label: &#x27;Серый фон&#x27;, cfg: { fill: true, pale: true, mlen: &#x27;none&#x27;, bg: &#x27;grey&#x27; } },
-    { id: &#x27;slab&#x27;, label: &#x27;Белый фон с обводкой&#x27;, cfg: { slab: true, fill: true, mlen: &#x27;none&#x27;, bg: &#x27;none&#x27; } },
   ];
   const preCfg = (pr, mcol) =&gt; ({ originalMarker: &#x27;default&#x27;, equalHeadingSizes: true, textColor: &#x27;black&#x27;, blueText: &#x27;black&#x27;, blueArrowSide: &#x27;none&#x27;, arrowSide: &#x27;left&#x27;, pale: false, slab: false, blueLine: false, mcol: pr.id === &#x27;slab&#x27; ? mcol : &#x27;grey&#x27;, ...pr.cfg });
   const cur = () =&gt; ({ sh: state.sh, bg: state.bg, mlen: state.mlen, mcol: state.mcol, fill: state.fill, pale: state.pale, slab: state.slab, blueLine: state.blueLine, blueArrowSide: state.blueArrowSide, textColor: tocTextColor(), arrowSide: state.arrowSide });
