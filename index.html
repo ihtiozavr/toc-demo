@@ -1978,9 +1978,9 @@ svg{ display: block}
 .sd-edit:hover{ background: rgba(0, 133, 242, .06)}
 .sd-edit.on:hover{ background: rgba(18, 161, 44, .06)}
 #toc &gt; .zone{ pointer-events: auto}
-#toc.sd[data-bg=&quot;grey&quot;] .zone::before{ content:&quot;&quot;;position:absolute;inset:-12px}
-#toc.sd[data-bg=&quot;grey&quot;] .dash{ transform-origin:left center}
-#toc.sd[data-bg=&quot;grey&quot;] .zone:hover .dash{ transform:scaleX(1.4)}
+#toc.sd.cmp[data-bg=&quot;grey&quot;] .zone::before{ content:&quot;&quot;;position:absolute;inset:-12px}
+#toc.sd.cmp[data-bg=&quot;grey&quot;] .dash{ transform-origin:left center}
+#toc.sd.cmp[data-bg=&quot;grey&quot;] .zone:hover .dash{ transform:scaleX(1.4)}
 .art{ position: absolute;left: 0;right: 0;bottom: 0;overflow-y: auto;border-radius: inherit;background: var(--white);scrollbar-width: none;overscroll-behavior: contain}
 .art::-webkit-scrollbar{ display: none}
 .art-in{ color: var(--ink);font-size: 16px;line-height: 19px;padding-bottom: 560px}
@@ -2056,6 +2056,11 @@ svg{ display: block}
 .oi.on{ background: var(--selected);color: var(--ink)}
 .oi .mk{ display: none;position: absolute;left: var(--edge-marker-x, 0px);top: 7px;width: 3px;height: 16px;border-radius: 0 2px 2px 0;background: var(--brand)}
 .oi.on .mk{ display: block}
+#toc.orig[data-bg=&quot;grey&quot;] .oi.on .mk{ background:var(--dash-on,var(--brand)) }
+#toc.orig[data-bg=&quot;grey&quot;][data-original-marker=&quot;long&quot;] .oi.on .mk{ top:0;bottom:0;height:auto;transform:none;border-radius:2px }
+#toc.orig[data-bg=&quot;grey&quot;][data-original-marker=&quot;none&quot;] .oi.on .mk{ display:none }
+#toc.orig[data-bg=&quot;grey&quot;][data-original-marker=&quot;none&quot;] .dash.on{ background:var(--dash) }
+#toc.orig[data-bg=&quot;grey&quot;][data-fill-color=&quot;grey&quot;] .oi:is(.on,:hover){ background:var(--background-contrast-pale_color) }
 #toc[data-original-blue] .oi .mk{background:var(--dash-on)}#toc.orig .oi:not(.on){color:var(--ink)}#toc.orig[data-original-grey] .oi:not(.on){color:var(--text-label_contrast_text-color)}
 #toc.live .oi{ color: var(--ink)}
 #toc.live .oi.l1{ font-size: 16px;line-height: 19.5px}
@@ -2256,7 +2261,8 @@ svg{ display: block}
 .radio:hover:not(.on) .dot rect{ stroke: #f6733c}
 .radio.on{ color: var(--ink);cursor: default}
 .radio:focus-visible{ outline: 2px solid var(--brand);outline-offset: 1px}
-#toc[data-ctl=&quot;1&quot;]{ --card-bg: var(--ctl-bg, var(--white))}
+#toc[data-ctl=&quot;1&quot;], #toc.orig[data-bg=&quot;grey&quot;]{ --card-bg: var(--ctl-bg, var(--white))}
+#toc.orig.sd[data-bg=&quot;grey&quot;] .pinned-card{ background:var(--card-bg)}
 #toc .card{ box-shadow: var(--ctl-sh, var(--card-shadow)) !important}
 #toc.white-outline .card{ --pin-inset:7.5px;padding:4px !important}
 #toc.white-outline .ci .cnt,#toc.pale-fill[data-row-fill] .ci.src[data-i] .cnt{--text-inset:4.5px;padding-right:7.5px;column-gap:4px}
@@ -2269,7 +2275,7 @@ svg{ display: block}
 #toc[data-sh=&quot;bright&quot;]{ --ctl-sh: var(--shadow-sliding)}
 #toc[data-sh=&quot;saby&quot;]{ --ctl-sh: var(--shadow-saby)}
 #toc[data-sh=&quot;none&quot;]{ --ctl-sh: 0 0 0 0 transparent}
-.pre-grid{ display: grid;grid-template-columns: repeat(3, 1fr);gap: 6px;padding: 2px 0 0}
+.pre-grid{ display: grid;grid-template-columns: repeat(4, minmax(0, 1fr));gap: 6px;padding: 2px 0 0}
 .pre-grid [data-pre=&quot;blue-line&quot;] .thc::before{ content:&quot;&quot;;position:absolute;left:4px;top:6px;bottom:5px;width:2px;background:linear-gradient(var(--secondary-border) 40%,var(--selected) 40%)}
 .opt{ display: flex;flex-direction: column;align-items: center;gap: 3px;padding: 0;cursor: pointer}
 .opt .th{ position: relative;display: block;border-radius: 6px;background: #e8eaee;box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .04)}
@@ -2775,7 +2781,11 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     const cb = boxOf(c);
     Object.assign(box.style, { left: cb.x + &#x27;px&#x27;, top: cb.y + &#x27;px&#x27;, width: cb.w + &#x27;px&#x27;, height: cb.h + &#x27;px&#x27;, borderRadius: c.id === &#x27;kb&#x27; ? &#x27;12px 12px 0 0&#x27; : &#x27;var(--document-radius) var(--document-radius) 0 0&#x27; });
     box.classList.toggle(&#x27;ls&#x27;, !!(c.static || c.sd));
-    const dashOn = state.orig &amp;&amp; state.originalMarker === &#x27;blue&#x27; ? MC(&#x27;blue&#x27;) : state.orig ? (c.static || sabyLeft() ? &#x27;var(--live-marker)&#x27; : &#x27;&#x27;) : MC(state.mcol);
+    const grayOriginal = state.orig &amp;&amp; state.bg === &#x27;grey&#x27;;
+    const markerColor = grayOriginal ? state.mcol : state.originalMarker;
+    const dashOn = state.orig &amp;&amp; markerColor !== &#x27;default&#x27;
+      ? MC(markerColor)
+      : state.orig ? (c.static || sabyLeft() ? &#x27;var(--live-marker)&#x27; : &#x27;&#x27;) : MC(state.mcol);
     const sdOrange = !state.orig &amp;&amp; state.mcol === &#x27;orange&#x27;;
     if (dashOn) doc.style.setProperty(&#x27;--dash-on&#x27;, dashOn); else doc.style.removeProperty(&#x27;--dash-on&#x27;);
     doc.className = v.kind === &#x27;original&#x27; ? &#x27;orig&#x27; + (c.static || sabyLeft() ? &#x27; live&#x27; : &#x27;&#x27;) : &#x27;cmp&#x27; + ((v.item === &#x27;mono&#x27; || v.item === &#x27;ink&#x27;) &amp;&amp; !(v.extra || &#x27;&#x27;).includes(&#x27;blueline&#x27;) ? &#x27; neutral&#x27; : &#x27;&#x27;);
@@ -2787,6 +2797,13 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     doc.classList.toggle(&#x27;sd-blue&#x27;, Boolean(c.sd &amp;&amp; blueLinePreset()));
     doc.classList.toggle(&#x27;sd-right&#x27;, Boolean(sabyRight()));
     doc.toggleAttribute(&#x27;data-row-fill&#x27;, !state.orig &amp;&amp; state.fill);
+    if (grayOriginal) {
+      doc.dataset.originalMarker = state.mlen;
+      doc.dataset.fillColor = state.fillColor;
+    } else {
+      delete doc.dataset.originalMarker;
+      delete doc.dataset.fillColor;
+    }
     doc.toggleAttribute(&#x27;data-edit&#x27;, Boolean(c.sd &amp;&amp; state.edit));
     doc.toggleAttribute(&#x27;data-original-heading-sizes&#x27;, c.sd &amp;&amp; !state.orig &amp;&amp; !state.equalHeadingSizes);
     doc.classList.toggle(&#x27;sdorange&#x27;, sdOrange);
@@ -2801,7 +2818,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     doc.classList.toggle(&#x27;white-outline&#x27;, state.slab &amp;&amp; state.bg === &#x27;none&#x27;);
     byId(&#x27;cmds&#x27;).hidden = !!(state.ctx.static || state.ctx.sd);
     const ctl = v.kind !== &#x27;original&#x27;;
-    doc.dataset.ctl = ctl ? &#x27;1&#x27; : &#x27;0&#x27;; doc.dataset.bg = state.orig ? &#x27;none&#x27; : state.bg; doc.dataset.sh = state.slab ? &#x27;default&#x27; : state.sh;
+    doc.dataset.ctl = ctl ? &#x27;1&#x27; : &#x27;0&#x27;; doc.dataset.bg = state.bg; doc.dataset.sh = state.slab ? &#x27;default&#x27; : state.sh;
     if (ctl) doc.dataset.text = &#x27;black&#x27;;
     else delete doc.dataset.text;
     kbMaster.hidden = c.id !== &#x27;kb&#x27;;
@@ -2992,7 +3009,6 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     if (card.style.height) card.style.height = (parseFloat(card.style.height) - trim) + &#x27;px&#x27;;
   }
 
-  let unpinPoint = null;
   function bindHover() {
     const zone = byId(&#x27;zone&#x27;);
     const card = byId(&#x27;card&#x27;);
@@ -3005,10 +3021,9 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
         card.classList.remove(&#x27;open&#x27;);
       }, 160);
     }
-    zone.addEventListener(&#x27;mouseenter&#x27;, event =&gt; {
+    zone.addEventListener(&#x27;mouseenter&#x27;, () =&gt; {
       clearTimeout(openTimer);
-      if (state.open || (event.clientX === unpinPoint?.x &amp;&amp; event.clientY === unpinPoint?.y)) return;
-      unpinPoint = null;
+      if (state.open) return;
       openTimer = setTimeout(() =&gt; { state.open = true; card.classList.add(&#x27;open&#x27;); }, 200);
     });
     zone.addEventListener(&#x27;mouseleave&#x27;, leave);
@@ -3067,10 +3082,22 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
   const setClose = byId(&#x27;setClose&#x27;);
   const presetGrid = preCard.querySelector(&#x27;.pre-grid&#x27;);
   let settingsOpen = false;
-  let activePreset = &#x27;craft&#x27;;
+  let activePreset = &#x27;blue-line&#x27;;
   const presetStorage = &#x27;sabydoc-toc-presets-v1&#x27;;
   let presetOverrides = {};
   try { presetOverrides = JSON.parse(localStorage.getItem(presetStorage)) || {}; } catch {}
+  const savedGreySettings = presetOverrides[&#x27;now-grey&#x27;];
+  if (savedGreySettings) {
+    const { mlen, mcol, textColor, sh, fillColor } = savedGreySettings;
+    const greySettings = Object.fromEntries(Object.entries({
+      mlen: mlen === &#x27;none&#x27; || mlen === &#x27;long&#x27; ? mlen : undefined,
+      mcol: mcol === &#x27;blue&#x27; || mcol === &#x27;grey&#x27; ? mcol : undefined,
+      textColor, sh,
+      fillColor: fillColor === &#x27;grey&#x27; ? fillColor : undefined,
+    }).filter(([, value]) =&gt; value !== undefined));
+    if (Object.keys(greySettings).length) presetOverrides[&#x27;now-grey&#x27;] = greySettings;
+    else delete presetOverrides[&#x27;now-grey&#x27;];
+  }
   const saveOverrides = () =&gt; {
     try { localStorage.setItem(presetStorage, JSON.stringify(presetOverrides)); } catch {}
   };
@@ -3078,14 +3105,17 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
   const wRadios = byId(&#x27;wRadios&#x27;), wHead = byId(&#x27;wHead&#x27;), sideRadios = byId(&#x27;sideRadios&#x27;), sideHead = byId(&#x27;sideHead&#x27;), alRadios = byId(&#x27;alRadios&#x27;), guide = byId(&#x27;guide&#x27;);
   const triggerHead = byId(&#x27;triggerHead&#x27;), triggerRadios = byId(&#x27;triggerRadios&#x27;);
     const PRESETS = [
-    { id: &#x27;now&#x27;, label: &#x27;Как сейчас&#x27; },
-    { id: &#x27;blue-line&#x27;, label: &#x27;С линией&#x27;, cfg: { blueLine: true, fill: false, mlen: &#x27;long&#x27;, bg: &#x27;none&#x27;, mcol: &#x27;blue&#x27;, sh: &#x27;default&#x27; } },
-    { id: &#x27;craft&#x27;, label: &#x27;Серый фон&#x27;, cfg: { fill: true, pale: true, mlen: &#x27;none&#x27;, bg: &#x27;grey&#x27; } },
+    { id: &#x27;now&#x27;, label: &#x27;Как сейчас&#x27;, original: true, cfg: { bg: &#x27;none&#x27;, sh: &#x27;default&#x27; } },
+    { id: &#x27;blue-line&#x27;, label: &#x27;С линией&#x27;, cfg: { blueLine: true, fill: false, mlen: &#x27;long&#x27;, bg: &#x27;none&#x27;, mcol: &#x27;blue&#x27;, sh: &#x27;saby&#x27; } },
+    { id: &#x27;now-grey&#x27;, label: &#x27;Серый фон&#x27;, original: true, cfg: {
+      bg: &#x27;grey&#x27;, mlen: &#x27;default&#x27;, mcol: &#x27;orange&#x27;, fillColor: &#x27;blue&#x27;, sh: &#x27;saby&#x27;,
+    } },
+    { id: &#x27;craft&#x27;, label: &#x27;Как в Craft&#x27;, cfg: { fill: true, pale: true, mlen: &#x27;none&#x27;, bg: &#x27;grey&#x27; } },
   ];
   const preCfg = (pr, mcol) =&gt; ({ originalMarker: &#x27;default&#x27;, equalHeadingSizes: true, textColor: &#x27;black&#x27;, blueText: &#x27;black&#x27;, blueArrowSide: &#x27;none&#x27;, arrowSide: &#x27;left&#x27;, pale: false, slab: false, blueLine: false, mcol: pr.id === &#x27;slab&#x27; ? mcol : &#x27;grey&#x27;, ...pr.cfg });
   const cur = () =&gt; ({ sh: state.sh, bg: state.bg, mlen: state.mlen, mcol: state.mcol, fill: state.fill, pale: state.pale, slab: state.slab, blueLine: state.blueLine, blueArrowSide: state.blueArrowSide, textColor: tocTextColor(), arrowSide: state.arrowSide });
   function SETTINGS() {
-    if (state.orig) return [{ key: &#x27;originalMarker&#x27;, label: &#x27;Цвет маркера&#x27;, opts: [[&#x27;default&#x27;, &#x27;Как сейчас&#x27;], [&#x27;blue&#x27;, &#x27;Синий&#x27;]] }, { key: &#x27;textColor&#x27;, label: &#x27;Цвет текста&#x27;, opts: [[&#x27;black&#x27;, &#x27;Чёрный&#x27;], [&#x27;grey&#x27;, &#x27;Серый&#x27;]] }];
+    if (state.orig &amp;&amp; state.bg !== &#x27;grey&#x27;) return [];
     const blue = blueLinePreset();
     const fill = { key: &#x27;fill&#x27;, label: &#x27;Заливка пункта&#x27;, sw: true };
     const shadow = { key: &#x27;sh&#x27;, label: &#x27;Тень&#x27;, opts: [[&#x27;default&#x27;, &#x27;Мягкая&#x27;], [&#x27;bright&#x27;, &#x27;Яркая&#x27;], [&#x27;saby&#x27;, &#x27;SabyDoc&#x27;], [&#x27;none&#x27;, &#x27;Нет&#x27;]] };
@@ -3094,6 +3124,11 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     const arrowSide = { key: &#x27;arrowSide&#x27;, label: &#x27;Стрелки&#x27;, opts: [[&#x27;left&#x27;, &#x27;Слева&#x27;], [&#x27;right&#x27;, &#x27;Справа&#x27;]] };
 
     const text = { key: &#x27;textColor&#x27;, label: &#x27;Цвет текста&#x27;, opts: [[&#x27;black&#x27;, &#x27;Чёрный&#x27;], [&#x27;grey&#x27;, &#x27;Серый&#x27;]] };
+    if (state.orig) return [
+      { ...length, opts: [[&#x27;none&#x27;, &#x27;Нет&#x27;], [&#x27;long&#x27;, &#x27;Длинный&#x27;], [&#x27;default&#x27;, &#x27;Как сейчас&#x27;]] },
+      color, text, shadow,
+      { key: &#x27;fillColor&#x27;, label: &#x27;Заливка пункта&#x27;, opts: [[&#x27;blue&#x27;, &#x27;Голубая&#x27;], [&#x27;grey&#x27;, &#x27;Серая&#x27;]] },
+    ];
     if (blue) return [
       length, color, text, shadow, fill,
       ...(state.ctx.sd ? [{ ...arrowSide, key: &#x27;blueArrowSide&#x27;, opts: [[&#x27;none&#x27;, &#x27;Нет&#x27;], ...arrowSide.opts] }] : []),
@@ -3112,17 +3147,24 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
   const EDGE = &#x27;inset 0 0 0 1px rgba(0,0,0,.09)&#x27;;
   function tile(key, val) {
     const st = (css, inner = &#x27;&#x27;) =&gt; `&lt;span class=&quot;sq&quot; style=&quot;${css}&quot;&gt;${inner}&lt;/span&gt;`;
+    if (key === &#x27;fillColor&#x27;) {
+      const color = val === &#x27;grey&#x27; ? &#x27;--background-contrast-pale_color&#x27; : &#x27;--selected&#x27;;
+      return st(`background:var(${color});box-shadow:${EDGE}`);
+    }
     if (key === &#x27;sh&#x27;) return st(`background:#fff;box-shadow:${SQ_SH[val]}`);
-    if ((key === &#x27;mlen&#x27; || key === &#x27;blueArrowSide&#x27;) &amp;&amp; val === &#x27;none&#x27;) return st(`background:#fff;box-shadow:inset 0 0 0 1px #d5d9e0`, &#x27;&lt;svg width=&quot;26&quot; height=&quot;26&quot; viewBox=&quot;0 0 26 26&quot; style=&quot;left:0;top:0&quot;&gt;&lt;path d=&quot;M6 20L20 6&quot; stroke=&quot;#b9bfca&quot; stroke-width=&quot;1.2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&#x27;);
+    if ((key === &#x27;mlen&#x27; || key === &#x27;blueArrowSide&#x27; || key === &#x27;arrowSide&#x27;) &amp;&amp; val === &#x27;none&#x27;) return st(`background:#fff;box-shadow:inset 0 0 0 1px #d5d9e0`, &#x27;&lt;svg width=&quot;26&quot; height=&quot;26&quot; viewBox=&quot;0 0 26 26&quot; style=&quot;left:0;top:0&quot;&gt;&lt;path d=&quot;M6 20L20 6&quot; stroke=&quot;#b9bfca&quot; stroke-width=&quot;1.2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&#x27;);
     if (key === &#x27;arrowSide&#x27; || key === &#x27;blueArrowSide&#x27;) return st(`background:#fff;box-shadow:${EDGE}`, `&lt;span style=&quot;position:absolute;top:5px;width:12px;height:16px;${val}:2px&quot;&gt;${ICON.arrowCol(true)}&lt;/span&gt;`);
-    if (key === &#x27;mlen&#x27;) { const c = MC(state.mcol), width = 3; return st(`background:#fff;box-shadow:${EDGE}`, val === &#x27;long&#x27; ? `&lt;i style=&quot;left:5px;top:4px;width:${width}px;height:18px;border-radius:1.5px;background:${c}&quot;&gt;&lt;/i&gt;` : `&lt;i style=&quot;left:5px;top:9px;width:${width}px;height:8px;border-radius:1.5px;background:${c}&quot;&gt;&lt;/i&gt;`); }
+    if (key === &#x27;mlen&#x27; &amp;&amp; val === &#x27;default&#x27;) {
+      return st(`background:#fff;box-shadow:${EDGE}`, `&lt;i style=&quot;left:0;top:5px;width:3px;height:16px;border-radius:0 2px 2px 0;background:${MC(state.mcol)}&quot;&gt;&lt;/i&gt;`);
+    }
+    if (key === &#x27;mlen&#x27;) { const c = state.mcol === &#x27;default&#x27; ? (state.ctx.static || sabyLeft() ? &#x27;var(--live-marker)&#x27; : &#x27;var(--brand)&#x27;) : MC(state.mcol), width = 3; return st(`background:#fff;box-shadow:${EDGE}`, val !== &#x27;short&#x27; ? `&lt;i style=&quot;left:5px;top:4px;width:${width}px;height:18px;border-radius:1.5px;background:${c}&quot;&gt;&lt;/i&gt;` : `&lt;i style=&quot;left:5px;top:9px;width:${width}px;height:8px;border-radius:1.5px;background:${c}&quot;&gt;&lt;/i&gt;`); }
     if (key === &#x27;mcol&#x27; || key === &#x27;originalMarker&#x27;) return st(`background:${val === &#x27;default&#x27; ? (state.ctx.static || sabyLeft() ? &#x27;var(--live-marker)&#x27; : &#x27;var(--brand)&#x27;) : MC(val)}`);
     if (key === &#x27;textColor&#x27;) return st(`display:grid;place-items:center;background:white;box-shadow:${EDGE};color:var(${val === &#x27;black&#x27; ? &#x27;--ink&#x27; : &#x27;--icon-secondary_icon-color&#x27;})`, &#x27;&lt;span aria-hidden=&quot;true&quot;&gt;Аа&lt;/span&gt;&#x27;);
     return &#x27;&#x27;;
   }
 
   function settingSwitch(setting, value) {
-    const on = (setting.disabled || !state.orig) &amp;&amp; value;
+    const on = Boolean(value);
     return `&lt;div class=&quot;srow swrow&quot;&gt;
       &lt;span class=&quot;sl&quot;&gt;${setting.label}&lt;/span&gt;
       &lt;button class=&quot;sw${on ? &#x27; on&#x27; : &#x27;&#x27;}&quot; type=&quot;button&quot; role=&quot;switch&quot; aria-checked=&quot;${on}&quot; aria-label=&quot;${setting.label}&quot; data-set=&quot;${setting.key}&quot; data-val=&quot;${!on}&quot;${setting.disabled ? &#x27; disabled&#x27; : &#x27;&#x27;}&gt;&lt;span class=&quot;swt&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/span&gt;&lt;/button&gt;
@@ -3143,7 +3185,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
       const on = presetOn(pr);
       return `&lt;button class=&quot;opt${on ? &#x27; on&#x27; : &#x27;&#x27;}&quot; role=&quot;radio&quot; aria-checked=&quot;${on}&quot; data-pre=&quot;${pr.id}&quot;&gt;${mini(pr.cfg?.bg ?? &#x27;none&#x27;, 58, 40)}&lt;span class=&quot;oc&quot;&gt;${pr.label}&lt;/span&gt;&lt;/button&gt;`;
     }).join(&#x27;&#x27;);
-    const settings = state.orig ? [] : SETTINGS();
+    const settings = SETTINGS();
     const showSettings = settingsOpen &amp;&amp; settings.length &gt; 0;
     setHead.hidden = settings.length === 0 || showSettings;
     setHead.setAttribute(&#x27;aria-expanded&#x27;, String(showSettings));
@@ -3161,6 +3203,9 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
       preCard.style.setProperty(&#x27;--reset-top&#x27;, (firstTile.top - bounds.top) / scale + &#x27;px&#x27;);
       preCard.style.setProperty(&#x27;--reset-right&#x27;, (bounds.right - lastPreview.right) / scale + &#x27;px&#x27;);
     }
+    if (!levelCard.hidden) {
+      levelCard.innerHTML = settingSwitch({ key: &#x27;equalHeadingSizes&#x27;, label: &#x27;Одинаковые размеры уровней&#x27; }, state.equalHeadingSizes);
+    }
     if (state.orig) {
       [triggerHead, triggerRadios, wHead, wRadios, tightRadios].forEach(el =&gt; { el.hidden = true; });
       const presetEnd = place(preHead, preCard, contextEnd + 4);
@@ -3168,9 +3213,6 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
       return;
     }
     const off = state.v.kind === &#x27;original&#x27;;
-    if (!levelCard.hidden) {
-      levelCard.innerHTML = settingSwitch({ key: &#x27;equalHeadingSizes&#x27;, label: &#x27;Одинаковые размеры уровней&#x27; }, state.equalHeadingSizes);
-    }
     const presetEnd = place(preHead, preCard, contextEnd + 4);
     const kb = state.ctx.id === &#x27;kb&#x27;;
     wHead.hidden = wRadios.hidden = !kb;
@@ -3214,8 +3256,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
         const pinning = a === &#x27;pin&#x27;;
         state.pinPreference = pinning;
         state.mode = pinning ? &#x27;pinned&#x27; : &#x27;free&#x27;;
-        state.open = false;
-        unpinPoint = pinning ? null : { x: e.clientX, y: e.clientY };
+        state.open = !pinning;
         focusSelector = pinning ? &#x27;[data-act=&quot;unpin&quot;]&#x27; : &#x27;[data-act=&quot;pin&quot;]&#x27;;
       }
       if (a === &#x27;levels&#x27;) { state.lc = !state.lc; }
@@ -3250,7 +3291,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
   function applyPreset(pr, reset = false) {
     activePreset = pr.id;
     const overrides = presetOverrides[pr.id];
-    state.orig = pr.id === &#x27;now&#x27;;
+    state.orig = Boolean(pr.original);
     state.presetMcol = defMcol();
     Object.assign(state, preCfg(pr, state.presetMcol), overrides);
     if (!reset) {
