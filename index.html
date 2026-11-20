@@ -2675,21 +2675,24 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     else if (c.fixedText) geo.textL = geo.textR = (W - 820) / 2;
     if (nearTextRulers()) {
       centerWideArticle(geo, W, 0, left);
-      const textEdge = left ? geo.textL : W - geo.textR;
-      const panelGap = blue ? 36 : 24;
-      const rulerGap = panelGap + 20;
-      const zoneInset = 12;
       if (blue &amp;&amp; state.mode === &#x27;pinned&#x27;) {
         const textShift = left ? 56 : -56;
         geo.textL += textShift;
         geo.textR -= textShift;
       }
-      geo.cardX = left ? textEdge - panelGap - cardW - (blue ? 8 : 0) : textEdge + panelGap;
+
+      // Left edge of the 100% label in the SabyDoc header artwork.
+      const zoomLabelX = 1253 - B.x;
+      const anchor = left ? W - zoomLabelX : zoomLabelX;
+      const [, paddingRight, , paddingLeft] = v.card;
+      const extraWidth = v.item === &#x27;src&#x27; ? paddingLeft : 0;
+      const headerRoom = !slabDoc() &amp;&amp; blue ? 8 : 0;
+      geo.cardX = left ? anchor - cardW - headerRoom + paddingRight : anchor - paddingLeft + extraWidth;
       geo.zoneW = 36;
-      geo.zoneX = left ? textEdge - rulerGap - geo.zoneW + zoneInset : textEdge + rulerGap - zoneInset;
-      geo.dashAlign = left ? &#x27;flex-start&#x27; : &#x27;flex-end&#x27;;
+      geo.zoneX = left ? anchor - geo.zoneW + 12 : anchor - 12;
+      geo.dashAlign = left ? &#x27;flex-end&#x27; : &#x27;flex-start&#x27;;
       geo.dashPad = &#x27;25px 12px 8px&#x27;;
-      geo.off = blue ? 0 : left ? 8 : -8;
+      geo.off = 0;
     }
     if (c.cmpPos &amp;&amp; left &amp;&amp; !blue &amp;&amp; !nearTextRulers()) {
     const q = c.cmpPos;
