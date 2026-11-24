@@ -2484,15 +2484,15 @@ details:not([open])&gt;.tree-article svg{transform:rotate(-90deg)}
 .radio.on{ color: var(--ink);cursor: default}
 .radio:focus-visible{ outline: 2px solid var(--brand);outline-offset: 1px}
 #toc[data-ctl=&quot;1&quot;], #toc.orig[data-bg=&quot;grey&quot;]{ --card-bg: var(--ctl-bg, var(--white))}
-#toc.orig.sd[data-bg=&quot;grey&quot;] .pinned-card{ background:var(--card-bg)}
+#toc.orig:is(.sd,.sd-right)[data-bg=&quot;grey&quot;] .pinned-card{ background:var(--card-bg)}
 #toc .card{ box-shadow: var(--ctl-sh, var(--card-shadow)) !important}
 #toc.white-outline .card{ --pin-inset:7.5px;padding:4px !important}
 #toc.white-outline .ci .cnt,#toc.pale-fill[data-row-fill] .ci.src[data-i] .cnt{--text-inset:4.5px;padding-right:7.5px;column-gap:4px}
 #toc.white-outline .card:not(.pinned-card){--ctl-sh:inset 0 0 0 1px color-mix(in srgb,var(--border-pale_border-color) 70%,transparent)}
 #toc[data-bg=&quot;grey&quot;] &gt; .card.pinned-card, #toc.tabbed-toc[data-bg=&quot;grey&quot;] &gt; .card {background:var(--bg-grey)}
 #toc[data-bg=&quot;grey&quot;]{ --ctl-bg: var(--bg-grey)}
-#toc.sd[data-bg=&quot;grey&quot;]{ --ctl-bg: #f8f8f8}
-#toc.sd[data-bg=&quot;grey&quot;][data-edit]{ --ctl-bg: var(--sd-edit-frame)}
+#toc:is(.sd,.orig.sd-right)[data-bg=&quot;grey&quot;]{ --ctl-bg: #f8f8f8}
+#toc:is(.sd,.orig.sd-right)[data-bg=&quot;grey&quot;][data-edit]{ --ctl-bg: var(--sd-edit-frame)}
 #toc.sdorange:not(.blue-line) .ci.mono.blueline.fill.all.on .mk{ background: #e0e0e0}
 #toc[data-sh=&quot;bright&quot;]{ --ctl-sh: var(--shadow-sliding)}
 #toc[data-sh=&quot;saby&quot;]{ --ctl-sh: var(--shadow-saby)}
@@ -3201,7 +3201,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     doc.classList.toggle(&#x27;white-outline&#x27;, state.slab &amp;&amp; state.bg === &#x27;none&#x27;);
     byId(&#x27;cmds&#x27;).hidden = !!(state.ctx.static || state.ctx.sd);
     const ctl = v.kind !== &#x27;original&#x27;;
-    const showCustomBackground = hasTocHover() &amp;&amp; state.mode === &#x27;free&#x27;;
+    const showCustomBackground = original &amp;&amp; c.sd || hasTocHover() &amp;&amp; state.mode === &#x27;free&#x27;;
     doc.dataset.ctl = ctl ? &#x27;1&#x27; : &#x27;0&#x27;;
     doc.dataset.bg = showCustomBackground ? state.bg : &#x27;none&#x27;;
     doc.dataset.sh = state.slab ? &#x27;default&#x27; : state.sh;
@@ -3697,7 +3697,7 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
       ...(hasTocHover() ? [{ key: &#x27;sh&#x27;, label: &#x27;Тень&#x27;, opts: [[&#x27;default&#x27;, &#x27;Мягкая&#x27;], [&#x27;saby&#x27;, &#x27;SabyDoc&#x27;]] }] : []),
     ];
   }
-  const backgroundColor = (bg) =&gt; bg === &#x27;none&#x27; ? &#x27;var(--white)&#x27; : sabyLeft() ? (state.edit ? &#x27;var(--sd-edit-frame)&#x27; : &#x27;#f8f8f8&#x27;) : &#x27;var(--bg-grey)&#x27;;
+  const backgroundColor = (bg) =&gt; bg === &#x27;none&#x27; ? &#x27;var(--white)&#x27; : state.ctx.sd &amp;&amp; (state.orig || sabyLeft()) ? (state.edit ? &#x27;var(--sd-edit-frame)&#x27; : &#x27;#f8f8f8&#x27;) : &#x27;var(--bg-grey)&#x27;;
   function mini(bg, width, height) {
     const bars = [[10, 7, 28], [14, 14, 21], [14, 21, 25]].map(([x, y, w], i) =&gt;
       `&lt;i style=&quot;left:${x}px;top:${y}px;width:${w}px;height:2px;border-radius:1px;background:${i ? &#x27;var(--contrast)&#x27; : &#x27;var(--ink)&#x27;}&quot;&gt;&lt;/i&gt;`    ).join(&#x27;&#x27;);
@@ -3779,23 +3779,28 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
       const setting = settings.find(entry =&gt; entry.key === key);
       return setting ? (setting.sw ? settingSwitch(setting, now[key]) : settingTiles(setting, now[key])) : &#x27;&#x27;;
     };
-    panelLook.innerHTML = row(&#x27;track&#x27;) +
-      (hasTocHover() ? settingTiles({ key: &#x27;bg&#x27;, label: &#x27;Фон панели&#x27;, opts: [[&#x27;none&#x27;, &#x27;Белый&#x27;], [&#x27;grey&#x27;, &#x27;Серый&#x27;]] }, state.bg, &#x27;common&#x27;) : &#x27;&#x27;) +
-      row(&#x27;panelWidth&#x27;) + row(&#x27;sh&#x27;);
-    itemLook.innerHTML = row(&#x27;fill&#x27;) +
+    const panelBackground = hasTocHover()
+      ? settingTiles({ key: &#x27;bg&#x27;, label: &#x27;Фон панели&#x27;, opts: [[&#x27;none&#x27;, &#x27;Белый&#x27;], [&#x27;grey&#x27;, &#x27;Серый&#x27;]] }, state.bg, &#x27;common&#x27;)
+      : &#x27;&#x27;;
+    panelLook.innerHTML = state.orig ? panelBackground :
+      row(&#x27;track&#x27;) + panelBackground + row(&#x27;panelWidth&#x27;) + row(&#x27;sh&#x27;);
+    itemLook.innerHTML = state.orig ? &#x27;&#x27; : row(&#x27;fill&#x27;) +
       settingTiles({ key: &#x27;blueArrowSide&#x27;, label: &#x27;Стрелки&#x27;, opts: [[&#x27;left&#x27;, &#x27;Слева&#x27;], [&#x27;right&#x27;, &#x27;Справа&#x27;], [&#x27;none&#x27;, &#x27;Нет&#x27;]] }, branchArrowSide(), &#x27;common&#x27;) +
       row(&#x27;textColor&#x27;) + row(&#x27;mlen&#x27;) + row(&#x27;mainSize&#x27;);
-    rulerLook.innerHTML = row(&#x27;rulerLength&#x27;);
+    rulerLook.innerHTML = state.orig ? &#x27;&#x27; : row(&#x27;rulerLength&#x27;);
+    itemLook.parentElement.hidden = state.orig;
     byId(&#x27;rulerCard&#x27;).hidden = !rulerLook.firstElementChild;
-    setHead.hidden = settingsOpen;
-    setHead.setAttribute(&#x27;aria-expanded&#x27;, String(settingsOpen));
-    appearanceSettings.hidden = !settingsOpen;
-    resetPreset.hidden = !settingsOpen || (!presetOverrides[activePreset] &amp;&amp; state.bg === &#x27;none&#x27; &amp;&amp; branchArrowSide() === defaultBranchArrowSide() &amp;&amp; state.trigger === &#x27;lines&#x27;);
+    const hasSettings = !state.orig || Boolean(panelBackground);
+    const showSettings = hasSettings &amp;&amp; settingsOpen;
+    setHead.hidden = !hasSettings || showSettings;
+    setHead.setAttribute(&#x27;aria-expanded&#x27;, String(showSettings));
+    appearanceSettings.hidden = !showSettings;
+    resetPreset.hidden = !showSettings || (!presetOverrides[activePreset] &amp;&amp; state.bg === &#x27;none&#x27; &amp;&amp; branchArrowSide() === defaultBranchArrowSide() &amp;&amp; state.trigger === &#x27;lines&#x27;);
     sideHead.hidden = sideRadios.hidden = true;
     const off = state.v.kind === &#x27;original&#x27;;
     const presetEnd = place(preHead, preCard, contextEnd + 4);
     appearanceSettings.style.top = (presetEnd + 6) + &#x27;px&#x27;;
-    const appearanceEnd = settingsOpen ? presetEnd + 6 + appearanceSettings.offsetHeight : presetEnd;
+    const appearanceEnd = showSettings ? presetEnd + 6 + appearanceSettings.offsetHeight : presetEnd;
     const kb = state.ctx.id === &#x27;kb&#x27;;
     wHead.hidden = wRadios.hidden = !kb;
     wRadios.innerHTML = [[&#x27;normal&#x27;, &#x27;Обычная&#x27;], [&#x27;wide&#x27;, &#x27;Широкая&#x27;], [&#x27;narrow&#x27;, &#x27;Узкая&#x27;]].map(([n, label]) =&gt; radio(state.width === n, label, `data-w=&quot;${n}&quot;`)).join(&#x27;&#x27;);
