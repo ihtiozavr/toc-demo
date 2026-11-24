@@ -3204,7 +3204,7 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     const showCustomBackground = original &amp;&amp; c.sd || hasTocHover() &amp;&amp; state.mode === &#x27;free&#x27;;
     doc.dataset.ctl = ctl ? &#x27;1&#x27; : &#x27;0&#x27;;
     doc.dataset.bg = showCustomBackground ? state.bg : &#x27;none&#x27;;
-    doc.dataset.sh = state.slab ? &#x27;default&#x27; : state.sh;
+    doc.dataset.sh = original &amp;&amp; c.sd ? &#x27;saby&#x27; : state.slab ? &#x27;default&#x27; : state.sh;
     if (ctl) doc.dataset.text = &#x27;black&#x27;;
     else delete doc.dataset.text;
     kbMaster.hidden = c.id !== &#x27;kb&#x27;;
