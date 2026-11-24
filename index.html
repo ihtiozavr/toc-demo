@@ -1964,7 +1964,7 @@ svg{ display: block}
 #kbMaster[data-folded]{background:#f8f8f8}
 .kb-master-controls{display:flex;align-items:center;gap:12px;width:124px;height:46px;padding-left:8px;background:#f8f8f8}
 .kb-master-controls &gt; *{display:grid;place-items:center;width:40px;height:26px;border-radius:14px}
-.kb-master-plus{background:var(--brand);color:white;font-size:27px;line-height:1}
+.kb-master-plus{background:linear-gradient(white,white) center/14px 2px no-repeat,linear-gradient(white,white) center/2px 14px no-repeat var(--brand)}
 #kbMasterToggle{background:white;border:1px solid var(--border-pale_border-color);pointer-events:auto}
 #kbMasterToggle::before{content:&#x27;&#x27;;width:14px;height:1px;background:#333;box-shadow:0 -5px #333,0 5px #333}
 #kbMasterToggle:hover{background:#f1f3f5}
@@ -2545,6 +2545,7 @@ details:not([open])&gt;.tree-article svg{transform:rotate(-90deg)}
   background:var(--line-track);
 }
 #toc.orig[data-track=&quot;true&quot;] .pinned-card .oi.on .mk{width:2px}
+#toc.combined-preset.orig[data-original-marker=&quot;long&quot;] .oi.on .mk{width:2px}
 #toc.orig[data-original-marker=&quot;none&quot;] .oi::before{display:none}
 #toc.blue-line[data-track=&quot;true&quot;] .pinned-card .ci.ln.all .mk {
   flex: 0 0 2px;
@@ -2555,9 +2556,10 @@ details:not([open])&gt;.tree-article svg{transform:rotate(-90deg)}
 }
 #toc.blue-line .ci.mono.on .mk::after {width:2px}
 #toc.blue-line.tabbed-toc .ci.mono.on .mk::after {
-  width: 3px;
   border-radius: 1px;
 }
+#toc.blue-line.tabbed-toc.sd-blue .ci.mono.on .mk::after,
+#toc.blue-line.tabbed-toc .ci.mono.fill.on .mk::after {width:3px}
 #toc.blue-line[data-track=&quot;true&quot;] .pinned-card .ci.mono.fill.all.on:first-child .mk {
   clip-path: inset(6px 0 0);
 }
@@ -2577,7 +2579,7 @@ details:not([open])&gt;.tree-article svg{transform:rotate(-90deg)}
 &lt;div class=&quot;viewport&quot; id=&quot;viewport&quot;&gt;
   &lt;div class=&quot;stage&quot; id=&quot;stage&quot;&gt;
     &lt;img class=&quot;bg&quot; id=&quot;bg&quot; alt=&quot;Экран с открытой статьёй «Как нанять удаленного сотрудника»&quot;&gt;
-    &lt;div id=&quot;kbMaster&quot; hidden&gt;&lt;div class=&quot;kb-master-controls&quot;&gt;&lt;span class=&quot;kb-master-plus&quot; aria-hidden=&quot;true&quot;&gt;+&lt;/span&gt;&lt;button type=&quot;button&quot; id=&quot;kbMasterToggle&quot; aria-label=&quot;Свернуть мастер&quot; aria-expanded=&quot;true&quot;&gt;&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div id=&quot;kbMaster&quot; hidden&gt;&lt;div class=&quot;kb-master-controls&quot;&gt;&lt;span class=&quot;kb-master-plus&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&lt;button type=&quot;button&quot; id=&quot;kbMasterToggle&quot; aria-label=&quot;Свернуть мастер&quot; aria-expanded=&quot;true&quot;&gt;&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;div class=&quot;doc&quot; id=&quot;docBox&quot;&gt;&lt;div class=&quot;art&quot; id=&quot;art&quot;&gt;&lt;/div&gt;&lt;div id=&quot;edTb&quot; hidden&gt;&lt;/div&gt;&lt;div class=&quot;guide&quot; id=&quot;guide&quot;&gt;&lt;/div&gt;&lt;div id=&quot;toc&quot;&gt;&lt;/div&gt;&lt;div id=&quot;sticky&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;&lt;div id=&quot;cmds&quot; aria-hidden=&quot;true&quot;&gt;&lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAACT0lEQVR42u3ZsWsTYRjH8W9FSsfYQTp2Utd2keiUKvgHZFG6KR3ajlEkpGPUQsWpOFknB5esAQd1lII03SoOtmNwkMydXH6B4wiXe997m3suvC+Eu5A34T5533ve53lvYbd1yDy3a8x5i8AIjMAIjMAIjMA5btcNXUsNWAfWgGXgHzAAvs0DsAW8BhYnfDYE9oCjKgJrQB+o6/0P4FSjtww0gRXgA/Bc/UZVAdYEuqNR2pwwHXeABvBZ/frAvSoEmTTufsa99h24C/zVCLasAyfh/kz5zgXwWOdd/YZJoA8uOZLHwJKirTlgEdy4DXRcswYMgUPRFeCGJWAonNlU7UVA3IPUVDWxDnZ0PCqIW9VyMQR61u7BTgZuIyfuWOcfq1RNdIGvUxbvMe4m8CsxI0oDPnPAdYBLrXF5cPWyg8wnJcbvp/Q7TODqwElO3KgsYE24TQWBt1P+hN1Z4EJFUZd1bvwnzAQXYgRN44oCzeOKAEPjAF6Gxvneg1eBA9hWMn0QCucL7OfENR1w6bSutGS7q4vNkzj3gH0HnIlqYkvHvZyJczsjoLyaBdBlijYUBIa+e5QTouWVTEvfEXzoWovlWAoOLBa8J4Fw9ZDRMgRwlLjQSuBcgT8T4b8SOFfgQGvakgOyVJzPFH2XyFBWreN8gkwb+K1RPMuo3jcs4HxTtUfAF+CWqveuthzOtSHbUCpH2Thf4AVwG3gDPNXzuyepPpeq6juU3IpU9G29mqlnBefKQ0cYaCG2LHouG7HWg0zlWgRGYARGYARGYEb7D4pZv/jVGUICAAAAAElFTkSuQmCC&quot; width=&quot;28&quot; height=&quot;28&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAABrklEQVR42u3av0vDQBjG8W9LEcdOxbGTdPTHVJyqCPoXODgKgnYsDtK1iKBjB0HH4urYqbgpLnXWQdwUB+nsossbCB203iW5N+F9INxxcCEfDu4ul5TanT5FTpmCx4AGNKABDWhAAxrQgAacMXXgCbgD9ooGrAMPwCLQBK6AN2nPPTDC1abaF4B7H2RZMS6OHOYV+BcuSgPo5A04Ky5KL0/A6j9xAPPAeh6AVZk4ag59l7UDI1zDoe87cKMZ6ItbA160AoPgsgReh8BlBRwA2yFwWQAHwG4oXNrA4Lg0gSpwaQH7jrivpHFpAHtA2xHXTBqXNLAHdD1wY81HFipxSQFdcaSNSwLog9tPG+cL9MVdZrFH9AEeacf5AJeAOVmYT7XifICrUj4Cx8DFDH1Ossb5ADekHEl5IGcsv+G6BIjvCN7G2raAZ004V2BVjtcBPmPtE2BHFm8VOICKQ59WrD4EzmVEW1Nv7cFxrsDNWL0hH0ni+RD0GQriAlyZ2kuO5HqVcoKiuADHMt1HKNVxAR6So1QSuMd3xs9c0nAmU6gRLGkG2l8WBjSgAQ3okx9VD1uZJgkvAQAAAABJRU5ErkJggg==&quot; width=&quot;28&quot; height=&quot;28&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAABEElEQVR42u2ZPQrCQBBGnyLBI1ja2tqoeAGPoGfQztZjeAZ/TiBeQPEEYiMpJTfQJjYTCEEUFFczfB8shN1ieSw7O49UxtM5nlPFeQQoQAEKUIACFKAABfgqTWAHXG0sbM4FYBM4AT0gsjEC9iEgQwCuDKqYhp1k6QE7T9Z6KjIlADw8WVt6ABwCyYP5CzDzABjbPcxO8mYVtA+cv715LdBViIGuOhkBClCAAnwz7ZxNpPbtyib2OZvIelDZhGxCReb3NrHxbhMTTzaxNZNwaxMDdTICFKAABfihTaShbSLEM5HZRFToQY9Ay54QlzZRl02oyPy/TejfRJlsYm2giZ2cO5sYqpMRoAAFKEAB/lnufhc59JpukRIAAAAASUVORK5CYII=&quot; width=&quot;28&quot; height=&quot;28&quot; alt=&quot;&quot;&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;aside id=&quot;kbNav&quot; hidden aria-label=&quot;Навигация&quot;&gt;
       &lt;div class=&quot;kb-tabs&quot; role=&quot;radiogroup&quot; aria-label=&quot;Содержимое панели&quot;&gt;
@@ -3710,7 +3712,7 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
     }
     if (key === &#x27;mlen&#x27;) {
       const height = val === &#x27;long&#x27; ? 22 : 12;
-      const width = state.orig || tabbedToc() ? 3 : 2;
+      const width = (state.orig &amp;&amp; (val !== &#x27;long&#x27; || activePreset === &#x27;now&#x27;)) || tabbedToc() ? 3 : 2;
       return st(`background:#fff;box-shadow:${EDGE}`,
         `&lt;i style=&quot;left:5px;top:${(26 - height) / 2}px;width:${width}px;height:${height}px;border-radius:2px;background:var(--label)&quot;&gt;&lt;/i&gt;`);
     }
