@@ -3819,7 +3819,7 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
     const tightHead = byId(&#x27;tightHead&#x27;);
     tightRadios.hidden = !vw; tightHead.hidden = true;
     tightRadios.innerHTML = `&lt;button class=&quot;sw${state.tight ? &#x27; on&#x27; : &#x27;&#x27;}&quot; role=&quot;switch&quot; aria-checked=&quot;${state.tight}&quot;${off ? &#x27; disabled&#x27; : &#x27;&#x27;} data-t=&quot;1&quot;&gt;&lt;span class=&quot;swc&quot;&gt;Отступы меньше&lt;/span&gt;&lt;span class=&quot;swt&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/span&gt;&lt;/button&gt;`;
-    if (rightOutline() &amp;&amp; settingsOpen) {
+    if (rightOutline()) {
       triggerRadios.insertAdjacentHTML(&#x27;beforeend&#x27;, settingSwitch({ key: &#x27;toolbarLeft&#x27;, label: &#x27;Тулбар слева&#x27; }, now.toolbarLeft));
     }
     const sideEnd = sideRadios.hidden ? appearanceEnd : place(sideHead, sideRadios, appearanceEnd + 4);
