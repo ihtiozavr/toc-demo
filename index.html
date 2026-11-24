@@ -2388,8 +2388,8 @@ details:not([open])&gt;.tree-article svg{transform:rotate(-90deg)}
 .ci.mono.fill.on .mk{ background: transparent}
 .ci.mono.fill.all.on .mk{background:linear-gradient(to right,var(--line-track,var(--selected)) 2px,transparent 2px)}
 .ci.mono.fill.all.on:first-child .mk{ -webkit-mask: linear-gradient(to bottom, transparent 6px, #000 6px);mask: linear-gradient(to bottom, transparent 6px, #000 6px)}
-#toc.pale-fill .ci.mono.on:not(.fill) .mk{ background:var(--dash-on)}
-#toc.pale-fill .ci.mono.blueline.all .mk{ background:var(--border-unaccented_border-color)}
+#toc.pale-fill:not(.blue-line) .ci.mono.on:not(.fill) .mk{ background:var(--dash-on)}
+#toc.pale-fill:not(.blue-line) .ci.mono.blueline.all .mk{ background:var(--border-unaccented_border-color)}
 .ci.mono.fill.on .mk::after{ content: &quot;&quot;;position: absolute;left: 0;top: 6px;width:2px;height: 16px;border-radius: 1px;background: var(--dash-on, var(--secondary-border))}
 .ci.guides.l2::before{ content: &quot;&quot;;position: absolute;left: 10px;top: 0;bottom: 0;width: 1px;background: var(--guide)}
 .radios{ position: absolute;left: 6px;right: 6px;padding: 6px;border-radius: 8px;background: var(--white);display: flex;flex-direction: column;isolation: isolate}
@@ -3710,8 +3710,9 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
     }
     if (key === &#x27;mlen&#x27;) {
       const height = val === &#x27;long&#x27; ? 22 : 12;
+      const width = state.orig || tabbedToc() ? 3 : 2;
       return st(`background:#fff;box-shadow:${EDGE}`,
-        `&lt;i style=&quot;left:5px;top:${(26 - height) / 2}px;width:3px;height:${height}px;border-radius:2px;background:var(--label)&quot;&gt;&lt;/i&gt;`);
+        `&lt;i style=&quot;left:5px;top:${(26 - height) / 2}px;width:${width}px;height:${height}px;border-radius:2px;background:var(--label)&quot;&gt;&lt;/i&gt;`);
     }
     if (key === &#x27;textColor&#x27;) return st(`display:grid;place-items:center;background:white;box-shadow:${EDGE};color:var(${val === &#x27;black&#x27; ? &#x27;--ink&#x27; : &#x27;--icon-secondary_icon-color&#x27;})`, &#x27;&lt;span aria-hidden=&quot;true&quot;&gt;Аа&lt;/span&gt;&#x27;);
     return &#x27;&#x27;;
