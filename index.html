@@ -2112,7 +2112,7 @@ details:not([open])&gt;.tree-article svg{transform:rotate(-90deg)}
   #sdTocRail[data-panel-tab][data-edit] #sdTocTab::before {
     content: &quot;&quot;;
     position: absolute;
-    inset: 0 100% calc(-1 * var(--tab-hover-gap, 0px)) -24px;
+    inset: 0 100% 0 -24px;
   }
 }
 .tabbed-panel-header {
@@ -3398,7 +3398,14 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     if (!inSidebar || sideOutline()) syncBreaks();
     renderDocTriggers();
     renderTabbedFrame();
-    if (blueLinePreset()) alignToArticleBaseline(artIn, cb, panelContext, panelScroll);
+    if (blueLinePreset()) {
+      if (!tabbedToc()) alignToArticleBaseline(artIn, cb);
+      const card = doc.querySelector(&#x27;.card&#x27;);
+      if (card) {
+        card.dataset.context = panelContext;
+        card.querySelector(tocScrollSelector).scrollTop = panelScroll;
+      }
+    }
     renderRadios();
   }
 
@@ -3424,11 +3431,10 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
       const tocTab = !lines ? `&lt;button id=&quot;sdTocTab&quot; type=&quot;button&quot; class=&quot;te__ritem&quot; aria-label=&quot;${pinned ? &#x27;Открепить оглавление&#x27; : &#x27;Закрепить оглавление&#x27;}&quot; aria-pressed=&quot;${pinned}&quot; title=&quot;Оглавление&quot;&gt;${tabbedToc() ? tabIcon : legacyTabIcon}&lt;/button&gt;` : &#x27;&#x27;;
       rail.innerHTML = state.edit ? `
 &lt;div class=&quot;te__rcmds&quot;&gt;
-${blueLinePreset() ? tocTab : &#x27;&#x27;}
 &lt;button data-te-action=&quot;add&quot; type=&quot;button&quot; class=&quot;te__ritem te__ritem--accent&quot; title=&quot;Добавить&quot; aria-label=&quot;Добавить&quot;&gt;
 &lt;svg class=&quot;te__i24&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill=&quot;currentColor&quot; transform=&quot;translate(0 480) scale(1 -1)&quot; d=&quot;M427 192 L277 192 L277 43 L235 43 L235 192 L85 192 L85 235 L235 235 L235 384 L277 384 L277 235 L427 235 L427 192 Z&quot;/&gt;&lt;/svg&gt;
 &lt;/button&gt;
-${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&quot; type=&quot;button&quot; class=&quot;te__ritem&quot; title=&quot;Данные&quot; aria-label=&quot;Данные&quot;&gt;
+${tocTab}&lt;button data-te-action=&quot;data&quot; type=&quot;button&quot; class=&quot;te__ritem&quot; title=&quot;Данные&quot; aria-label=&quot;Данные&quot;&gt;
 &lt;svg class=&quot;te__i24&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;&gt;
 &lt;path transform=&quot;translate(0 480) scale(1 -1)&quot; d=&quot;M392 239Q363 221 325.5 215.0Q288 209 256 209Q224 209 186.5 215.0Q149 221 120 239V173Q120 168 128 160Q139 151 155.5 145.0Q172 139 190.0 136.0Q208 133 225.5 131.5Q243 130 256 130Q269 130 286.5 131.5Q304 133 322.0 136.0Q340 139 356.5 145.0Q373 151 384 160Q392 168 392 173ZM392 332Q364 318 325.5 313.5Q287 309 256 309Q225 309 186.5 313.5Q148 318 120 332V273Q120 268 128 260Q139 251 155.5 245.0Q172 239 190.0 236.0Q208 233 225.5 231.5Q243 230 256 230Q269 230 286.5 231.5Q304 233 322.0 236.0Q340 239 356.5 245.0Q373 251 384 260Q392 268 392 273ZM392 139Q363 121 325.5 115.0Q288 109 256 109Q224 109 186.5 115.0Q149 121 120 139V80Q120 75 124.0 70.5Q128 66 134.0 62.5Q140 59 146.0 56.5Q152 54 156 52Q175 45 200.5 41.0Q226 37 256 37Q265 37 287.0 39.0Q309 41 332.5 46.0Q356 51 374.0 59.5Q392 68 392 80ZM120 360V359L121 358Q130 349 148.0 343.5Q166 338 186.5 335.0Q207 332 226.0 331.0Q245 330 256 330Q268 330 287.5 331.0Q307 332 327.0 335.0Q347 338 364.5 343.5Q382 349 391 358L392 359V360Q386 369 367.5 375.0Q349 381 327.0 384.0Q305 387 285.0 388.0Q265 389 256 389Q247 389 226.5 388.0Q206 387 183.5 383.5Q161 380 143.0 374.5Q125 369 120 360ZM413 80Q413 63 398 51Q386 41 368.0 34.0Q350 27 330.0 23.0Q310 19 290.5 17.5Q271 16 256 16Q241 16 221.5 17.5Q202 19 182.0 23.0Q162 27 144.0 34.0Q126 41 114 51Q99 63 99 80V360Q99 368 104.0 374.0Q109 380 115 384Q127 392 145.5 397.0Q164 402 184.0 405.0Q204 408 223.0 409.0Q242 410 256 410Q267 410 293.0 408.5Q319 407 345.5 402.0Q372 397 392.5 387.0Q413 377 413 360Z&quot; fill=&quot;currentColor&quot;/&gt;
 &lt;/svg&gt;
@@ -3450,7 +3456,7 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
 ` : (state.edit || !lines ? &#x27;&lt;span class=&quot;sd-rail-plus&quot; aria-label=&quot;Добавить&quot;&gt;+&lt;/span&gt;&#x27; : &#x27;&#x27;) + (!lines ? &#x27;&lt;button id=&quot;sdTocTab&quot; &#x27; + attrs + &#x27;&gt;&#x27; + (tabbedToc() ? tabIcon : legacyTabIcon) + &#x27;&lt;/button&gt;&#x27; : &#x27;&#x27;) + items.map(([y,t]) =&gt; crop(state.edit ? screens.screen5 : screens.screen2,y,t)).join(&#x27;&#x27;);
       if (blueLinePreset() &amp;&amp; !state.edit &amp;&amp; state.trigger === &#x27;tabs&#x27;) {
         const tab = byId(&#x27;sdTocTab&#x27;);
-        if (tab) rail.prepend(tab);
+        if (tab) rail.querySelector(&#x27;.sd-rail-art&#x27;)?.after(tab);
       }
       if (blueLinePreset() &amp;&amp; state.trigger === &#x27;tabs&#x27; &amp;&amp; !state.edit) {
         rail.querySelector(&#x27;.sd-rail-plus&#x27;)?.remove();
@@ -3482,7 +3488,7 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
     return baseline;
   }
 
-  function alignToArticleBaseline(article, articleBox, panelContext, panelScroll) {
+  function alignToArticleBaseline(article, articleBox) {
     const scale = box.getBoundingClientRect().width / articleBox.w;
     if (!scale) return;
     // Anchor the panel to the start of the article, including after an article scroll.
@@ -3500,16 +3506,7 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
     const baseline = firstLineBaseline(paragraph) + scroll;
     if (entry) {
       const top = shiftTop(card, baseline - firstLineBaseline(entry));
-      const bottomInset = tabbedToc() ? 11 : 0;
-      card.style.maxHeight = Math.max(0, articleBox.h - top - bottomInset) + &#x27;px&#x27;;
-      card.dataset.context = panelContext;
-      const list = card.querySelector(tocScrollSelector);
-      list.scrollTop = panelScroll;
-      if (tabbedToc() &amp;&amp; state.edit) {
-        const tab = byId(&#x27;sdTocTab&#x27;);
-        const gap = (card.getBoundingClientRect().top - tab.getBoundingClientRect().bottom) / scale;
-        tab.style.setProperty(&#x27;--tab-hover-gap&#x27;, Math.max(0, gap) + &#x27;px&#x27;);
-      }
+      card.style.maxHeight = Math.max(0, articleBox.h - top) + &#x27;px&#x27;;
     }
     const zone = doc.querySelector(&#x27;.zone&#x27;);
     const dash = zone?.querySelector(&#x27;.dash&#x27;);
