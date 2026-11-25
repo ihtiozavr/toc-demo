@@ -2590,9 +2590,6 @@ details:not([open])&gt;.tree-article svg{transform:rotate(-90deg)}
 #toc.blue-line[data-track=&quot;true&quot;] .pinned-card .ci.mono.fill.all.on:first-child .mk {
   clip-path: inset(6px 0 0);
 }
-#toc.blue-line[data-pinned-background].sd-blue[data-bg=&quot;grey&quot;]{--ctl-bg:#f8f8f8}
-#toc.blue-line[data-pinned-background].sd-blue[data-bg=&quot;grey&quot;][data-edit]{--ctl-bg:var(--sd-edit-frame)}
-#toc.blue-line[data-pinned-background].sd-blue[data-bg=&quot;grey&quot;] .card{background:var(--ctl-bg)}
 #toc.blue-line .ci.ln.nomk .mk::after{display:none}
 .ci.src.nomkr .slot i{ visibility: hidden}
 .ci.src.longmk .slot{ display: flex;padding-top: 0}
@@ -3255,7 +3252,6 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     if (!original) doc.dataset.rulerGap = state.rulerGap;
     else delete doc.dataset.rulerGap;
     doc.toggleAttribute(&#x27;data-original-rulers&#x27;, blueLinePreset());
-    doc.toggleAttribute(&#x27;data-pinned-background&#x27;, !original &amp;&amp; state.pinnedBackground);
     doc.classList.toggle(&#x27;vw&#x27;, !!c.static);
     doc.classList.toggle(&#x27;sd&#x27;, Boolean(sabyLeft() &amp;&amp; !blueLinePreset()));
     doc.classList.toggle(&#x27;sd-blue&#x27;, Boolean(c.sd &amp;&amp; blueLinePreset()));
@@ -3299,7 +3295,6 @@ BODY[&#x27;Какую подпись выбрать&#x27;] = `&lt;p&gt;Для п
     byId(&#x27;cmds&#x27;).hidden = !!(state.ctx.static || state.ctx.sd);
     const ctl = v.kind !== &#x27;original&#x27;;
     const showCustomBackground = original &amp;&amp; c.sd
-      || !original &amp;&amp; c.sd &amp;&amp; state.pinnedBackground
       || hasTocHover() &amp;&amp; state.mode === &#x27;free&#x27;;
     doc.dataset.ctl = ctl ? &#x27;1&#x27; : &#x27;0&#x27;;
     doc.dataset.bg = showCustomBackground ? state.bg : &#x27;none&#x27;;
@@ -3537,7 +3532,9 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
     }
     const ttlPad = v.item === &#x27;src&#x27; ? 14 : 10;
     const ttl = `&lt;span class=&quot;ttl&quot; aria-hidden=&quot;true&quot; style=&quot;visibility:hidden;padding-left:${ttlPad}px&quot;&gt;Оглавление&lt;/span&gt;`;
-    const shift = state.panelWidth !== &#x27;wide&#x27; &amp;&amp; !slabDoc() &amp;&amp; !state.ctx.static &amp;&amp; (state.side === &#x27;right&#x27; || blueLinePreset()) ? 8 : 0;
+    const extendToRulers = blueLinePreset() &amp;&amp; (state.ctx.id === &#x27;kb&#x27; || state.ctx.sd);
+    const shift = (state.panelWidth !== &#x27;wide&#x27; || extendToRulers)
+      &amp;&amp; !slabDoc() &amp;&amp; !state.ctx.static &amp;&amp; (state.side === &#x27;right&#x27; || blueLinePreset()) ? 8 : 0;
     const [pt, pr, pb, pl] = v.card;
     const extraWidth = v.item === &#x27;src&#x27; ? pl : 0;
     const cardX = g.cardX - extraWidth;
@@ -3703,7 +3700,7 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
   const appearanceSettings = byId(&#x27;appearanceSettings&#x27;);
   const panelLook = byId(&#x27;panelLook&#x27;), itemLook = byId(&#x27;itemLook&#x27;), rulerLook = byId(&#x27;rulerLook&#x27;);
   const blueOptions = {
-    rulerGap: 8, rulerCount: null, baselineRulers: true, pinnedBackground: false,
+    rulerGap: 8, rulerCount: null, baselineRulers: true,
   };
   const commonDefaults = {
     ...blueOptions,
@@ -3739,7 +3736,6 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
   function SETTINGS() {
     const withRulers = !tabbedToc();
     return [
-      ...(state.ctx.sd &amp;&amp; hasTocHover() ? [{ key: &#x27;pinnedBackground&#x27;, label: &#x27;Фон в закреплённом виде&#x27;, sw: true }] : []),
       ...(withRulers ? [
         { key: &#x27;rulerCount&#x27;, label: &#x27;Количество&#x27;, opts: [[null, &#x27;Авто&#x27;], [5, &#x27;5&#x27;], [12, &#x27;12&#x27;]] },
         { key: &#x27;rulerGap&#x27;, label: &#x27;Между линейками&#x27;, opts: [[8, &#x27;Малый&#x27;], [16, &#x27;Большой&#x27;]] },
@@ -3848,7 +3844,7 @@ ${blueLinePreset() ? &#x27;&#x27; : tocTab}&lt;button data-te-action=&quot;data&
       ? settingTiles({ key: &#x27;bg&#x27;, label: &#x27;Фон панели&#x27;, opts: [[&#x27;none&#x27;, &#x27;Белый&#x27;], [&#x27;grey&#x27;, &#x27;Серый&#x27;]] }, state.bg, &#x27;common&#x27;)
       : &#x27;&#x27;;
     panelLook.innerHTML = state.orig ? panelBackground :
-      row(&#x27;track&#x27;) + panelBackground + row(&#x27;panelWidth&#x27;) + row(&#x27;sh&#x27;) + row(&#x27;pinnedBackground&#x27;);
+      row(&#x27;track&#x27;) + panelBackground + row(&#x27;panelWidth&#x27;) + row(&#x27;sh&#x27;);
     itemLook.innerHTML = state.orig ? &#x27;&#x27; : row(&#x27;fill&#x27;) +
       settingTiles({ key: &#x27;blueArrowSide&#x27;, label: &#x27;Стрелки&#x27;, opts: [[&#x27;left&#x27;, &#x27;Слева&#x27;], [&#x27;right&#x27;, &#x27;Справа&#x27;], [&#x27;none&#x27;, &#x27;Нет&#x27;]] }, branchArrowSide(), &#x27;common&#x27;) +
       row(&#x27;textColor&#x27;) + row(&#x27;equalHeadingSizes&#x27;) + row(&#x27;mlen&#x27;);
