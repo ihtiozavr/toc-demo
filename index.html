@@ -2198,7 +2198,7 @@ details:not([open])&gt;.tree-article svg{transform:rotate(-90deg)}
 .art ul{ margin: 0;padding: 0 0 0 24px}
 .art li{ padding: 6px 0}
 .art.static{ overflow: hidden}
-.stage:has(#docBox.ls){--document-letter-spacing:-0.1974px}
+.stage:has(#docBox.ls,#toc.cmp){--document-letter-spacing:-0.1974px}
 .ls{letter-spacing:var(--document-letter-spacing)}
 .art.static .art-in{padding-bottom:0}
 .art.static h1{padding:0 0 32px}
@@ -2344,6 +2344,12 @@ details:not([open])&gt;.tree-article svg{transform:rotate(-90deg)}
 .oi:not(.on) .ar:hover path{ fill: var(--brand-dark)}
 .clamp{ display: block;overflow: hidden;white-space: nowrap}
 .tx{ flex: 1 1 0;min-width: 0;display: grid;font-family:var(--document-font);letter-spacing:var(--document-letter-spacing)}
+.stage:has(#toc.cmp) .art-in,
+#toc.cmp :is(.tx,.tree-row,.tree-heading){
+  font-kerning:auto;
+  font-optical-sizing:auto;
+  font-variation-settings:normal;
+}
 .tx &gt; span{ grid-area: 1 / 1;align-self: center}
 .tx .b{ font-weight: 600;visibility: hidden}
 .tx .r{ font-weight: 400}
@@ -3690,8 +3696,14 @@ ${tocTab}&lt;button data-te-action=&quot;data&quot; type=&quot;button&quot; clas
       const W = t.clientWidth;
       if (!W) return;
       const cs = getComputedStyle(r);
-      probe.style.fontSize = cs.fontSize; probe.style.fontFamily = cs.fontFamily; probe.style.letterSpacing = cs.letterSpacing;
-      probe.style.fontVariationSettings = cs.fontVariationSettings;
+      Object.assign(probe.style, {
+        fontFamily: cs.fontFamily,
+        fontSize: cs.fontSize,
+        fontKerning: cs.fontKerning,
+        fontOpticalSizing: cs.fontOpticalSizing,
+        fontVariationSettings: cs.fontVariationSettings,
+        letterSpacing: cs.letterSpacing,
+      });
       const width = (str, wt) =&gt; { probe.style.fontWeight = wt; probe.textContent = str; return probe.getBoundingClientRect().width / sc; };
       const BOLD = 600, REG = 400;
       const words = text.split(&#x27; &#x27;);
@@ -4891,18 +4903,19 @@ const DemoFrame = (function () {
   DemoFrame.mountDevices(toc.querySelector(&#x27;.device-header&#x27;), { devices: [monitor], device: &#x27;monitor&#x27; });
   const tocSelector = toc.querySelector(&#x27;.demo-switch&#x27;);
   const previewFrame = toc.querySelector(&#x27;.preview-frame&#x27;);
-  const previewWidth = previewFrame.offsetWidth;
-  const previewHeight = previewFrame.offsetHeight;
-  const initialPixelRatio = window.devicePixelRatio || 1;
-  function fitPreview() {
-    // Use the viewport at the page's initial zoom as the reference for fitting.
-    const zoom = (window.devicePixelRatio || 1) / initialPixelRatio;
-    const scale = Math.min(root.clientWidth / previewWidth, root.clientHeight / previewHeight) * zoom;
-    if (Number.isFinite(scale) &amp;&amp; scale &gt; 0) root.style.setProperty(&#x27;--preview-scale&#x27;, scale);
+  // Fit once, then let the browser zoom the scene and scroll any overflow.
+  function setInitialPreviewScale() {
+    const scale = Math.min(root.clientWidth / previewFrame.offsetWidth, root.clientHeight / previewFrame.offsetHeight);
+    if (!Number.isFinite(scale) || scale &lt;= 0) return false;
+    root.style.setProperty(&#x27;--preview-scale&#x27;, scale);
+    return true;
   }
-  new ResizeObserver(fitPreview).observe(root);
-  window.addEventListener(&#x27;resize&#x27;, fitPreview);
-  fitPreview();
+  if (!setInitialPreviewScale()) {
+    const observer = new ResizeObserver(() =&gt; {
+      if (setInitialPreviewScale()) observer.disconnect();
+    });
+    observer.observe(root);
+  }
   const groups = {};
   let toolbarSelector;
   const scenarios = [{ id: &#x27;toc&#x27;, title: &#x27;Оглавление&#x27; }, { id: &#x27;toolbar&#x27;, title: &#x27;Тулбар&#x27; }];
