@@ -3809,7 +3809,7 @@ ${tocTab}&lt;button data-te-action=&quot;data&quot; type=&quot;button&quot; clas
   const PRESETS = [
     { id: &#x27;blue-line&#x27;, label: &#x27;С голубой линией&#x27;, cfg: {
       orig: false, panelWidth: &#x27;narrow&#x27;, spacing: &#x27;compact&#x27;, indent: 12,
-      fillColor: &#x27;blue&#x27;, textColor: &#x27;grey&#x27;, mlen: &#x27;default&#x27;, mcol: &#x27;blue&#x27;, sh: &#x27;saby&#x27;, track: null,
+      fillColor: &#x27;blue&#x27;, textColor: &#x27;black&#x27;, mlen: &#x27;default&#x27;, mcol: &#x27;blue&#x27;, sh: &#x27;saby&#x27;, track: null,
       rulerLength: &#x27;medium&#x27;, rulerGap: 12,
     } },
     { id: &#x27;now&#x27;, label: &#x27;Как сейчас&#x27;, cfg: {} },
@@ -3839,16 +3839,16 @@ ${tocTab}&lt;button data-te-action=&quot;data&quot; type=&quot;button&quot; clas
     return [
       ...(withRulers ? [
         { key: &#x27;rulerCount&#x27;, label: &#x27;Количество&#x27;, opts: [[null, &#x27;Авто&#x27;], [5, &#x27;5&#x27;], [12, &#x27;12&#x27;]] },
-        { key: &#x27;rulerGap&#x27;, label: &#x27;Между линейками&#x27;, opts: [[12, &#x27;Средний&#x27;], [8, &#x27;Малый&#x27;], [16, &#x27;Большой&#x27;]] },
+        { key: &#x27;rulerGap&#x27;, label: &#x27;Между линейками&#x27;, opts: [[8, &#x27;Малый&#x27;], [12, &#x27;Средний&#x27;], [16, &#x27;Большой&#x27;]] },
       ] : []),
       { key: &#x27;track&#x27;, label: &#x27;Линия&#x27;, sw: true, disabled: state.mlen === &#x27;none&#x27; || !canPin() },
       { key: &#x27;fill&#x27;, label: &#x27;Заливка пункта&#x27;, sw: true },
       { key: &#x27;panelWidth&#x27;, label: &#x27;Ширина панели&#x27;, opts: [[&#x27;narrow&#x27;, &#x27;Узкая&#x27;], [&#x27;wide&#x27;, &#x27;Широкая&#x27;]] },
       { key: &#x27;mainSize&#x27;, label: &#x27;Размер&#x27;, opts: mainSizeOptions },
       { key: &#x27;equalHeadingSizes&#x27;, label: &#x27;Одинаковые размеры&#x27;, sw: true },
-      { key: &#x27;textColor&#x27;, label: &#x27;Цвет текста&#x27;, opts: [[&#x27;grey&#x27;, &#x27;Серый&#x27;], [&#x27;black&#x27;, &#x27;Чёрный&#x27;]] },
+      { key: &#x27;textColor&#x27;, label: &#x27;Цвет текста&#x27;, opts: [[&#x27;black&#x27;, &#x27;Чёрный&#x27;], [&#x27;grey&#x27;, &#x27;Серый&#x27;]] },
       ...(!docTriggers() || state.trigger === &#x27;lines&#x27; ? [{
-        key: &#x27;rulerLength&#x27;, label: &#x27;Размер&#x27;, opts: [[&#x27;medium&#x27;, &#x27;Средние&#x27;], [&#x27;short&#x27;, &#x27;Короткие&#x27;], [&#x27;long&#x27;, &#x27;Длинные&#x27;]],
+        key: &#x27;rulerLength&#x27;, label: &#x27;Размер&#x27;, opts: [[&#x27;short&#x27;, &#x27;Короткие&#x27;], [&#x27;medium&#x27;, &#x27;Средние&#x27;], [&#x27;long&#x27;, &#x27;Длинные&#x27;]],
       }] : []),
       { key: &#x27;mlen&#x27;, label: &#x27;Маркер&#x27;, opts: [[&#x27;default&#x27;, &#x27;Короткий&#x27;], [&#x27;long&#x27;, &#x27;Длинный&#x27;]] },
       ...(hasTocHover() ? [{ key: &#x27;sh&#x27;, label: &#x27;Тень&#x27;, opts: [[&#x27;saby&#x27;, &#x27;Активная&#x27;], [&#x27;default&#x27;, &#x27;Мягкая&#x27;]] }] : []),
